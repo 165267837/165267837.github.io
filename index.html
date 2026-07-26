@@ -40,7 +40,34 @@
     touch-action: none;
   }
 
+  /* 视频播放期间暂停所有非必要动画，提升移动端性能 */
+  body.video-playing * {
+    animation-play-state: paused !important;
+    transition: none !important;
+  }
+  body.video-playing #intro-video-panel,
+  body.video-playing #intro-video-panel * {
+    animation-play-state: running !important;
+  }
+  /* 视频播放时隐藏游戏画布和HUD，减少GPU占用 */
+  body.video-playing #game-canvas,
+  body.video-playing #hud,
+  body.video-playing #start-menu,
+  body.video-playing #rotate-prompt,
+  body.video-playing #loading-overlay {
+    display: none !important;
+  }
+
   #game-canvas { display: block; width: 100vw; height: 100vh; }
+
+  /* 视频硬件加速优化 */
+  #intro-video {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    will-change: transform;
+  }
 
   /* 十字准星 */
   .crosshair {
@@ -148,10 +175,10 @@
   /* 虚拟摇杆 - 左下角 */
   .joystick-container {
     position: absolute;
-    bottom: 80px;
-    left: 40px;
-    width: 140px;
-    height: 140px;
+    bottom: 60px;
+    left: 30px;
+    width: 160px;
+    height: 160px;
     pointer-events: auto;
     touch-action: none;
   }
@@ -168,13 +195,13 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
     background: radial-gradient(circle at 30% 30%, rgba(251, 191, 36, 0.9), rgba(180, 130, 20, 0.95));
     transform: translate(-50%, -50%);
     box-shadow: 0 4px 15px rgba(251, 191, 36, 0.5), inset 0 -2px 5px rgba(0,0,0,0.3);
-    transition: transform 0.05s ease-out;
+    transition: transform 0.03s ease-out;
   }
   .joystick-stick.active {
     background: radial-gradient(circle at 30% 30%, rgba(251, 191, 36, 1), rgba(218, 165, 32, 1));
@@ -908,7 +935,7 @@
 
 <!-- 开场动画 - 视频播放 -->
 <div id="intro-video-panel" class="fixed inset-0 bg-black flex items-center justify-center z-[100]">
-  <video id="intro-video" class="w-full h-full object-cover" playsinline webkit-playsinline muted preload="auto" x5-playsinline="true">
+  <video id="intro-video" class="w-full h-full object-cover" playsinline webkit-playsinline muted preload="auto" x5-playsinline="true" x5-video-player-type="h5" x5-video-player-fullscreen="false" x5-video-orientation="landscape">
     <source src="./intro.mp4" type="video/mp4">
   </video>
   <!-- 底部渐变遮罩 -->
@@ -923,6 +950,10 @@
       </div>
       <p class="text-amber-300 text-lg tracking-widest">点 击 屏 幕 开 始</p>
     </div>
+  </div>
+  <!-- 跳过按钮（播放3秒后显示） -->
+  <div id="btn-skip-intro" class="absolute bottom-6 right-6 px-4 py-2 rounded-full bg-black/50 border border-amber-400/40 text-amber-300/70 text-sm cursor-pointer hidden pointer-events-auto hover:bg-black/70 hover:text-amber-300 transition-all">
+    跳过 →
   </div>
 </div>
 
@@ -1321,9 +1352,8 @@
     <path d="M8 42 L10 40 L12 42" stroke="#fbbf24" stroke-width="2" fill="none"/>
     <text x="50" y="55" text-anchor="middle" fill="#fbbf24" font-size="14" font-weight="bold">横屏</text>
   </svg>
-  <h3>请横屏体验游戏</h3>
-  <p>为了获得最佳游戏体验<br>请将手机旋转至横屏模式</p>
-  <div id="btn-continue-portrait" class="btn-continue-portrait">仍用竖屏继续</div>
+  <h3>请横屏游玩</h3>
+  <p>本游戏仅支持横屏模式<br>请将手机旋转至横屏后继续</p>
 </div>
 
 <!-- 加载遮罩（3D场景加载时显示） -->
@@ -3130,13 +3160,16 @@ function calcStats() {
 function initThree() {
   const canvas = document.getElementById('game-canvas');
   
+  // 检测是否为移动设备
+  const isMobile = typeof MobileControls !== 'undefined' && MobileControls.isMobile;
+  
   // 尝试创建WebGL渲染器，失败时给出友好提示
   try {
     game.renderer = new THREE.WebGLRenderer({ 
       canvas, 
-      antialias: true,
+      antialias: !isMobile,  // 移动端关闭抗锯齿，提升性能
       alpha: false,
-      powerPreference: 'default'
+      powerPreference: isMobile ? 'low-power' : 'default'
     });
   } catch (e) {
     throw new Error('WebGL 初始化失败，请检查浏览器是否支持 WebGL');
@@ -3154,18 +3187,21 @@ function initThree() {
   }, false);
   
   game.renderer.setSize(window.innerWidth, window.innerHeight);
-  // 性能优化：限制像素比为1，减少像素填充率
-  game.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1));
-  game.renderer.shadowMap.enabled = true;
-  // 性能优化：使用PCFShadowMap替代PCFSoftShadowMap，减少阴影计算开销
-  game.renderer.shadowMap.type = THREE.PCFShadowMap;
+  // 性能优化：移动端像素比限制为1，大幅减少像素填充率
+  game.renderer.setPixelRatio(isMobile ? Math.min(window.devicePixelRatio, 1) : Math.min(window.devicePixelRatio, 2));
+  game.renderer.shadowMap.enabled = !isMobile; // 移动端关闭阴影，大幅提升性能
+  if (!isMobile) {
+    // 性能优化：使用PCFShadowMap替代PCFSoftShadowMap，减少阴影计算开销
+    game.renderer.shadowMap.type = THREE.PCFShadowMap;
+  }
   game.renderer.outputEncoding = THREE.sRGBEncoding;
 
   game.scene = new THREE.Scene();
   game.scene.background = new THREE.Color(0x87ceeb);
-  game.scene.fog = new THREE.Fog(0xaaddff, 60, 200);
+  // 移动端缩短雾距离，减少可见范围，降低绘制压力
+  game.scene.fog = new THREE.Fog(0xaaddff, isMobile ? 40 : 60, isMobile ? 140 : 200);
 
-  game.camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 500);
+  game.camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, isMobile ? 300 : 500);
 
   game.clock = new THREE.Clock();
 
@@ -14633,7 +14669,7 @@ const MobileControls = {
     centerY: 0,
     moveX: 0, // -1 ~ 1
     moveZ: 0, // -1 ~ 1
-    maxRadius: 50,
+    maxRadius: 65,
   },
   // 视角控制
   cameraTouch: {
@@ -14677,22 +14713,14 @@ const MobileControls = {
   // 初始化屏幕方向检测
   initOrientation() {
     const prompt = document.getElementById('rotate-prompt');
-    const continueBtn = document.getElementById('btn-continue-portrait');
     if (!prompt) return;
 
-    this.forcePortrait = false; // 用户是否强制竖屏继续
-
     const checkOrientation = () => {
-      if (this.forcePortrait) {
-        prompt.classList.remove('show');
-        return;
-      }
-      
       const isLandscape = window.innerWidth > window.innerHeight;
       if (isLandscape) {
         prompt.classList.remove('show');
       } else {
-        // 竖屏时显示提示
+        // 竖屏时强制显示提示（手机端必须横屏）
         prompt.classList.add('show');
       }
     };
@@ -14710,19 +14738,6 @@ const MobileControls = {
     window.addEventListener('orientationchange', () => {
       setTimeout(checkOrientation, 300);
     });
-
-    // 竖屏继续按钮
-    if (continueBtn) {
-      continueBtn.addEventListener('click', () => {
-        this.forcePortrait = true;
-        prompt.classList.remove('show');
-      });
-      continueBtn.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        this.forcePortrait = true;
-        prompt.classList.remove('show');
-      }, { passive: false });
-    }
   },
 
   // 初始化虚拟摇杆
@@ -14816,7 +14831,7 @@ const MobileControls = {
     joystick.moveZ = dy / joystick.maxRadius;
   },
 
-  // 初始化视角控制（屏幕右侧区域滑动）
+  // 初始化视角控制（全屏滑动，除了摇杆和按钮区域）
   initCameraControl() {
     const hud = document.getElementById('hud');
     if (!hud) return;
@@ -14837,15 +14852,27 @@ const MobileControls = {
             touch.target.closest('.action-buttons') ||
             touch.target.closest('.mobile-shortcuts') ||
             touch.target.closest('.btn-interact') ||
-            touch.target.closest('.pointer-events-auto')) {
+            touch.target.closest('.pointer-events-auto') ||
+            touch.target.closest('.crosshair') ||
+            touch.target.closest('.quest-panel') ||
+            touch.target.closest('.hp-mp-bar') ||
+            touch.target.closest('.soul-ring-ui')) {
           continue;
         }
         
-        // 排除左下角摇杆区域（避免误触）
-        const joystickZoneX = 180; // 摇杆区域宽度
-        const joystickZoneY = 200; // 摇杆区域高度（从底部算起）
+        // 排除左下角摇杆区域（扩大一点范围避免误触）
+        const joystickZoneX = 200;
+        const joystickZoneY = 220;
         if (touch.clientX < joystickZoneX && 
             touch.clientY > window.innerHeight - joystickZoneY) {
+          continue;
+        }
+        
+        // 排除右下角按钮区域
+        const btnZoneX = 200;
+        const btnZoneY = 280;
+        if (touch.clientX > window.innerWidth - btnZoneX && 
+            touch.clientY > window.innerHeight - btnZoneY) {
           continue;
         }
         
@@ -14880,10 +14907,10 @@ const MobileControls = {
       camTouch.lastX = touch.clientX;
       camTouch.lastY = touch.clientY;
       
-      // 提高灵敏度，让转视角更轻松
-      game.cameraYaw -= dx * 0.008;
-      game.cameraPitch -= dy * 0.006;
-      game.cameraPitch = Math.max(-1.05, Math.min(1.05, game.cameraPitch));
+      // 高灵敏度，滑动屏幕轻松转视角
+      game.cameraYaw -= dx * 0.010;
+      game.cameraPitch -= dy * 0.008;
+      game.cameraPitch = Math.max(-1.1, Math.min(1.1, game.cameraPitch));
     };
 
     const onTouchEnd = (e) => {
@@ -16837,11 +16864,14 @@ function awakenMartialSoul() {
   btnAwaken.classList.add('hidden');
   glowDiv.style.opacity = '1';
   
+  // 普通觉醒池：不含昊天锤（昊天锤只能通过觉醒卡获得）
+  const normalSouls = CONFIG.MARTIAL_SOULS.filter(s => s.id !== 'haotian_hammer');
+  
   // 抽取动画
   let count = 0;
   const totalRolls = 20;
   const rollInterval = setInterval(() => {
-    const randomSoul = CONFIG.MARTIAL_SOULS[Math.floor(Math.random() * CONFIG.MARTIAL_SOULS.length)];
+    const randomSoul = normalSouls[Math.floor(Math.random() * normalSouls.length)];
     iconDiv.textContent = getSoulIcon(randomSoul.id);
     iconDiv.style.color = '#' + randomSoul.color.toString(16).padStart(6, '0');
     count++;
@@ -16849,8 +16879,8 @@ function awakenMartialSoul() {
     if (count >= totalRolls) {
       clearInterval(rollInterval);
       
-      // 最终结果（5个武魂概率相同）
-      const finalSoul = CONFIG.MARTIAL_SOULS[Math.floor(Math.random() * CONFIG.MARTIAL_SOULS.length)];
+      // 最终结果（从普通武魂中抽取，昊天锤只能通过觉醒卡获得）
+      const finalSoul = normalSouls[Math.floor(Math.random() * normalSouls.length)];
       
       // 显示结果
       setTimeout(() => {
@@ -16895,6 +16925,7 @@ function getSoulIcon(soulId) {
     tiger: '🐯',
     rabbit: '🐰',
     sword: '⚔️',
+    haotian_hammer: '🔨',
   };
   return icons[soulId] || '✦';
 }
@@ -17530,6 +17561,12 @@ function gameLoop() {
   try {
     const now = performance.now();
     let dt = (now - game.lastTime) / 1000;
+    
+    // 移动端帧率限制（30fps），降低CPU/GPU占用
+    const isMobile = typeof MobileControls !== 'undefined' && MobileControls.isMobile;
+    const minFrameTime = isMobile ? 1/30 : 1/60;
+    if (dt < minFrameTime) return;
+    
     game.lastTime = now;
     dt = Math.min(dt, 0.1); // 防止切Tab后大跳
 
@@ -17577,8 +17614,13 @@ function initUI() {
   const introVideo = document.getElementById('intro-video');
   const introPanel = document.getElementById('intro-video-panel');
   const videoTapHint = document.getElementById('video-tap-hint');
+  const btnSkipIntro = document.getElementById('btn-skip-intro');
+  let videoStarted = false;
 
   function showStartMenu() {
+    // 移除视频播放期间的性能优化标记
+    document.body.classList.remove('video-playing');
+    
     // 先隐藏视频面板
     if (introPanel && !introPanel.classList.contains('hidden')) {
       introPanel.classList.add('hidden');
@@ -17603,12 +17645,22 @@ function initUI() {
       return;
     }
     
+    // 视频播放时启用性能优化模式
+    document.body.classList.add('video-playing');
+    
     // 尝试自动播放
     const playPromise = introVideo.play();
     if (playPromise !== undefined) {
       playPromise.then(() => {
         // 自动播放成功，隐藏点击提示
         if (videoTapHint) videoTapHint.style.display = 'none';
+        videoStarted = true;
+        // 3秒后显示跳过按钮
+        setTimeout(() => {
+          if (btnSkipIntro && !introPanel?.classList.contains('hidden') === false) {
+            btnSkipIntro.classList.remove('hidden');
+          }
+        }, 3000);
       }).catch(() => {
         // 自动播放失败，保持点击提示
         if (videoTapHint) videoTapHint.style.display = 'flex';
@@ -17617,32 +17669,69 @@ function initUI() {
     
     // 视频播放结束
     introVideo.addEventListener('ended', showStartMenu);
+    
+    // 视频开始播放事件
+    introVideo.addEventListener('play', () => {
+      if (videoTapHint) videoTapHint.style.display = 'none';
+      videoStarted = true;
+      // 3秒后显示跳过按钮
+      setTimeout(() => {
+        if (btnSkipIntro && introPanel && !introPanel.classList.contains('hidden')) {
+          btnSkipIntro.classList.remove('hidden');
+        }
+      }, 3000);
+    });
   }
 
   // 点击屏幕开始播放
   if (introPanel) {
-    introPanel.addEventListener('click', function startOnTap() {
+    introPanel.addEventListener('click', function startOnTap(e) {
+      // 如果点击的是跳过按钮，不处理跳过逻辑
+      if (btnSkipIntro && (e.target === btnSkipIntro || btnSkipIntro.contains(e.target))) {
+        return;
+      }
+      
       if (videoTapHint) videoTapHint.style.display = 'none';
       if (introVideo && introVideo.paused) {
+        // 视频播放时启用性能优化模式
+        document.body.classList.add('video-playing');
         introVideo.play().catch(() => {
           // 播放失败直接进入菜单
           showStartMenu();
         });
       }
-      introPanel.removeEventListener('click', startOnTap);
     }, { once: false });
     
     // 触摸事件（移动端优先）
     introPanel.addEventListener('touchstart', function startOnTouch(e) {
+      // 如果点击的是跳过按钮，不处理
+      if (btnSkipIntro && (e.target === btnSkipIntro || btnSkipIntro.contains(e.target))) {
+        return;
+      }
+      
       e.preventDefault();
       if (videoTapHint) videoTapHint.style.display = 'none';
       if (introVideo && introVideo.paused) {
+        // 视频播放时启用性能优化模式
+        document.body.classList.add('video-playing');
         introVideo.play().catch(() => {
           showStartMenu();
         });
       }
-      introPanel.removeEventListener('touchstart', startOnTouch);
     }, { passive: false, once: false });
+  }
+
+  // 跳过按钮
+  if (btnSkipIntro) {
+    btnSkipIntro.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showStartMenu();
+    });
+    btnSkipIntro.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      showStartMenu();
+    }, { passive: false });
   }
 
   // 视频元素不存在则直接显示菜单
@@ -17943,6 +18032,13 @@ function init3DScene(callback) {
   // 用setTimeout让浏览器先渲染加载遮罩，再开始加载
   setTimeout(() => {
     try {
+      // 移动端性能优化：调整配置参数
+      if (typeof MobileControls !== 'undefined' && MobileControls.isMobile) {
+        CONFIG.TREE_COUNT = 80;      // 减少树木数量
+        CONFIG.BEAST_COUNT = 20;     // 减少魂兽数量
+        console.log('[移动端] 已应用性能优化配置');
+      }
+      
       initThree();
       initTerrain();
       initTrees();
