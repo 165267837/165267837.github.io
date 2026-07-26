@@ -85,6 +85,18 @@
   }
   .btn-gold:active { transform: translateY(1px); }
 
+  .btn-cyan {
+    background: linear-gradient(180deg, #0891b2, #0e7490);
+    border: 1px solid #22d3ee;
+    color: #ecfeff; text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+    transition: all 0.2s; box-shadow: 0 4px 12px rgba(34,211,238,0.3);
+  }
+  .btn-cyan:hover {
+    background: linear-gradient(180deg, #22d3ee, #0891b2);
+    box-shadow: 0 6px 20px rgba(34,211,238,0.5); transform: translateY(-1px);
+  }
+  .btn-cyan:active { transform: translateY(1px); }
+
   /* 品质颜色 */
   .q-white { color: #e5e7eb; border-color: #e5e7eb; }
   .q-yellow { color: #fbbf24; border-color: #fbbf24; }
@@ -195,6 +207,38 @@
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    letter-spacing: 0.2em;
+  }
+  .btn-xuanhuan-primary {
+    background: linear-gradient(180deg, rgba(251, 191, 36, 0.95) 0%, rgba(217, 119, 6, 0.95) 50%, rgba(180, 83, 9, 0.95) 100%);
+    border: 2px solid rgba(253, 224, 71, 0.7);
+    box-shadow: 
+      0 0 25px rgba(251, 191, 36, 0.4),
+      0 4px 15px rgba(0,0,0,0.4),
+      inset 0 2px 0 rgba(255,255,255,0.4),
+      inset 0 -2px 6px rgba(120,53,15,0.5);
+    animation: btnPulse 2.5s ease-in-out infinite;
+  }
+  @keyframes btnPulse {
+    0%, 100% { box-shadow: 0 0 25px rgba(251, 191, 36, 0.4), 0 4px 15px rgba(0,0,0,0.4), inset 0 2px 0 rgba(255,255,255,0.4), inset 0 -2px 6px rgba(120,53,15,0.5); }
+    50% { box-shadow: 0 0 40px rgba(251, 191, 36, 0.6), 0 4px 20px rgba(0,0,0,0.4), inset 0 2px 0 rgba(255,255,255,0.4), inset 0 -2px 6px rgba(120,53,15,0.5); }
+  }
+  .btn-xuanhuan-secondary {
+    background: linear-gradient(180deg, rgba(88, 28, 135, 0.8) 0%, rgba(67, 56, 202, 0.85) 50%, rgba(49, 46, 129, 0.9) 100%);
+    border: 1px solid rgba(139, 92, 246, 0.5);
+    color: #e0e7ff;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    box-shadow: 
+      0 0 15px rgba(139, 92, 246, 0.25),
+      0 3px 10px rgba(0,0,0,0.3),
+      inset 0 1px 0 rgba(255,255,255,0.2),
+      inset 0 -2px 4px rgba(0,0,0,0.3);
+  }
+  .btn-xuanhuan-secondary:hover {
+    box-shadow: 
+      0 0 25px rgba(139, 92, 246, 0.45),
+      0 4px 15px rgba(0,0,0,0.4),
+      inset 0 1px 0 rgba(255,255,255,0.2);
   }
   .btn-xuanhuan::before {
     content: '';
@@ -214,8 +258,113 @@
       inset 0 1px 0 rgba(255,255,255,0.3);
     transform: translateY(-2px);
   }
+  .btn-xuanhuan-secondary:hover {
+    transform: translateY(-2px);
+  }
   .btn-xuanhuan:active {
     transform: translateY(1px);
+  }
+
+  /* 装饰线 */
+  .menu-deco-line {
+    position: relative;
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.6), rgba(251, 191, 36, 0.8));
+  }
+  .menu-deco-line:last-child {
+    background: linear-gradient(270deg, transparent, rgba(251, 191, 36, 0.6), rgba(251, 191, 36, 0.8));
+  }
+  .menu-deco-dot {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    background: rgba(251, 191, 36, 0.9);
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(251, 191, 36, 0.8);
+  }
+  .menu-deco-line:first-child .menu-deco-dot { right: 0; }
+  .menu-deco-line:last-child .menu-deco-dot { left: 0; }
+  .menu-deco-icon {
+    animation: iconFloat 3s ease-in-out infinite;
+  }
+  @keyframes iconFloat {
+    0%, 100% { transform: translateY(0); opacity: 0.9; }
+    50% { transform: translateY(-3px); opacity: 1; }
+  }
+
+  /* 云雾效果 */
+  .menu-fog {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 250px;
+    background: 
+      radial-gradient(ellipse at 20% 100%, rgba(30, 20, 60, 0.8) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 100%, rgba(40, 30, 80, 0.7) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 100%, rgba(30, 20, 60, 0.8) 0%, transparent 50%);
+    pointer-events: none;
+    animation: fogMove 15s ease-in-out infinite;
+  }
+  @keyframes fogMove {
+    0%, 100% { opacity: 0.8; transform: translateX(0); }
+    50% { opacity: 1; transform: translateX(-20px); }
+  }
+
+  /* 中央武魂光环 */
+  .menu-soul-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -55%);
+    width: 500px;
+    height: 500px;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .soul-ring-outer {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 400px;
+    border: 2px solid rgba(251, 191, 36, 0.15);
+    border-radius: 50%;
+    animation: ringRotate 20s linear infinite;
+    box-shadow: 
+      0 0 40px rgba(251, 191, 36, 0.1),
+      inset 0 0 40px rgba(251, 191, 36, 0.05);
+  }
+  .soul-ring-inner {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 300px;
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    border-radius: 50%;
+    animation: ringRotate 15s linear infinite reverse;
+    box-shadow: 
+      0 0 30px rgba(139, 92, 246, 0.1),
+      inset 0 0 30px rgba(139, 92, 246, 0.05);
+  }
+  .soul-ring-core {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 4rem;
+    color: rgba(251, 191, 36, 0.15);
+    text-shadow: 0 0 30px rgba(251, 191, 36, 0.2);
+    animation: corePulse 4s ease-in-out infinite;
+  }
+  @keyframes ringRotate {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+  @keyframes corePulse {
+    0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.1); }
   }
 
   /* 提示文字 */
@@ -257,6 +406,21 @@
     100% { opacity: 0; }
   }
 
+  /* 水晶球粒子上升动画 */
+  @keyframes particleRise {
+    0% {
+      opacity: 0;
+      transform: translateY(0) scale(0.5);
+    }
+    20% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-200px) scale(1.2);
+    }
+  }
+
   /* 抽奖卡片动画 */
   .gacha-result-card {
     opacity: 0;
@@ -287,8 +451,17 @@
 <!-- 十字准星 -->
 <div id="crosshair" class="crosshair hidden"></div>
 
+<!-- 开场动画 - 视频播放 -->
+<div id="intro-video-panel" class="fixed inset-0 bg-black flex items-center justify-center z-[100]">
+  <video id="intro-video" class="w-full h-full object-cover" autoplay playsinline>
+    <source src="./intro.mp4" type="video/mp4">
+  </video>
+  <!-- 底部渐变遮罩 -->
+  <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black to-transparent pointer-events-none"></div>
+</div>
+
 <!-- 开始菜单 - 玄幻风格 -->
-<div id="start-menu" class="fixed inset-0 menu-bg flex flex-col items-center justify-center z-50">
+<div id="start-menu" class="fixed inset-0 menu-bg flex flex-col items-center justify-center z-50 hidden">
   <!-- 悬浮光点粒子 -->
   <div class="menu-particles" id="menu-particles"></div>
   
@@ -300,38 +473,62 @@
     <div class="menu-mountain" style="left: 65%; border-width: 0 90px 140px 90px; border-color: transparent transparent rgba(25,18,45,0.9) transparent;"></div>
     <div class="menu-mountain" style="right: 0%; border-width: 0 110px 130px 110px; border-color: transparent transparent rgba(30,20,50,0.85) transparent;"></div>
   </div>
+  
+  <!-- 云雾效果 -->
+  <div class="menu-fog"></div>
+  
+  <!-- 中央武魂光环 -->
+  <div class="menu-soul-ring">
+    <div class="soul-ring-outer"></div>
+    <div class="soul-ring-inner"></div>
+    <div class="soul-ring-core">❖</div>
+  </div>
 
-  <div class="text-center mb-12 relative z-10">
+  <div class="text-center mb-10 relative z-10">
     <!-- 顶部装饰 -->
-    <div class="flex items-center justify-center gap-4 mb-4">
-      <div class="w-20 h-px bg-gradient-to-r from-transparent via-amber-400/60 to-amber-400"></div>
-      <div class="text-amber-400 text-2xl">❖</div>
-      <div class="w-20 h-px bg-gradient-to-l from-transparent via-amber-400/60 to-amber-400"></div>
+    <div class="flex items-center justify-center gap-4 mb-6">
+      <div class="menu-deco-line">
+        <div class="menu-deco-dot"></div>
+      </div>
+      <div class="text-amber-400 text-xl menu-deco-icon">✦ ❖ ✦</div>
+      <div class="menu-deco-line">
+        <div class="menu-deco-dot"></div>
+      </div>
     </div>
     
-    <h1 class="text-7xl font-bold title-glow mb-2 tracking-[0.3em]">斗罗大陆</h1>
-    <p class="text-2xl text-amber-200/70 tracking-[0.5em] mt-4">· 魂师传说 ·</p>
-    <p class="text-sm text-amber-100/40 mt-6 tracking-widest">3D 玄幻 · 猎杀魂兽 · 成就封号斗罗</p>
+    <h1 class="text-7xl font-bold title-glow mb-3 tracking-[0.35em] ml-[0.35em]">斗罗大陆</h1>
+    <div class="flex items-center justify-center gap-4 my-4">
+      <div class="h-px w-16 bg-gradient-to-r from-transparent via-amber-400/50 to-amber-400/80"></div>
+      <p class="text-2xl text-amber-200/80 tracking-[0.6em] ml-[0.6em]">魂师传说</p>
+      <div class="h-px w-16 bg-gradient-to-l from-transparent via-amber-400/50 to-amber-400/80"></div>
+    </div>
+    <p class="text-sm text-amber-100/50 mt-4 tracking-[0.4em] ml-[0.4em]">— 三 D 玄 幻 · 猎 杀 魂 兽 · 成 就 封 号 斗 罗 —</p>
     
     <!-- 底部装饰 -->
-    <div class="flex items-center justify-center gap-4 mt-6">
-      <div class="w-16 h-px bg-gradient-to-r from-transparent to-purple-500/50"></div>
-      <div class="text-purple-400/60 text-xs">✦ 武魂觉醒 ✦</div>
-      <div class="w-16 h-px bg-gradient-to-l from-transparent to-purple-500/50"></div>
+    <div class="flex items-center justify-center gap-4 mt-8">
+      <div class="w-12 h-px bg-gradient-to-r from-transparent to-purple-500/40"></div>
+      <div class="text-purple-400/60 text-xs tracking-widest">✦ 武魂觉醒 · 魂环修炼 · 登顶封号 ✦</div>
+      <div class="w-12 h-px bg-gradient-to-l from-transparent to-purple-500/40"></div>
     </div>
   </div>
   
-  <div class="flex flex-col gap-5 w-72 relative z-10">
-    <button id="btn-start" class="btn-xuanhuan py-4 px-8 rounded-lg text-xl font-bold tracking-[0.3em]">
-      开 始 游 戏
+  <div class="flex flex-col gap-4 w-80 relative z-10">
+    <button id="btn-start" class="btn-xuanhuan btn-xuanhuan-primary py-4 px-8 rounded-lg text-xl font-bold tracking-[0.3em]">
+      <span class="relative z-10">开 始 游 戏</span>
     </button>
-    <button id="btn-help" class="btn-xuanhuan py-3 px-8 rounded-lg text-base font-bold tracking-[0.2em] opacity-80">
-      操 作 说 明
+    <button id="btn-help" class="btn-xuanhuan btn-xuanhuan-secondary py-3 px-8 rounded-lg text-base font-bold tracking-[0.2em]">
+      <span class="relative z-10">操 作 说 明</span>
     </button>
   </div>
   
-  <div class="absolute bottom-8 text-amber-100/30 text-xs tracking-widest z-10">
-    穿越斗罗 · 觉醒武魂 · 猎杀魂兽 · 成就封号
+  <!-- 底部装饰文字 -->
+  <div class="absolute bottom-10 text-center z-10">
+    <div class="flex items-center justify-center gap-3 mb-2">
+      <div class="w-8 h-px bg-gradient-to-r from-transparent to-amber-400/30"></div>
+      <div class="text-amber-400/50 text-xs">❖</div>
+      <div class="w-8 h-px bg-gradient-to-l from-transparent to-amber-400/30"></div>
+    </div>
+    <div class="text-amber-100/25 text-xs tracking-[0.3em] ml-[0.3em]">穿越斗罗 · 觉醒武魂 · 猎杀魂兽 · 成就封号</div>
   </div>
 </div>
 
@@ -351,6 +548,91 @@
       <div class="flex items-center gap-3"><span class="bg-amber-900/50 px-2 py-1 rounded font-mono">ESC</span><span>暂停</span></div>
     </div>
     <button id="btn-close-help" class="btn-gold w-full py-3 rounded-lg mt-6 font-bold">知道了</button>
+  </div>
+</div>
+
+<!-- 捏脸/角色创建面板 -->
+<div id="character-create-panel" class="fixed inset-0 bg-black/80 flex items-center justify-center z-[60] hidden">
+  <div class="glass-panel rounded-2xl p-6 max-w-5xl w-full mx-4" style="max-height: 90vh;">
+    <h2 class="text-3xl font-bold text-amber-300 mb-4 text-center tracking-[0.3em]">角 色 创 建</h2>
+    
+    <div class="flex gap-6" style="height: 500px;">
+      <!-- 左侧：3D预览 -->
+      <div class="flex-1 rounded-xl overflow-hidden relative" style="background: linear-gradient(180deg, #1a1a3a 0%, #0a0a20 100%);">
+        <div id="character-preview-container" class="w-full h-full"></div>
+        <div class="absolute bottom-3 left-1/2 -translate-x-1/2 text-amber-200/60 text-xs">
+          拖动旋转 · 滚轮缩放
+        </div>
+      </div>
+      
+      <!-- 右侧：自定义选项 -->
+      <div class="w-80 flex flex-col gap-4 overflow-y-auto pr-2">
+        <!-- 性别 -->
+        <div class="bg-black/30 rounded-xl p-4">
+          <div class="text-amber-300 font-bold mb-3 flex items-center gap-2">
+            <span>👤</span><span>性别</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <button data-gender="male" class="char-option gender-btn py-3 rounded-lg border border-amber-600/50 text-amber-200 hover:bg-amber-900/40 transition text-sm font-bold">
+              ♂ 男
+            </button>
+            <button data-gender="female" class="char-option gender-btn py-3 rounded-lg border border-pink-600/50 text-pink-200 hover:bg-pink-900/40 transition text-sm font-bold">
+              ♀ 女
+            </button>
+          </div>
+        </div>
+        
+        <!-- 发型 -->
+        <div class="bg-black/30 rounded-xl p-4">
+          <div class="text-amber-300 font-bold mb-3 flex items-center gap-2">
+            <span>💇</span><span>发型</span>
+          </div>
+          <div class="grid grid-cols-3 gap-2" id="hairstyle-btns">
+            <!-- 动态生成 -->
+          </div>
+        </div>
+        
+        <!-- 发色 -->
+        <div class="bg-black/30 rounded-xl p-4">
+          <div class="text-amber-300 font-bold mb-3 flex items-center gap-2">
+            <span>🎨</span><span>发色</span>
+          </div>
+          <div class="grid grid-cols-5 gap-2" id="haircolor-btns">
+            <!-- 动态生成 -->
+          </div>
+        </div>
+        
+        <!-- 上衣 -->
+        <div class="bg-black/30 rounded-xl p-4">
+          <div class="text-amber-300 font-bold mb-3 flex items-center gap-2">
+            <span>👕</span><span>上衣</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2" id="top-btns">
+            <!-- 动态生成 -->
+          </div>
+        </div>
+        
+        <!-- 裤子 -->
+        <div class="bg-black/30 rounded-xl p-4">
+          <div class="text-amber-300 font-bold mb-3 flex items-center gap-2">
+            <span>👖</span><span>裤子</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2" id="pants-btns">
+            <!-- 动态生成 -->
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 底部按钮 -->
+    <div class="flex gap-4 mt-5">
+      <button id="btn-char-back" class="flex-1 py-3 rounded-lg font-bold border border-amber-600/50 text-amber-200 hover:bg-amber-900/30 transition">
+        返回
+      </button>
+      <button id="btn-char-confirm" class="flex-1 btn-gold py-3 rounded-lg font-bold text-lg tracking-[0.2em]">
+        进 入 游 戏
+      </button>
+    </div>
   </div>
 </div>
 
@@ -442,12 +724,19 @@
     </div>
   </div>
 
-  <!-- 右上角：抽奖系统入口 -->
-  <div class="absolute top-4 right-4 flex flex-col items-end gap-2 pointer-events-auto z-20">
+  <!-- 右上角：抽奖系统入口 + 设置 -->
+  <div class="absolute top-4 right-4 flex items-start gap-2 pointer-events-auto z-20">
     <!-- 抽奖按钮 -->
     <button id="btn-gacha" class="glass-panel rounded-lg px-4 py-2 flex items-center gap-2 hover:border-amber-400 transition-all group">
       <div class="w-6 h-6 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 shadow-lg shadow-amber-500/50 group-hover:scale-110 transition-transform"></div>
       <span class="text-amber-300 font-bold">抽奖</span>
+    </button>
+    <!-- 设置按钮 -->
+    <button id="btn-settings" class="glass-panel rounded-lg px-3 py-2 flex items-center justify-center hover:border-gray-400 transition-all group" title="设置">
+      <svg class="w-6 h-6 text-gray-400 group-hover:text-gray-200 transition-colors group-hover:rotate-45 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+      </svg>
     </button>
   </div>
 
@@ -485,24 +774,6 @@
         <button id="dialog-next" class="px-4 py-1 rounded bg-amber-600/50 text-amber-100 text-sm hover:bg-amber-600/70">
           继续 ▶
         </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- 左下角：指令对话框 -->
-  <div class="absolute bottom-6 left-4 pointer-events-auto z-30">
-    <div id="chat-container" class="glass-panel rounded-lg overflow-hidden" style="width: 320px;">
-      <!-- 消息显示区 -->
-      <div id="chat-messages" class="p-2 h-32 overflow-y-auto text-xs text-amber-100/80 space-y-1" style="display: none;">
-        <div class="text-amber-200/60">系统：欢迎来到斗罗大陆！输入 /help 查看指令列表</div>
-      </div>
-      <!-- 输入框 -->
-      <div class="flex border-t border-amber-900/30">
-        <input type="text" id="chat-input" 
-               class="flex-1 bg-transparent px-3 py-2 text-xs text-amber-100 placeholder-amber-100/30 outline-none"
-               placeholder="输入指令... (按回车发送, /help查看帮助)"
-               autocomplete="off">
-        <button id="chat-send" class="px-3 text-amber-300 hover:text-amber-100 text-xs">发送</button>
       </div>
     </div>
   </div>
@@ -664,6 +935,75 @@
   </div>
 </div>
 
+<!-- 测魂力面板 -->
+<div id="soul-power-panel" class="fixed inset-0 bg-black/85 flex items-center justify-center z-[100] hidden">
+  <div class="text-center max-w-lg w-full mx-4">
+    <div class="mb-6">
+      <div class="text-cyan-400/60 text-sm mb-2">✦ 魂力测试 ✦</div>
+      <h2 class="text-4xl font-bold text-cyan-300 mb-2" style="text-shadow: 0 0 30px rgba(34,211,238,0.5);">测魂力</h2>
+      <p id="soul-power-hint" class="text-cyan-100/60 text-sm">将手放在魂力水晶球上，感受体内的魂力波动</p>
+    </div>
+    
+    <!-- 水晶球动画区域 -->
+    <div class="relative h-72 mb-6 flex items-center justify-center">
+      <!-- 水晶球底座 -->
+      <div class="absolute bottom-4 w-32 h-8 rounded-full bg-gradient-to-t from-gray-700 to-gray-500 opacity-80"></div>
+      <div class="absolute bottom-8 w-24 h-4 rounded-full bg-gradient-to-t from-gray-600 to-gray-400 opacity-60"></div>
+      
+      <!-- 水晶球光晕 -->
+      <div id="crystal-glow" class="absolute w-48 h-48 rounded-full opacity-0 transition-all duration-1000" 
+           style="background: radial-gradient(circle, rgba(34,211,238,0.6) 0%, rgba(59,130,246,0.3) 40%, transparent 70%);
+                  filter: blur(20px);"></div>
+      
+      <!-- 水晶球 -->
+      <div id="crystal-ball" class="relative w-40 h-40 rounded-full opacity-80 transition-all duration-1000"
+           style="background: radial-gradient(circle at 30% 30%, 
+                   rgba(255,255,255,0.9) 0%, 
+                   rgba(200,220,255,0.6) 20%, 
+                   rgba(100,150,220,0.4) 50%, 
+                   rgba(50,100,180,0.3) 80%,
+                   rgba(30,60,120,0.4) 100%);
+                  box-shadow: 
+                    inset -10px -10px 30px rgba(0,0,0,0.3),
+                    inset 10px 10px 30px rgba(255,255,255,0.5),
+                    0 0 40px rgba(100,150,255,0.3);">
+        
+        <!-- 水晶球高光 -->
+        <div class="absolute top-6 left-8 w-6 h-8 rounded-full bg-white/60 transform -rotate-12"></div>
+        <div class="absolute top-10 left-12 w-3 h-4 rounded-full bg-white/40 transform -rotate-12"></div>
+        
+        <!-- 魂力数值显示 -->
+        <div id="crystal-level" class="absolute inset-0 flex items-center justify-center text-5xl font-bold text-white opacity-0 transition-opacity duration-500"
+             style="text-shadow: 0 0 20px rgba(255,255,255,0.8), 0 0 40px rgba(100,200,255,0.6);">
+          ?
+        </div>
+      </div>
+      
+      <!-- 上升粒子效果 -->
+      <div id="crystal-particles" class="absolute inset-0 pointer-events-none overflow-hidden rounded-full"></div>
+    </div>
+    
+    <!-- 测试结果 -->
+    <div id="soul-power-result" class="hidden mb-6">
+      <div class="text-cyan-100/70 text-sm mb-2">先天魂力</div>
+      <div class="flex items-center justify-center gap-3 mb-3">
+        <span id="soul-power-level" class="text-5xl font-bold" style="text-shadow: 0 0 20px currentColor;"></span>
+        <span class="text-2xl text-cyan-200">级</span>
+      </div>
+      <div id="soul-power-realm" class="text-xl mb-2"></div>
+      <p id="soul-power-comment" class="text-cyan-100/60 text-sm"></p>
+    </div>
+    
+    <!-- 按钮 -->
+    <button id="btn-test-soul-power" class="btn-cyan py-3 px-8 rounded-lg text-lg font-bold">
+      开始测试
+    </button>
+    <button id="btn-confirm-soul-power" class="btn-cyan py-3 px-8 rounded-lg text-lg font-bold hidden">
+      确认
+    </button>
+  </div>
+</div>
+
 <!-- 商店面板 -->
 <div id="shop-panel" class="fixed inset-0 bg-black/60 flex items-center justify-center z-40 hidden">
   <div class="glass-panel rounded-xl p-6 w-[700px] max-w-[90vw] max-h-[85vh] overflow-y-auto">
@@ -737,6 +1077,74 @@
     <div id="quest-detail" class="p-3 bg-black/30 rounded-lg min-h-[80px] text-sm text-amber-100/80">
       点击任务查看详情
     </div>
+  </div>
+</div>
+
+<!-- 设置面板 -->
+<div id="settings-panel" class="fixed inset-0 bg-black/70 flex items-center justify-center z-[60] hidden">
+  <div class="glass-panel rounded-xl p-8 max-w-md w-full mx-4">
+    <h2 class="text-2xl font-bold text-amber-300 mb-6 text-center tracking-[0.3em]">设 置</h2>
+    
+    <div class="space-y-6">
+      <!-- 音乐音量 -->
+      <div>
+        <div class="flex justify-between items-center mb-2">
+          <span class="text-amber-200 font-bold">音乐音量</span>
+          <span id="music-volume-value" class="text-amber-300/80 text-sm">70%</span>
+        </div>
+        <input type="range" id="music-volume-slider" min="0" max="100" value="70" 
+          class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
+      </div>
+      
+      <!-- 音效音量 -->
+      <div>
+        <div class="flex justify-between items-center mb-2">
+          <span class="text-amber-200 font-bold">音效音量</span>
+          <span id="sound-volume-value" class="text-amber-300/80 text-sm">80%</span>
+        </div>
+        <input type="range" id="sound-volume-slider" min="0" max="100" value="80" 
+          class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
+      </div>
+      
+      <!-- 昼夜/天气效果开关 -->
+      <div class="flex justify-between items-center">
+        <span class="text-amber-200 font-bold">昼夜天气效果</span>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" id="toggle-daynight" class="sr-only peer" checked>
+          <div class="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500"></div>
+        </label>
+      </div>
+      
+      <!-- 显示粒子效果 -->
+      <div class="flex justify-between items-center">
+        <span class="text-amber-200 font-bold">粒子特效</span>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" id="toggle-particles" class="sr-only peer" checked>
+          <div class="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500"></div>
+        </label>
+      </div>
+      
+      <!-- 分割线 -->
+      <div class="h-px bg-gradient-to-r from-transparent via-amber-500/30 to-transparent"></div>
+      
+      <!-- 兑换码 -->
+      <div>
+        <div class="text-amber-200 font-bold mb-2">兑换码</div>
+        <div class="flex gap-2">
+          <input type="text" id="redeem-code-input" placeholder="输入兑换码" 
+            class="flex-1 px-4 py-2 rounded-lg bg-black/40 border border-amber-600/30 text-amber-100 placeholder-amber-200/30 focus:outline-none focus:border-amber-500/60 transition">
+          <button id="btn-redeem" class="px-5 py-2 rounded-lg bg-amber-600/30 border border-amber-500/50 text-amber-200 hover:bg-amber-600/50 transition font-bold">
+            兑换
+          </button>
+        </div>
+        <div id="redeem-result" class="text-sm mt-2 h-5"></div>
+      </div>
+    </div>
+    
+    <!-- 关闭按钮 -->
+    <button id="btn-close-settings" class="w-full mt-8 py-3 rounded-lg font-bold border border-amber-600/50 text-amber-200 hover:bg-amber-900/30 transition tracking-[0.2em]">
+      关 闭
+    </button>
   </div>
 </div>
 
@@ -876,6 +1284,62 @@
 // ============================================================
 
 // ========== 配置常量 ==========
+
+// 角色外观配置
+const CHAR_CUSTOMIZATION = {
+  // 发型
+  hairstyles: [
+    { id: 'short', name: '短发' },
+    { id: 'long', name: '长发' },
+    { id: 'spiky', name: '刺猬头' },
+    { id: 'ponytail', name: '马尾' },
+    { id: 'bun', name: '发髻' },
+    { id: 'mohawk', name: '莫西干' },
+  ],
+  // 发色
+  hairColors: [
+    { id: 'black', name: '墨黑', color: 0x2a2a2a, colorHex: '#2a2a2a' },
+    { id: 'brown', name: '棕褐', color: 0x6b4423, colorHex: '#6b4423' },
+    { id: 'gold', name: '金色', color: 0xd4af37, colorHex: '#d4af37' },
+    { id: 'red', name: '赤红', color: 0xc0392b, colorHex: '#c0392b' },
+    { id: 'blue', name: '幽蓝', color: 0x3a7bd5, colorHex: '#3a7bd5' },
+    { id: 'purple', name: '紫晶', color: 0x8b5cf6, colorHex: '#8b5cf6' },
+    { id: 'silver', name: '银白', color: 0xc0c8d0, colorHex: '#c0c8d0' },
+    { id: 'green', name: '翠绿', color: 0x22c55e, colorHex: '#22c55e' },
+    { id: 'pink', name: '粉樱', color: 0xff66b2, colorHex: '#ff66b2' },
+    { id: 'white', name: '霜白', color: 0xf0f0f0, colorHex: '#f0f0f0' },
+  ],
+  // 上衣款式和颜色组合
+  tops: [
+    { id: 'blue_tunic', name: '蓝银劲装', color: 0x7b9dc4, colorDark: 0x5a7ba0, colorLight: 0x9abce0 },
+    { id: 'red_robe', name: '烈焰战袍', color: 0xc0392b, colorDark: 0x8b2500, colorLight: 0xe06050 },
+    { id: 'green_cloth', name: '翠竹青衣', color: 0x3d8b3d, colorDark: 0x2d6a2d, colorLight: 0x5ab05a },
+    { id: 'purple_robe', name: '紫霞长袍', color: 0x7c3aed, colorDark: 0x5b21b6, colorLight: 0xa78bfa },
+    { id: 'gold_armor', name: '黄金战甲', color: 0xd4af37, colorDark: 0xb8941f, colorLight: 0xf0d780 },
+    { id: 'black_cloak', name: '暗夜斗篷', color: 0x2d3748, colorDark: 0x1a202c, colorLight: 0x4a5568 },
+    { id: 'white_robe', name: '雪月白袍', color: 0xe8eef5, colorDark: 0xc0c8d0, colorLight: 0xffffff },
+    { id: 'orange_outfit', name: '炽凤烈阳', color: 0xea580c, colorDark: 0xc2410c, colorLight: 0xf97316 },
+  ],
+  // 裤子款式
+  pants: [
+    { id: 'blue_pants', name: '蓝银裤', color: 0x4a6a90, colorDark: 0x3a5a80 },
+    { id: 'black_pants', name: '玄铁裤', color: 0x2d3748, colorDark: 0x1a202c },
+    { id: 'brown_pants', name: '皮甲裤', color: 0x6b4423, colorDark: 0x4a2e18 },
+    { id: 'white_pants', name: '云纹裤', color: 0xd0d8b8, colorDark: 0xa08878 },
+    { id: 'red_pants', name: '烈焰裤', color: 0x991b1b, colorDark: 0x7f1d1d },
+    { id: 'green_pants', name: '翠竹裤', color: 0x3a7a3a, colorDark: 0x2d6a2d },
+  ],
+};
+
+// 默认角色外观
+const defaultCharAppearance = {
+  gender: 'male',
+  hairstyle: 'short',
+  hairColor: 'black',
+  top: 'blue_tunic',
+  pants: 'blue_pants',
+};
+
 const CONFIG = {
   // 魂环年限等级
   RING_GRADES: [
@@ -1167,6 +1631,28 @@ const CONFIG = {
         { name: '剑道尘心', type: 'ultimate', dmgMult: 4.2, desc: '剑道极境，一剑破万法' },
       ],
     },
+    {
+      id: 'haotian_hammer',
+      name: '昊天锤',
+      element: 'attack',
+      type: 'attack',
+      color: 0x4a4a4a,
+      desc: '强攻系器武魂之首，昊天锤形态，天下第一器武魂，力量无穷',
+      attackType: 'melee',
+      attackRange: 6,
+      attackSpeed: 0.5,
+      atkBonus: 12,
+      spdBonus: 0.2,
+      defBonus: 6,
+      expMult: 1.2, // 经验倍率
+      skills: [
+        { name: '昊天锤第一击', type: 'melee', dmgMult: 2.0, desc: '昊天锤挥动，力重千钧' },
+        { name: '乱披风锤法', type: 'aoe', dmgMult: 2.5, desc: '乱披风锤法，连续轰击' },
+        { name: '泰坦之锤', type: 'melee', dmgMult: 3.0, desc: '泰坦之力，锤碎山河' },
+        { name: '大地之力', type: 'buff', dmgMult: 2.0, desc: '大地之力加持，攻防暴涨' },
+        { name: '大须弥锤', type: 'ultimate', dmgMult: 5.0, desc: '大须弥锤法，炸环之力，毁天灭地' },
+      ],
+    },
   ],
   MAP_SIZE: 250,
   BEAST_COUNT: 40,
@@ -1434,6 +1920,15 @@ const SoundSystem = {
     this.playNoise(0.6, 0.15, 300, 'lowpass');
   },
 
+  // 按钮点击音效 - 清脆的点击声
+  playButtonClick() {
+    if (!this.enabled || !this.ctx) return;
+    this.resume();
+    // 清脆的短音
+    this.playTone(800, 0.06, 'sine', 0.15, 1000);
+    this.playTone(1200, 0.04, 'triangle', 0.1);
+  },
+
   // 抽奖音效
   playGacha() {
     if (!this.enabled || !this.ctx) return;
@@ -1451,6 +1946,500 @@ const SoundSystem = {
       this.playTone(1319, 0.3, 'sine', 0.2);
       this.playTone(1568, 0.3, 'sine', 0.15);
     }, notes.length * 80);
+  },
+};
+
+// ========== 背景音乐系统 ==========
+// 使用 Web Audio API 生成热烈、激情、燃向的背景音乐
+const MusicSystem = {
+  ctx: null,
+  masterGain: null,
+  menuGain: null,
+  gameGain: null,
+  current: null, // 'menu' | 'game' | null
+  menuOscs: [],
+  gameOscs: [],
+  menuInterval: null,
+  gameInterval: null,
+  menuBeat: 0,
+  gameBeat: 0,
+  enabled: true,
+  menuTempo: 120, // BPM
+  gameTempo: 140, // BPM
+
+  init() {
+    try {
+      this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+      this.masterGain = this.ctx.createGain();
+      this.masterGain.gain.value = 0.2; // 主音量
+      this.masterGain.connect(this.ctx.destination);
+
+      // 菜单音乐通道
+      this.menuGain = this.ctx.createGain();
+      this.menuGain.gain.value = 0;
+      this.menuGain.connect(this.masterGain);
+
+      // 游戏音乐通道
+      this.gameGain = this.ctx.createGain();
+      this.gameGain.gain.value = 0;
+      this.gameGain.connect(this.masterGain);
+
+      this.enabled = true;
+    } catch (e) {
+      console.warn('Web Audio API 不支持', e);
+      this.enabled = false;
+    }
+  },
+
+  resume() {
+    if (this.ctx && this.ctx.state === 'suspended') {
+      this.ctx.resume();
+    }
+  },
+
+  // 创建激情的合成器音色
+  createSynth(freq, gainNode, type = 'sawtooth', volume = 0.1) {
+    const osc = this.ctx.createOscillator();
+    osc.type = type;
+    osc.frequency.value = freq;
+    const gain = this.ctx.createGain();
+    gain.gain.value = volume;
+    osc.connect(gain);
+    gain.connect(gainNode);
+    osc.start();
+    return { osc, gain };
+  },
+
+  // 播放鼓点（底鼓）
+  playKick(targetGain, time, volume = 0.3) {
+    if (!this.enabled || !this.ctx) return;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(150, time);
+    osc.frequency.exponentialRampToValueAtTime(40, time + 0.15);
+    gain.gain.setValueAtTime(volume, time);
+    gain.gain.exponentialRampToValueAtTime(0.001, time + 0.2);
+    osc.connect(gain);
+    gain.connect(targetGain);
+    osc.start(time);
+    osc.stop(time + 0.2);
+  },
+
+  // 播放军鼓
+  playSnare(targetGain, time, volume = 0.2) {
+    if (!this.enabled || !this.ctx) return;
+    // 噪声部分
+    const bufferSize = this.ctx.sampleRate * 0.1;
+    const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      data[i] = Math.random() * 2 - 1;
+    }
+    const noise = this.ctx.createBufferSource();
+    noise.buffer = buffer;
+    const noiseFilter = this.ctx.createBiquadFilter();
+    noiseFilter.type = 'highpass';
+    noiseFilter.frequency.value = 1000;
+    const noiseGain = this.ctx.createGain();
+    noiseGain.gain.setValueAtTime(volume, time);
+    noiseGain.gain.exponentialRampToValueAtTime(0.001, time + 0.1);
+    noise.connect(noiseFilter);
+    noiseFilter.connect(noiseGain);
+    noiseGain.connect(targetGain);
+    noise.start(time);
+    noise.stop(time + 0.1);
+
+    // 音调部分
+    const osc = this.ctx.createOscillator();
+    const oscGain = this.ctx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(200, time);
+    oscGain.gain.setValueAtTime(volume * 0.5, time);
+    oscGain.gain.exponentialRampToValueAtTime(0.001, time + 0.08);
+    osc.connect(oscGain);
+    oscGain.connect(targetGain);
+    osc.start(time);
+    osc.stop(time + 0.08);
+  },
+
+  // 踩镲
+  playHat(targetGain, time, volume = 0.08) {
+    if (!this.enabled || !this.ctx) return;
+    const bufferSize = this.ctx.sampleRate * 0.05;
+    const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      data[i] = Math.random() * 2 - 1;
+    }
+    const noise = this.ctx.createBufferSource();
+    noise.buffer = buffer;
+    const filter = this.ctx.createBiquadFilter();
+    filter.type = 'highpass';
+    filter.frequency.value = 5000;
+    const gain = this.ctx.createGain();
+    gain.gain.setValueAtTime(volume, time);
+    gain.gain.exponentialRampToValueAtTime(0.001, time + 0.05);
+    noise.connect(filter);
+    filter.connect(gain);
+    gain.connect(targetGain);
+    noise.start(time);
+    noise.stop(time + 0.05);
+  },
+
+  // 播放贝斯音符
+  playBass(freq, targetGain, time, duration = 0.3, volume = 0.15) {
+    if (!this.enabled || !this.ctx) return;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'sawtooth';
+    osc.frequency.value = freq;
+    // 低通滤波器让贝斯更柔和
+    const filter = this.ctx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.value = 800;
+    gain.gain.setValueAtTime(0, time);
+    gain.gain.linearRampToValueAtTime(volume, time + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.001, time + duration);
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(targetGain);
+    osc.start(time);
+    osc.stop(time + duration);
+  },
+
+  // 播放主旋律音符
+  playLead(freq, targetGain, time, duration = 0.4, volume = 0.1) {
+    if (!this.enabled || !this.ctx) return;
+    // 主音色
+    const osc1 = this.ctx.createOscillator();
+    osc1.type = 'sawtooth';
+    osc1.frequency.value = freq;
+    // 叠加一个八度
+    const osc2 = this.ctx.createOscillator();
+    osc2.type = 'square';
+    osc2.frequency.value = freq * 2;
+
+    const gain = this.ctx.createGain();
+    // 包络
+    gain.gain.setValueAtTime(0, time);
+    gain.gain.linearRampToValueAtTime(volume, time + 0.05);
+    gain.gain.linearRampToValueAtTime(volume * 0.8, time + duration * 0.3);
+    gain.gain.exponentialRampToValueAtTime(0.001, time + duration);
+
+    const gain2 = this.ctx.createGain();
+    gain2.gain.value = volume * 0.3;
+
+    osc1.connect(gain);
+    osc2.connect(gain2);
+    gain2.connect(gain);
+    gain.connect(targetGain);
+    osc1.start(time);
+    osc2.start(time);
+    osc1.stop(time + duration);
+    osc2.stop(time + duration);
+  },
+
+  // 主菜单音乐 - 热烈、激昂、燃向
+  playMenu() {
+    if (!this.enabled || !this.ctx || this.current === 'menu') return;
+    this.resume();
+
+    // 停止当前音乐
+    this.stopAll();
+    this.current = 'menu';
+
+    const now = this.ctx.currentTime;
+    const beatDur = 60 / this.menuTempo; // 每拍时长
+
+    // D小调强力和弦进行：Dm - F - C - G
+    // 营造史诗感和激情
+    const chordProgression = [
+      [146.83, 220.00, 293.66], // Dm: D3, A3, D4
+      [174.61, 261.63, 349.23], // F: F3, C4, F4
+      [130.81, 196.00, 261.63], // C: C3, G3, C4
+      [196.00, 246.94, 392.00], // G: G3, B3, G4
+    ];
+
+    // 主旋律音阶（D小调五声 + 经过音）
+    const leadScale = [
+      293.66, 349.23, 392.00, 440.00, 523.25, 587.33, 698.46
+    ];
+
+    let beatIndex = 0;
+    this.menuBeat = 0;
+
+    // 节拍循环
+    const playBeat = () => {
+      if (this.current !== 'menu') return;
+
+      const beat = this.menuBeat;
+      const chordIndex = Math.floor(beat / 4) % chordProgression.length;
+      const chord = chordProgression[chordIndex];
+      const beatInBar = beat % 4;
+      const t = this.ctx.currentTime;
+
+      // ---- 鼓组 ----
+      // 底鼓：第1、3拍
+      if (beatInBar === 0 || beatInBar === 2) {
+        this.playKick(this.menuGain, t, 0.35);
+      }
+      // 军鼓：第2、4拍
+      if (beatInBar === 1 || beatInBar === 3) {
+        this.playSnare(this.menuGain, t, 0.25);
+      }
+      // 踩镲：每拍
+      this.playHat(this.menuGain, t, 0.06);
+      // 反拍镲：第2、4拍重一点
+      if (beatInBar === 1 || beatInBar === 3) {
+        this.playHat(this.menuGain, t + beatDur * 0.5, 0.1);
+      }
+
+      // ---- 贝斯 ----
+      // 每拍一个贝斯音，根音+五度交替
+      const bassFreq = beatInBar % 2 === 0 ? chord[0] : chord[1];
+      this.playBass(bassFreq, this.menuGain, t, beatDur * 0.9, 0.12);
+
+      // ---- 和弦垫 ----
+      // 每小节（4拍）换一次和弦
+      if (beatInBar === 0) {
+        // 用更有力量的音色
+        chord.forEach((freq, i) => {
+          const osc = this.ctx.createOscillator();
+          osc.type = i === 0 ? 'sawtooth' : 'triangle';
+          osc.frequency.value = freq;
+          const gain = this.ctx.createGain();
+          const vol = 0.05 / (i + 1);
+          gain.gain.setValueAtTime(0, t);
+          gain.gain.linearRampToValueAtTime(vol, t + 0.1);
+          gain.gain.setValueAtTime(vol, t + beatDur * 3.8);
+          gain.gain.linearRampToValueAtTime(0, t + beatDur * 4);
+          osc.connect(gain);
+          gain.connect(this.menuGain);
+          osc.start(t);
+          osc.stop(t + beatDur * 4);
+        });
+      }
+
+      // ---- 主旋律 ----
+      // 每两拍一个旋律音，更有冲击力
+      if (beatInBar === 0 || beatInBar === 2) {
+        // 随机选择旋律音，但偏向根音和五度音
+        let noteIdx;
+        const rand = Math.random();
+        if (rand < 0.3) {
+          noteIdx = 0; // 根音
+        } else if (rand < 0.5) {
+          noteIdx = 2; // 五度
+        } else if (rand < 0.7) {
+          noteIdx = 4; // 八度
+        } else {
+          noteIdx = Math.floor(Math.random() * leadScale.length);
+        }
+        const leadFreq = leadScale[noteIdx] * (Math.random() > 0.5 ? 1 : 2);
+        this.playLead(leadFreq, this.menuGain, t, beatDur * 1.8, 0.08);
+      }
+
+      // 每8拍加一个装饰性的上行音阶
+      if (beat % 8 === 7) {
+        for (let i = 0; i < 4; i++) {
+          const noteT = t + beatDur * 0.25 * i;
+          const noteFreq = leadScale[Math.min(i + 2, leadScale.length - 1)] * 2;
+          this.playLead(noteFreq, this.menuGain, noteT, beatDur * 0.3, 0.06);
+        }
+      }
+
+      this.menuBeat++;
+    };
+
+    // 立即开始第一拍
+    playBeat();
+
+    // 设置节拍循环
+    this.menuInterval = setInterval(playBeat, beatDur * 1000);
+
+    // 淡入
+    this.menuGain.gain.setValueAtTime(0, now);
+    this.menuGain.gain.linearRampToValueAtTime(1, now + 2);
+  },
+
+  // 游戏音乐 - 更燃、更快、更有冲击力
+  playGame() {
+    if (!this.enabled || !this.ctx || this.current === 'game') return;
+    this.resume();
+
+    const now = this.ctx.currentTime;
+
+    // 先淡出菜单音乐
+    if (this.current === 'menu') {
+      this.menuGain.gain.cancelScheduledValues(now);
+      this.menuGain.gain.setValueAtTime(this.menuGain.gain.value, now);
+      this.menuGain.gain.linearRampToValueAtTime(0, now + 1.5);
+    }
+
+    this.current = 'game';
+
+    const beatDur = 60 / this.gameTempo; // 更快的节奏
+
+    // 游戏音乐用 E小调，更有战斗感
+    // 和弦进行：Em - C - G - D （经典史诗进行）
+    const chordProgression = [
+      [164.81, 246.94, 329.63], // Em: E3, B3, E4
+      [130.81, 196.00, 261.63], // C: C3, G3, C4
+      [196.00, 246.94, 392.00], // G: G3, B3, G4
+      [146.83, 220.00, 293.66], // D: D3, A3, D4
+    ];
+
+    // 主旋律音阶（E小调 + 蓝调音）
+    const leadScale = [
+      329.63, 392.00, 440.00, 493.88, 587.33, 659.25, 783.99
+    ];
+
+    this.gameBeat = 0;
+
+    const playBeat = () => {
+      if (this.current !== 'game') return;
+
+      const beat = this.gameBeat;
+      const chordIndex = Math.floor(beat / 4) % chordProgression.length;
+      const chord = chordProgression[chordIndex];
+      const beatInBar = beat % 4;
+      const t = this.ctx.currentTime;
+
+      // ---- 更强烈的鼓组 ----
+      // 底鼓：第1拍和第3拍前半加重
+      if (beatInBar === 0) {
+        this.playKick(this.gameGain, t, 0.4);
+      } else if (beatInBar === 2) {
+        this.playKick(this.gameGain, t, 0.35);
+      }
+      // 反拍底鼓增加冲击力
+      if (beatInBar === 1 || beatInBar === 3) {
+        this.playKick(this.gameGain, t + beatDur * 0.5, 0.2);
+      }
+      // 军鼓：第2、4拍
+      if (beatInBar === 1 || beatInBar === 3) {
+        this.playSnare(this.gameGain, t, 0.3);
+      }
+      // 快速踩镲（八分音符）
+      this.playHat(this.gameGain, t, 0.05);
+      this.playHat(this.gameGain, t + beatDur * 0.5, 0.05);
+
+      // ---- 更有冲劲的贝斯 ----
+      // 快速的八分音符贝斯线
+      this.playBass(chord[0], this.gameGain, t, beatDur * 0.45, 0.15);
+      this.playBass(chord[0] * 1.5, this.gameGain, t + beatDur * 0.5, beatDur * 0.45, 0.12);
+
+      // ---- 强力和弦 ----
+      if (beatInBar === 0) {
+        chord.forEach((freq, i) => {
+          const osc = this.ctx.createOscillator();
+          osc.type = 'sawtooth';
+          osc.frequency.value = freq;
+          const gain = this.ctx.createGain();
+          const vol = 0.06 / (i + 1);
+          // 更有冲击力的包络
+          gain.gain.setValueAtTime(0, t);
+          gain.gain.linearRampToValueAtTime(vol, t + 0.02);
+          gain.gain.setValueAtTime(vol * 0.9, t + beatDur * 3.5);
+          gain.gain.linearRampToValueAtTime(0, t + beatDur * 4);
+          osc.connect(gain);
+          gain.connect(this.gameGain);
+          osc.start(t);
+          osc.stop(t + beatDur * 4);
+        });
+      }
+
+      // ---- 更密集的主旋律 ----
+      // 每拍都有旋律音，更有战斗感
+      if (beatInBar % 2 === 0) {
+        let noteIdx;
+        const rand = Math.random();
+        if (rand < 0.25) {
+          noteIdx = 0; // 根音
+        } else if (rand < 0.45) {
+          noteIdx = 2; // 三度
+        } else if (rand < 0.65) {
+          noteIdx = 4; // 五度
+        } else {
+          noteIdx = Math.floor(Math.random() * leadScale.length);
+        }
+        const octave = Math.random() > 0.4 ? 2 : 1;
+        const leadFreq = leadScale[noteIdx] * octave;
+        this.playLead(leadFreq, this.gameGain, t, beatDur * 0.9, 0.07);
+      }
+
+      // 每4拍的第4拍加一个快速上行音阶（战斗感）
+      if (beat % 4 === 3) {
+        for (let i = 0; i < 5; i++) {
+          const noteT = t + beatDur * 0.2 * i;
+          const idx = Math.min(i + 1, leadScale.length - 1);
+          this.playLead(leadScale[idx] * 2, this.gameGain, noteT, beatDur * 0.25, 0.05);
+        }
+      }
+
+      // 每8拍加一个重音底鼓，增强史诗感
+      if (beat % 8 === 7) {
+        this.playKick(this.gameGain, t + beatDur * 0.75, 0.45);
+      }
+
+      this.gameBeat++;
+    };
+
+    // 开始
+    playBeat();
+    this.gameInterval = setInterval(playBeat, beatDur * 1000);
+
+    // 淡入
+    this.gameGain.gain.setValueAtTime(0, now);
+    this.gameGain.gain.linearRampToValueAtTime(1, now + 2);
+  },
+
+  stopAll() {
+    if (!this.ctx) return;
+
+    // 停止节拍循环
+    if (this.menuInterval) {
+      clearInterval(this.menuInterval);
+      this.menuInterval = null;
+    }
+    if (this.gameInterval) {
+      clearInterval(this.gameInterval);
+      this.gameInterval = null;
+    }
+
+    // 停止菜单振荡器
+    this.menuOscs.forEach(g => {
+      try { g.osc.stop(); } catch (e) {}
+    });
+    this.menuOscs = [];
+
+    // 停止游戏振荡器
+    this.gameOscs.forEach(g => {
+      try { g.osc.stop(); } catch (e) {}
+    });
+    this.gameOscs = [];
+
+    this.current = null;
+  },
+
+  // 暂停游戏音乐
+  pauseGame() {
+    if (this.current === 'game' && this.gameGain) {
+      const now = this.ctx.currentTime;
+      this.gameGain.gain.cancelScheduledValues(now);
+      this.gameGain.gain.setValueAtTime(this.gameGain.gain.value, now);
+      this.gameGain.gain.linearRampToValueAtTime(0.3, now + 0.3);
+    }
+  },
+
+  resumeGame() {
+    if (this.current === 'game' && this.gameGain) {
+      const now = this.ctx.currentTime;
+      this.gameGain.gain.cancelScheduledValues(now);
+      this.gameGain.gain.setValueAtTime(this.gameGain.gain.value, now);
+      this.gameGain.gain.linearRampToValueAtTime(1, now + 0.3);
+    }
   },
 };
 
@@ -1616,39 +2605,62 @@ function initThree() {
   }, false);
   
   game.renderer.setSize(window.innerWidth, window.innerHeight);
-  game.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  // 性能优化：限制像素比为1，减少像素填充率
+  game.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1));
   game.renderer.shadowMap.enabled = true;
-  game.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  // 性能优化：使用PCFShadowMap替代PCFSoftShadowMap，减少阴影计算开销
+  game.renderer.shadowMap.type = THREE.PCFShadowMap;
   game.renderer.outputEncoding = THREE.sRGBEncoding;
 
   game.scene = new THREE.Scene();
   game.scene.background = new THREE.Color(0x87ceeb);
-  game.scene.fog = new THREE.Fog(0xaaddff, 50, 180);
+  game.scene.fog = new THREE.Fog(0xaaddff, 60, 200);
 
   game.camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 500);
 
   game.clock = new THREE.Clock();
 
-  // 光照
-  const ambient = new THREE.AmbientLight(0x88aa88, 0.5);
-  game.scene.add(ambient);
+  // ========== 现实时间同步 + 季节系统 ==========
+  game.dayNight = {
+    enabled: true,
+    // 季节: 0=春, 1=夏, 2=秋, 3=冬
+    season: 0,
+    seasonName: '春',
+    // 天气: 'clear', 'rain', 'snow', 'cloudy'
+    weather: 'clear',
+    weatherTimer: 0,
+    // 雨雪粒子系统
+    precipParticles: null,
+  };
 
-  const sun = new THREE.DirectionalLight(0xfff5d6, 1);
-  sun.position.set(50, 80, 30);
-  sun.castShadow = true;
-  sun.shadow.mapSize.width = 2048;
-  sun.shadow.mapSize.height = 2048;
-  sun.shadow.camera.left = -100;
-  sun.shadow.camera.right = 100;
-  sun.shadow.camera.top = 100;
-  sun.shadow.camera.bottom = -100;
-  sun.shadow.camera.near = 0.5;
-  sun.shadow.camera.far = 200;
-  game.scene.add(sun);
+  // 光照 - 存储引用用于昼夜更新
+  game.ambientLight = new THREE.AmbientLight(0x88aa88, 0.5);
+  game.scene.add(game.ambientLight);
+
+  game.sunLight = new THREE.DirectionalLight(0xfff5d6, 1);
+  game.sunLight.position.set(50, 80, 30);
+  game.sunLight.castShadow = true;
+  // 性能优化：降低阴影贴图分辨率从2048到1024
+  game.sunLight.shadow.mapSize.width = 1024;
+  game.sunLight.shadow.mapSize.height = 1024;
+  game.sunLight.shadow.camera.left = -80;
+  game.sunLight.shadow.camera.right = 80;
+  game.sunLight.shadow.camera.top = 80;
+  game.sunLight.shadow.camera.bottom = -80;
+  game.sunLight.shadow.camera.near = 0.5;
+  game.sunLight.shadow.camera.far = 200;
+  // 性能优化：增加阴影偏移减少自阴影计算
+  game.sunLight.shadow.bias = -0.0005;
+  game.scene.add(game.sunLight);
 
   // 半球光
-  const hemi = new THREE.HemisphereLight(0x87ceeb, 0x3a5f3a, 0.4);
-  game.scene.add(hemi);
+  game.hemiLight = new THREE.HemisphereLight(0x87ceeb, 0x3a5f3a, 0.4);
+  game.scene.add(game.hemiLight);
+
+  // 夜间月光
+  game.moonLight = new THREE.DirectionalLight(0x6688cc, 0);
+  game.moonLight.position.set(-30, 60, -20);
+  game.scene.add(game.moonLight);
 
   window.addEventListener('resize', onWindowResize);
 }
@@ -1747,20 +2759,21 @@ function calcNaturalTerrainHeight(x, z) {
 }
 
 // ========== 草丛和花 ==========
+// 性能优化：使用MeshLambertMaterial替代MeshPhongMaterial，减少光照计算
 const grassMats = [
-  new THREE.MeshPhongMaterial({ color: 0x3d7a3d, shininess: 10, specular: 0x224422, side: THREE.DoubleSide }),
-  new THREE.MeshPhongMaterial({ color: 0x4a9a4a, shininess: 12, specular: 0x2a552a, side: THREE.DoubleSide }),
-  new THREE.MeshPhongMaterial({ color: 0x2d6a2d, shininess: 8, specular: 0x1a331a, side: THREE.DoubleSide }),
-  new THREE.MeshPhongMaterial({ color: 0x5ab05a, shininess: 10, specular: 0x336633, side: THREE.DoubleSide })
+  new THREE.MeshLambertMaterial({ color: 0x3d7a3d, side: THREE.DoubleSide }),
+  new THREE.MeshLambertMaterial({ color: 0x4a9a4a, side: THREE.DoubleSide }),
+  new THREE.MeshLambertMaterial({ color: 0x2d6a2d, side: THREE.DoubleSide }),
+  new THREE.MeshLambertMaterial({ color: 0x5ab05a, side: THREE.DoubleSide })
 ];
 
 const flowerMats = [
-  new THREE.MeshPhongMaterial({ color: 0xff66b2, shininess: 30, specular: 0xffaaff, emissive: 0xff2288, emissiveIntensity: 0.15, side: THREE.DoubleSide }),
-  new THREE.MeshPhongMaterial({ color: 0x66ccff, shininess: 30, specular: 0xbbddff, emissive: 0x22aaff, emissiveIntensity: 0.15, side: THREE.DoubleSide }),
-  new THREE.MeshPhongMaterial({ color: 0xffff66, shininess: 30, specular: 0xffffbb, emissive: 0xdddd22, emissiveIntensity: 0.15, side: THREE.DoubleSide }),
-  new THREE.MeshPhongMaterial({ color: 0x9966ff, shininess: 30, specular: 0xbb99ff, emissive: 0x6622dd, emissiveIntensity: 0.15, side: THREE.DoubleSide }),
-  new THREE.MeshPhongMaterial({ color: 0xff6666, shininess: 30, specular: 0xffaaaa, emissive: 0xdd2222, emissiveIntensity: 0.15, side: THREE.DoubleSide }),
-  new THREE.MeshPhongMaterial({ color: 0xffffff, shininess: 30, specular: 0xffffff, emissive: 0xdddddd, emissiveIntensity: 0.1, side: THREE.DoubleSide })
+  new THREE.MeshLambertMaterial({ color: 0xff66b2, emissive: 0xff2288, emissiveIntensity: 0.1, side: THREE.DoubleSide }),
+  new THREE.MeshLambertMaterial({ color: 0x66ccff, emissive: 0x22aaff, emissiveIntensity: 0.1, side: THREE.DoubleSide }),
+  new THREE.MeshLambertMaterial({ color: 0xffff66, emissive: 0xdddd22, emissiveIntensity: 0.1, side: THREE.DoubleSide }),
+  new THREE.MeshLambertMaterial({ color: 0x9966ff, emissive: 0x6622dd, emissiveIntensity: 0.1, side: THREE.DoubleSide }),
+  new THREE.MeshLambertMaterial({ color: 0xff6666, emissive: 0xdd2222, emissiveIntensity: 0.1, side: THREE.DoubleSide }),
+  new THREE.MeshLambertMaterial({ color: 0xffffff, emissive: 0xdddddd, emissiveIntensity: 0.08, side: THREE.DoubleSide })
 ];
 
 function createGrass() {
@@ -1854,8 +2867,11 @@ function createFlower() {
 // ========== 树木 ==========
 function initTrees() {
   game.trees = [];
-  game.grass = [];
-  game.flowers = [];
+  // 性能优化：使用InstancedMesh渲染草和花，大幅减少Draw Call
+  // 收集所有草和花的位置数据，最后统一创建InstancedMesh
+  const grassPositions = []; // {x, y, z, scale, rotY, colorIndex}
+  const flowerPositions = []; // {x, y, z, scale, rotY, colorIndex}
+
   for (let i = 0; i < CONFIG.TREE_COUNT; i++) {
     const angle = Math.random() * Math.PI * 2;
     const dist = 15 + Math.random() * (CONFIG.MAP_SIZE * 0.7 - 15);
@@ -1875,8 +2891,8 @@ function initTrees() {
     game.scene.add(tree);
     game.trees.push(tree);
 
-    // 在树周围生成草丛
-    const grassCount = 10 + Math.floor(Math.random() * 15);
+    // 在树周围生成草丛 - 收集位置，不立即创建Mesh
+    const grassCount = 5 + Math.floor(Math.random() * 8); // 减少密度
     for (let g = 0; g < grassCount; g++) {
       const grassAngle = Math.random() * Math.PI * 2;
       const grassDist = 1.2 + Math.random() * 4;
@@ -1890,33 +2906,31 @@ function initTrees() {
       if (Math.sqrt(gdx * gdx + gdz * gdz) < CONFIG.VILLAGE.radius + 2) continue;
       if (grassY > 3) continue;
 
-      const grass = createGrass();
-      grass.position.set(grassX, grassY, grassZ);
-      grass.scale.setScalar(0.7 + Math.random() * 0.7);
-      grass.rotation.y = Math.random() * Math.PI * 2;
-      game.scene.add(grass);
-      game.grass.push(grass);
+      grassPositions.push({
+        x: grassX, y: grassY, z: grassZ,
+        scale: 0.7 + Math.random() * 0.7,
+        rotY: Math.random() * Math.PI * 2,
+        colorIndex: Math.floor(Math.random() * grassMats.length)
+      });
 
-      // 35%概率在草丛位置生成花
-      if (Math.random() < 0.35) {
-        const flower = createFlower();
+      // 25%概率在草丛位置生成花
+      if (Math.random() < 0.25) {
         const flowerOffsetAngle = Math.random() * Math.PI * 2;
         const flowerOffsetDist = Math.random() * 0.3;
-        flower.position.set(
-          grassX + Math.cos(flowerOffsetAngle) * flowerOffsetDist,
-          grassY,
-          grassZ + Math.sin(flowerOffsetAngle) * flowerOffsetDist
-        );
-        flower.scale.setScalar(0.8 + Math.random() * 0.6);
-        flower.rotation.y = Math.random() * Math.PI * 2;
-        game.scene.add(flower);
-        game.flowers.push(flower);
+        flowerPositions.push({
+          x: grassX + Math.cos(flowerOffsetAngle) * flowerOffsetDist,
+          y: grassY,
+          z: grassZ + Math.sin(flowerOffsetAngle) * flowerOffsetDist,
+          scale: 0.8 + Math.random() * 0.6,
+          rotY: Math.random() * Math.PI * 2,
+          colorIndex: Math.floor(Math.random() * flowerMats.length)
+        });
       }
     }
   }
 
-  // 在森林区域额外随机散布一些草丛和花（不依赖树木）
-  const extraVegetationCount = Math.floor(CONFIG.TREE_COUNT * 0.8);
+  // 在森林区域额外随机散布一些草丛和花
+  const extraVegetationCount = Math.floor(CONFIG.TREE_COUNT * 0.5); // 减少密度
   for (let v = 0; v < extraVegetationCount; v++) {
     const vegAngle = Math.random() * Math.PI * 2;
     const vegDist = 20 + Math.random() * (CONFIG.MAP_SIZE * 0.6 - 20);
@@ -1929,228 +2943,130 @@ function initTrees() {
     if (Math.sqrt(vdx * vdx + vdz * vdz) < CONFIG.VILLAGE.radius + 3) continue;
     if (vegY > 3.5) continue;
 
-    const grass = createGrass();
-    grass.position.set(vegX, vegY, vegZ);
-    grass.scale.setScalar(0.6 + Math.random() * 0.8);
-    grass.rotation.y = Math.random() * Math.PI * 2;
-    game.scene.add(grass);
-    game.grass.push(grass);
+    grassPositions.push({
+      x: vegX, y: vegY, z: vegZ,
+      scale: 0.6 + Math.random() * 0.8,
+      rotY: Math.random() * Math.PI * 2,
+      colorIndex: Math.floor(Math.random() * grassMats.length)
+    });
 
-    if (Math.random() < 0.25) {
-      const flower = createFlower();
-      flower.position.set(vegX, vegY, vegZ);
-      flower.scale.setScalar(0.7 + Math.random() * 0.7);
-      flower.rotation.y = Math.random() * Math.PI * 2;
-      game.scene.add(flower);
-      game.flowers.push(flower);
+    if (Math.random() < 0.2) {
+      flowerPositions.push({
+        x: vegX, y: vegY, z: vegZ,
+        scale: 0.7 + Math.random() * 0.7,
+        rotY: Math.random() * Math.PI * 2,
+        colorIndex: Math.floor(Math.random() * flowerMats.length)
+      });
     }
+  }
+
+  // 性能优化：使用InstancedMesh创建草丛
+  // 由于草有多种颜色，每种颜色创建一个InstancedMesh
+  game.grassMeshes = [];
+  const grassBaseGeom = new THREE.PlaneGeometry(0.15, 0.4, 1, 1); // 简化的草叶形状
+  const dummy = new THREE.Object3D();
+
+  for (let ci = 0; ci < grassMats.length; ci++) {
+    const positions = grassPositions.filter(p => p.colorIndex === ci);
+    if (positions.length === 0) continue;
+
+    const instancedMesh = new THREE.InstancedMesh(grassBaseGeom, grassMats[ci], positions.length);
+    instancedMesh.instanceMatrix.setUsage(THREE.StaticDrawUsage);
+
+    positions.forEach((pos, idx) => {
+      dummy.position.set(pos.x, pos.y + pos.scale * 0.2, pos.z);
+      dummy.rotation.y = pos.rotY;
+      dummy.scale.setScalar(pos.scale);
+      dummy.updateMatrix();
+      instancedMesh.setMatrixAt(idx, dummy.matrix);
+    });
+
+    instancedMesh.instanceMatrix.needsUpdate = true;
+    game.scene.add(instancedMesh);
+    game.grassMeshes.push(instancedMesh);
+  }
+
+  // 性能优化：使用InstancedMesh创建花
+  // 花比较复杂，我们用简化版：一个球形花瓣 + 圆柱形茎
+  game.flowerMeshes = [];
+  const flowerPetalGeom = new THREE.SphereGeometry(0.06, 6, 5);
+  const flowerStemGeom = new THREE.CylinderGeometry(0.01, 0.008, 0.3, 5);
+
+  for (let ci = 0; ci < flowerMats.length; ci++) {
+    const positions = flowerPositions.filter(p => p.colorIndex === ci);
+    if (positions.length === 0) continue;
+
+    // 花瓣
+    const petalMesh = new THREE.InstancedMesh(flowerPetalGeom, flowerMats[ci], positions.length);
+    petalMesh.instanceMatrix.setUsage(THREE.StaticDrawUsage);
+
+    // 花茎（共享草材质的第一种）
+    const stemMesh = new THREE.InstancedMesh(flowerStemGeom, grassMats[0], positions.length);
+    stemMesh.instanceMatrix.setUsage(THREE.StaticDrawUsage);
+
+    positions.forEach((pos, idx) => {
+      // 花瓣
+      dummy.position.set(pos.x, pos.y + pos.scale * 0.35, pos.z);
+      dummy.scale.setScalar(pos.scale);
+      dummy.updateMatrix();
+      petalMesh.setMatrixAt(idx, dummy.matrix);
+
+      // 花茎
+      dummy.position.set(pos.x, pos.y + pos.scale * 0.15, pos.z);
+      dummy.rotation.set(0, 0, 0);
+      dummy.scale.setScalar(pos.scale);
+      dummy.updateMatrix();
+      stemMesh.setMatrixAt(idx, dummy.matrix);
+    });
+
+    petalMesh.instanceMatrix.needsUpdate = true;
+    stemMesh.instanceMatrix.needsUpdate = true;
+    game.scene.add(petalMesh);
+    game.scene.add(stemMesh);
+    game.flowerMeshes.push(petalMesh, stemMesh);
   }
 }
 
 function createTree() {
   const group = new THREE.Group();
 
-  // ===== 材质定义
-  const trunkMat1 = new THREE.MeshPhongMaterial({ color: 0x5c3a1e, shininess: 10, specular: 0x221100 });
-  const trunkMat2 = new THREE.MeshPhongMaterial({ color: 0x4a2e18, shininess: 8, specular: 0x110800 });
-  const trunkMat3 = new THREE.MeshPhongMaterial({ color: 0x6b4423, shininess: 12, specular: 0x332211 });
-  const rootMat = new THREE.MeshPhongMaterial({ color: 0x4a2e18, shininess: 8, specular: 0x110800 });
-  const knotMat = new THREE.MeshPhongMaterial({ color: 0x3d2410, shininess: 6, specular: 0x0a0500 });
-  const branchMat = new THREE.MeshPhongMaterial({ color: 0x4a2e18, shininess: 8, specular: 0x110800 });
-  const leafColors = [0x2d5a2d, 0x357a35, 0x264d26, 0x3d8b3d, 0x4a9a4a];
-  const leafMats = leafColors.map(c => new THREE.MeshPhongMaterial({ color: c, shininess: 15, specular: 0x224422 }));
+  // 性能优化：大幅简化树木模型，从约50个Mesh降到5个Mesh
+  // 使用共享材质
+  const trunkMat = new THREE.MeshLambertMaterial({ color: 0x5c3a1e });
+  const leafMat1 = new THREE.MeshLambertMaterial({ color: 0x3d8b3d });
+  const leafMat2 = new THREE.MeshLambertMaterial({ color: 0x2d6a2d });
+  const leafMat3 = new THREE.MeshLambertMaterial({ color: 0x4a9a4a });
 
-  // ===== 树干（多段拼接，增加树皮纹理感）
-  const trunkSegments = 7;
-  const trunkBaseRadius = 0.5;
-  const trunkTopRadius = 0.25;
-  const trunkHeight = 4;
-  for (let i = 0; i < trunkSegments; i++) {
-    const segH = trunkHeight / trunkSegments;
-    const rBottom = trunkBaseRadius - (trunkBaseRadius - trunkTopRadius) * (i / trunkSegments);
-    const rTop = trunkBaseRadius - (trunkBaseRadius - trunkTopRadius) * ((i + 1) / trunkSegments);
-    const segGeom = new THREE.CylinderGeometry(rTop * 0.98, rBottom * 0.98, segH * 0.95, 16);
-    let segMat;
-    if (i % 3 === 0) segMat = trunkMat1;
-    else if (i % 3 === 1) segMat = trunkMat2;
-    else segMat = trunkMat3;
-    const seg = new THREE.Mesh(segGeom, segMat);
-    seg.position.y = segH / 2 + i * segH;
-    seg.rotation.y = i * 0.3;
-    seg.castShadow = true;
-    group.add(seg);
-  }
+  // 树干 - 单段圆柱体
+  const trunkGeom = new THREE.CylinderGeometry(0.25, 0.4, 3.5, 8);
+  const trunk = new THREE.Mesh(trunkGeom, trunkMat);
+  trunk.position.y = 1.75;
+  trunk.castShadow = true;
+  group.add(trunk);
 
-  // ===== 树皮纹理凸起（竖向条纹）
-  for (let i = 0; i < 12; i++) {
-    const angle = (i / 12) * Math.PI * 2;
-    const barkGeom = new THREE.BoxGeometry(0.025, 3.5, 0.05);
-    const bark = new THREE.Mesh(barkGeom, trunkMat2);
-    bark.position.set(
-      Math.cos(angle) * 0.38,
-      2,
-      Math.sin(angle) * 0.38
-    );
-    bark.rotation.y = angle;
-    bark.scale.y = 0.8 + Math.random() * 0.4;
-    group.add(bark);
-  }
-
-  // ===== 树根（底部凸起的根瘤 + 延伸根）
-  for (let i = 0; i < 8; i++) {
-    const angle = (i / 8) * Math.PI * 2 + Math.random() * 0.3;
-    const rootGeom = new THREE.SphereGeometry(0.25 + Math.random() * 0.15, 10, 8);
-    const root = new THREE.Mesh(rootGeom, rootMat);
-    root.position.set(
-      Math.cos(angle) * (trunkBaseRadius - 0.1),
-      0.15,
-      Math.sin(angle) * (trunkBaseRadius - 0.1)
-    );
-    root.scale.set(1.2, 0.5, 1.2);
-    root.castShadow = true;
-    group.add(root);
-  }
-
-  // 延伸到地面的主根
-  for (let i = 0; i < 4; i++) {
-    const angle = (i / 4) * Math.PI * 2 + 0.4;
-    const mainRootGeom = new THREE.CylinderGeometry(0.08, 0.15, 0.6, 8);
-    const mainRoot = new THREE.Mesh(mainRootGeom, rootMat);
-    mainRoot.position.set(
-      Math.cos(angle) * 0.35,
-      0.3,
-      Math.sin(angle) * 0.35
-    );
-    mainRoot.rotation.z = Math.cos(angle) * 0.5;
-    mainRoot.rotation.x = Math.sin(angle) * -0.5;
-    mainRoot.castShadow = true;
-    group.add(mainRoot);
-  }
-
-  // ===== 树瘤装饰（树干上的凸起）
-  for (let i = 0; i < 6; i++) {
-    const knotGeom = new THREE.SphereGeometry(0.12 + Math.random() * 0.08, 10, 8);
-    const knot = new THREE.Mesh(knotGeom, knotMat);
-    const angle = Math.random() * Math.PI * 2;
-    const height = 0.8 + Math.random() * 2.5;
-    const radius = trunkBaseRadius - (trunkBaseRadius - trunkTopRadius) * (height / trunkHeight);
-    knot.position.set(
-      Math.cos(angle) * radius * 0.9,
-      height,
-      Math.sin(angle) * radius * 0.9
-    );
-    knot.scale.set(1.3, 0.8, 1);
-    group.add(knot);
-  }
-
-  // ===== 树枝细节
-  const branchData = [
-    // 低枝
-    { y: 2.5, angle: 0.3, len: 1.2, r: 0.08, tilt: 0.4 },
-    { y: 2.8, angle: 2.1, len: 1.0, r: 0.07, tilt: 0.35 },
-    { y: 3.0, angle: 3.8, len: 0.9, r: 0.06, tilt: 0.3 },
-    // 中枝
-    { y: 3.5, angle: 1.0, len: 1.4, r: 0.07, tilt: 0.5 },
-    { y: 3.7, angle: 2.8, len: 1.1, r: 0.06, tilt: 0.4 },
-    { y: 3.3, angle: 4.5, len: 1.0, r: 0.06, tilt: 0.35 },
-    // 高枝
-    { y: 4.2, angle: 0.8, len: 0.8, r: 0.05, tilt: 0.45 },
-    { y: 4.4, angle: 3.2, len: 0.7, r: 0.04, tilt: 0.4 },
-  ];
-  branchData.forEach(bd => {
-    const branchGeom = new THREE.CylinderGeometry(bd.r * 0.6, bd.r, bd.len, 8);
-    const branch = new THREE.Mesh(branchGeom, branchMat);
-    const bx = Math.cos(bd.angle) * 0.15;
-    const bz = Math.sin(bd.angle) * 0.15;
-    branch.position.set(
-      bx + Math.cos(bd.angle) * bd.len * 0.4 * Math.cos(bd.tilt),
-      bd.y + bd.len * 0.4 * Math.sin(bd.tilt),
-      bz + Math.sin(bd.angle) * bd.len * 0.4 * Math.cos(bd.tilt)
-    );
-    branch.rotation.z = Math.cos(bd.angle) * -bd.tilt;
-    branch.rotation.x = Math.sin(bd.angle) * bd.tilt;
-    branch.rotation.y = bd.angle;
-    branch.castShadow = true;
-    group.add(branch);
-
-    // 树枝末端小叶丛
-    const twigLeafGeom = new THREE.SphereGeometry(0.3 + Math.random() * 0.15, 8, 6);
-    const twigLeaf = new THREE.Mesh(twigLeafGeom, leafMats[Math.floor(Math.random() * leafMats.length)]);
-    twigLeaf.position.set(
-      bx + Math.cos(bd.angle) * bd.len * 0.9 * Math.cos(bd.tilt),
-      bd.y + bd.len * 0.9 * Math.sin(bd.tilt),
-      bz + Math.sin(bd.angle) * bd.len * 0.9 * Math.cos(bd.tilt)
-    );
-    twigLeaf.scale.set(1, 0.7, 1);
-    twigLeaf.castShadow = true;
-    group.add(twigLeaf);
-  });
-
-  // ===== 树冠（多层圆锥+球体组合，增加层次感）
-  // 底层：大圆锥
-  const bottomLeafGeom = new THREE.ConeGeometry(2.8, 2.2, 16);
-  const bottomLeaf = new THREE.Mesh(bottomLeafGeom, leafMats[0]);
+  // 树冠 - 三层球体组合，简洁但有层次
+  // 底层大球
+  const bottomLeafGeom = new THREE.SphereGeometry(1.8, 10, 8);
+  const bottomLeaf = new THREE.Mesh(bottomLeafGeom, leafMat1);
   bottomLeaf.position.y = 3.2;
+  bottomLeaf.scale.set(1.1, 0.8, 1.1);
   bottomLeaf.castShadow = true;
   group.add(bottomLeaf);
 
-  // 底层内侧填充球
-  const bottomFillGeom = new THREE.SphereGeometry(1.8, 12, 10);
-  const bottomFill = new THREE.Mesh(bottomFillGeom, leafMats[1]);
-  bottomFill.position.y = 3.5;
-  bottomFill.scale.set(1.2, 0.7, 1.2);
-  bottomFill.castShadow = true;
-  group.add(bottomFill);
-
-  // 中层：稍小圆锥，偏移位置增加自然感
-  const midLeafGeom = new THREE.ConeGeometry(2.2, 1.8, 14);
-  const midLeaf = new THREE.Mesh(midLeafGeom, leafMats[1]);
-  midLeaf.position.set(0.15, 4.4, -0.1);
+  // 中层球
+  const midLeafGeom = new THREE.SphereGeometry(1.3, 10, 8);
+  const midLeaf = new THREE.Mesh(midLeafGeom, leafMat2);
+  midLeaf.position.set(0.2, 4.3, -0.1);
+  midLeaf.scale.set(1, 0.85, 1);
   midLeaf.castShadow = true;
   group.add(midLeaf);
 
-  // 中层填充球
-  const midFillGeom = new THREE.SphereGeometry(1.4, 12, 10);
-  const midFill = new THREE.Mesh(midFillGeom, leafMats[2]);
-  midFill.position.set(0.1, 4.6, -0.05);
-  midFill.scale.set(1.1, 0.75, 1.1);
-  midFill.castShadow = true;
-  group.add(midFill);
-
-  // 上层：更小圆锥
-  const topLeafGeom = new THREE.ConeGeometry(1.5, 1.5, 12);
-  const topLeaf = new THREE.Mesh(topLeafGeom, leafMats[2]);
-  topLeaf.position.set(-0.1, 5.5, 0.1);
+  // 顶层球
+  const topLeafGeom = new THREE.SphereGeometry(0.8, 8, 7);
+  const topLeaf = new THREE.Mesh(topLeafGeom, leafMat3);
+  topLeaf.position.set(-0.1, 5.2, 0.1);
   topLeaf.castShadow = true;
   group.add(topLeaf);
-
-  // 点缀球形树冠，增加蓬松感（更多层次）
-  const puffPositions = [
-    { x: 0.8, y: 3.8, z: 0.5, r: 0.7 },
-    { x: -0.9, y: 4.2, z: -0.3, r: 0.6 },
-    { x: 0.3, y: 5.0, z: -0.7, r: 0.55 },
-    { x: -0.5, y: 3.5, z: 0.8, r: 0.5 },
-    { x: 0, y: 6.0, z: 0, r: 0.45 },
-    { x: 1.2, y: 3.2, z: -0.4, r: 0.5 },
-    { x: -1.1, y: 3.6, z: 0.4, r: 0.55 },
-    { x: 0.6, y: 5.2, z: 0.4, r: 0.4 },
-    { x: -0.7, y: 4.8, z: -0.6, r: 0.45 },
-    { x: 0, y: 4.0, z: -1.0, r: 0.5 },
-  ];
-  puffPositions.forEach((pos, idx) => {
-    const puffGeom = new THREE.SphereGeometry(pos.r, 12, 10);
-    const puff = new THREE.Mesh(puffGeom, leafMats[idx % leafMats.length]);
-    puff.position.set(pos.x, pos.y, pos.z);
-    puff.castShadow = true;
-    group.add(puff);
-  });
-
-  // 树冠最顶端的尖顶
-  const tipGeom = new THREE.ConeGeometry(0.4, 0.8, 10);
-  const tip = new THREE.Mesh(tipGeom, leafMats[3]);
-  tip.position.y = 6.4;
-  tip.castShadow = true;
-  group.add(tip);
 
   return group;
 }
@@ -4716,7 +5632,7 @@ function createLampPost() {
   const metalLightMat = new THREE.MeshPhongMaterial({ color: 0x5a5a5a, shininess: 70, specular: 0x888888 });
   const stoneMat = new THREE.MeshPhongMaterial({ color: 0x6b5b4f, shininess: 10, specular: 0x222222 });
   const glassMat = new THREE.MeshPhongMaterial({ color: 0xffd700, shininess: 100, specular: 0xffff88, transparent: true, opacity: 0.9 });
-  const lightEmissiveMat = new THREE.MeshBasicMaterial({ color: 0xffdd44 });
+  const lightEmissiveMat = new THREE.MeshPhongMaterial({ color: 0xffdd44, emissive: 0xffaa00, emissiveIntensity: 0 });
 
   // ===== 底座（石质基座）
   // 底层基座
@@ -4800,6 +5716,11 @@ function createLampPost() {
   flame.position.y = 4.58;
   group.add(flame);
 
+  // 点光源 - 夜间照亮周围
+  const pointLight = new THREE.PointLight(0xffcc66, 0, 15);
+  pointLight.position.y = 4.58;
+  group.add(pointLight);
+
   // 灯芯底座（蜡烛座）
   const candleBaseGeom = new THREE.CylinderGeometry(0.08, 0.1, 0.06, 8);
   const candleBase = new THREE.Mesh(candleBaseGeom, metalDarkMat);
@@ -4869,955 +5790,994 @@ function createLampPost() {
 function createVillageTree() {
   const group = new THREE.Group();
 
-  // ===== 材质定义
-  const trunkMat1 = new THREE.MeshPhongMaterial({ color: 0x5c3a1e, shininess: 12, specular: 0x221100 });
-  const trunkMat2 = new THREE.MeshPhongMaterial({ color: 0x4a2e18, shininess: 10, specular: 0x110800 });
-  const trunkMat3 = new THREE.MeshPhongMaterial({ color: 0x6b4423, shininess: 15, specular: 0x332211 });
-  const rootMat = new THREE.MeshPhongMaterial({ color: 0x4a2e18, shininess: 8, specular: 0x110800 });
-  const knotMat = new THREE.MeshPhongMaterial({ color: 0x3d2410, shininess: 6, specular: 0x0a0500 });
-  const branchMat = new THREE.MeshPhongMaterial({ color: 0x4a2e18, shininess: 8, specular: 0x110800 });
-  const leafColors = [0x3d7a3d, 0x4a9a4a, 0x2d6a2d, 0x55aa55, 0x66bb66];
-  const leafMats = leafColors.map(c => new THREE.MeshPhongMaterial({ color: c, shininess: 20, specular: 0x336633 }));
+  // 性能优化：简化村庄树木模型
+  const trunkMat = new THREE.MeshLambertMaterial({ color: 0x5c3a1e });
+  const leafMat1 = new THREE.MeshLambertMaterial({ color: 0x4a9a4a });
+  const leafMat2 = new THREE.MeshLambertMaterial({ color: 0x3d8b3d });
+  const leafMat3 = new THREE.MeshLambertMaterial({ color: 0x55aa55 });
 
-  // ===== 树干（多段拼接，增加纹理感）
-  const trunkMats = [trunkMat1, trunkMat2, trunkMat3, trunkMat2, trunkMat1];
-  const trunkHeights = [0.8, 0.7, 0.6, 0.5, 0.4];
-  const trunkRadiiBottom = [0.3, 0.27, 0.24, 0.21, 0.19];
-  const trunkRadiiTop = [0.27, 0.24, 0.21, 0.19, 0.17];
-  let yOffset = 0;
-  for (let i = 0; i < 5; i++) {
-    const segGeom = new THREE.CylinderGeometry(trunkRadiiTop[i], trunkRadiiBottom[i], trunkHeights[i] * 0.95, 12);
-    const seg = new THREE.Mesh(segGeom, trunkMats[i]);
-    seg.position.y = yOffset + trunkHeights[i] / 2;
-    seg.rotation.y = i * 0.4;
-    seg.castShadow = true;
-    group.add(seg);
-    yOffset += trunkHeights[i];
-  }
+  // 树干 - 单段
+  const trunkGeom = new THREE.CylinderGeometry(0.2, 0.28, 2.5, 8);
+  const trunk = new THREE.Mesh(trunkGeom, trunkMat);
+  trunk.position.y = 1.25;
+  trunk.castShadow = true;
+  group.add(trunk);
 
-  // ===== 树皮竖向纹理
-  for (let i = 0; i < 8; i++) {
-    const angle = (i / 8) * Math.PI * 2;
-    const barkGeom = new THREE.BoxGeometry(0.02, 2.2, 0.035);
-    const bark = new THREE.Mesh(barkGeom, trunkMat2);
-    bark.position.set(
-      Math.cos(angle) * 0.23,
-      1.3,
-      Math.sin(angle) * 0.23
-    );
-    bark.rotation.y = angle;
-    bark.scale.y = 0.7 + Math.random() * 0.5;
-    group.add(bark);
-  }
+  // 树冠 - 三层球体
+  const bottomLeafGeom = new THREE.SphereGeometry(1.2, 10, 8);
+  const bottomLeaf = new THREE.Mesh(bottomLeafGeom, leafMat1);
+  bottomLeaf.position.y = 3.2;
+  bottomLeaf.scale.set(1.1, 0.8, 1.1);
+  bottomLeaf.castShadow = true;
+  group.add(bottomLeaf);
 
-  // ===== 底部树根装饰
-  for (let i = 0; i < 6; i++) {
-    const angle = (i / 6) * Math.PI * 2 + Math.random() * 0.2;
-    const rootGeom = new THREE.SphereGeometry(0.15 + Math.random() * 0.1, 10, 8);
-    const root = new THREE.Mesh(rootGeom, rootMat);
-    root.position.set(
-      Math.cos(angle) * 0.2,
-      0.1,
-      Math.sin(angle) * 0.2
-    );
-    root.scale.set(1.3, 0.4, 1.3);
-    root.castShadow = true;
-    group.add(root);
-  }
+  const midLeafGeom = new THREE.SphereGeometry(0.9, 10, 8);
+  const midLeaf = new THREE.Mesh(midLeafGeom, leafMat2);
+  midLeaf.position.set(0.2, 3.9, -0.1);
+  midLeaf.scale.set(1, 0.85, 1);
+  midLeaf.castShadow = true;
+  group.add(midLeaf);
 
-  // 主根延伸
-  for (let i = 0; i < 3; i++) {
-    const angle = (i / 3) * Math.PI * 2 + 0.5;
-    const mainRootGeom = new THREE.CylinderGeometry(0.04, 0.08, 0.4, 6);
-    const mainRoot = new THREE.Mesh(mainRootGeom, rootMat);
-    mainRoot.position.set(
-      Math.cos(angle) * 0.18,
-      0.2,
-      Math.sin(angle) * 0.18
-    );
-    mainRoot.rotation.z = Math.cos(angle) * 0.6;
-    mainRoot.rotation.x = Math.sin(angle) * -0.6;
-    mainRoot.castShadow = true;
-    group.add(mainRoot);
-  }
-
-  // ===== 小树瘤
-  for (let i = 0; i < 3; i++) {
-    const knotGeom = new THREE.SphereGeometry(0.08 + Math.random() * 0.05, 8, 6);
-    const knot = new THREE.Mesh(knotGeom, knotMat);
-    const angle = Math.random() * Math.PI * 2;
-    const height = 0.6 + Math.random() * 1.5;
-    const r = 0.28 - (0.28 - 0.18) * (height / 2.5);
-    knot.position.set(
-      Math.cos(angle) * r * 0.9,
-      height,
-      Math.sin(angle) * r * 0.9
-    );
-    knot.scale.set(1.2, 0.7, 1);
-    group.add(knot);
-  }
-
-  // ===== 树枝细节（小树枝）
-  const smallBranches = [
-    { y: 1.8, angle: 0.5, len: 0.6, r: 0.04, tilt: 0.5 },
-    { y: 2.0, angle: 2.5, len: 0.5, r: 0.035, tilt: 0.4 },
-    { y: 2.2, angle: 4.2, len: 0.45, r: 0.03, tilt: 0.45 },
-    { y: 2.5, angle: 1.2, len: 0.4, r: 0.025, tilt: 0.5 },
-  ];
-  smallBranches.forEach(bd => {
-    const branchGeom = new THREE.CylinderGeometry(bd.r * 0.6, bd.r, bd.len, 6);
-    const branch = new THREE.Mesh(branchGeom, branchMat);
-    const bx = Math.cos(bd.angle) * 0.1;
-    const bz = Math.sin(bd.angle) * 0.1;
-    branch.position.set(
-      bx + Math.cos(bd.angle) * bd.len * 0.4 * Math.cos(bd.tilt),
-      bd.y + bd.len * 0.4 * Math.sin(bd.tilt),
-      bz + Math.sin(bd.angle) * bd.len * 0.4 * Math.cos(bd.tilt)
-    );
-    branch.rotation.z = Math.cos(bd.angle) * -bd.tilt;
-    branch.rotation.x = Math.sin(bd.angle) * bd.tilt;
-    branch.rotation.y = bd.angle;
-    branch.castShadow = true;
-    group.add(branch);
-
-    // 树枝末端小叶
-    const twigLeafGeom = new THREE.SphereGeometry(0.2 + Math.random() * 0.1, 8, 6);
-    const twigLeaf = new THREE.Mesh(twigLeafGeom, leafMats[Math.floor(Math.random() * leafMats.length)]);
-    twigLeaf.position.set(
-      bx + Math.cos(bd.angle) * bd.len * 0.9 * Math.cos(bd.tilt),
-      bd.y + bd.len * 0.9 * Math.sin(bd.tilt),
-      bz + Math.sin(bd.angle) * bd.len * 0.9 * Math.cos(bd.tilt)
-    );
-    twigLeaf.scale.set(1, 0.7, 1);
-    twigLeaf.castShadow = true;
-    group.add(twigLeaf);
-  });
-
-  // ===== 树冠（多层球体组合，增加蓬松层次感）
-  // 底层大球（主树冠）
-  const mainLeafGeom = new THREE.SphereGeometry(1.3, 14, 12);
-  const mainLeaf = new THREE.Mesh(mainLeafGeom, leafMats[0]);
-  mainLeaf.position.y = 3.3;
-  mainLeaf.scale.set(1.1, 0.85, 1.1);
-  mainLeaf.castShadow = true;
-  group.add(mainLeaf);
-
-  // 底层内侧填充
-  const innerFillGeom = new THREE.SphereGeometry(0.9, 12, 10);
-  const innerFill = new THREE.Mesh(innerFillGeom, leafMats[1]);
-  innerFill.position.y = 3.3;
-  innerFill.scale.set(1.05, 0.7, 1.05);
-  innerFill.castShadow = true;
-  group.add(innerFill);
-
-  // 中层球簇（更多）
-  const midPositions = [
-    { x: 0.5, y: 3.8, z: 0.3, r: 0.75 },
-    { x: -0.6, y: 3.6, z: -0.2, r: 0.7 },
-    { x: 0.2, y: 4.0, z: -0.5, r: 0.65 },
-    { x: -0.3, y: 3.4, z: 0.6, r: 0.6 },
-    { x: 0.7, y: 3.2, z: -0.3, r: 0.55 },
-    { x: -0.7, y: 3.5, z: 0.2, r: 0.6 },
-  ];
-  midPositions.forEach((pos, idx) => {
-    const leafGeom = new THREE.SphereGeometry(pos.r, 12, 10);
-    const leaf = new THREE.Mesh(leafGeom, leafMats[(idx + 1) % leafMats.length]);
-    leaf.position.set(pos.x, pos.y, pos.z);
-    leaf.castShadow = true;
-    group.add(leaf);
-  });
-
-  // 顶层小球
-  const topLeafGeom = new THREE.SphereGeometry(0.6, 12, 10);
-  const topLeaf = new THREE.Mesh(topLeafGeom, leafMats[2]);
-  topLeaf.position.set(0.1, 4.5, 0);
+  const topLeafGeom = new THREE.SphereGeometry(0.5, 8, 7);
+  const topLeaf = new THREE.Mesh(topLeafGeom, leafMat3);
+  topLeaf.position.set(-0.1, 4.5, 0.1);
   topLeaf.castShadow = true;
   group.add(topLeaf);
 
-  // 顶层周围点缀
-  const topPuffPositions = [
-    { x: 0.3, y: 4.6, z: 0.3, r: 0.35 },
-    { x: -0.3, y: 4.55, z: -0.2, r: 0.3 },
-    { x: 0.2, y: 4.7, z: -0.3, r: 0.32 },
-  ];
-  topPuffPositions.forEach((pos, idx) => {
-    const puffGeom = new THREE.SphereGeometry(pos.r, 10, 8);
-    const puff = new THREE.Mesh(puffGeom, leafMats[(idx + 3) % leafMats.length]);
-    puff.position.set(pos.x, pos.y, pos.z);
-    puff.castShadow = true;
-    group.add(puff);
-  });
+  return group;
+}
 
-  // 最顶端尖叶
-  const tipGeom = new THREE.ConeGeometry(0.25, 0.5, 10);
-  const tip = new THREE.Mesh(tipGeom, leafMats[3]);
-  tip.position.y = 4.9;
-  tip.castShadow = true;
-  group.add(tip);
+// ========== 发型生成函数 ==========
+function createHairstyle(styleId, hairMat, hairDarkMat, isFemale) {
+  const group = new THREE.Group();
+
+  switch (styleId) {
+    case 'short': {
+      // 短发 - 干净利落
+      const mainGeom = new THREE.SphereGeometry(0.34, 14, 10, 0, Math.PI * 2, 0, Math.PI * 0.6);
+      const main = new THREE.Mesh(mainGeom, hairMat);
+      main.position.y = 0.02;
+      main.castShadow = true;
+      group.add(main);
+
+      // 刘海
+      const bangsGeom = new THREE.SphereGeometry(0.32, 10, 6, 0, Math.PI * 2, 0, Math.PI * 0.3);
+      const bangs = new THREE.Mesh(bangsGeom, hairMat);
+      bangs.position.set(0, -0.02, 0.15);
+      bangs.rotation.x = 0.3;
+      group.add(bangs);
+
+      // 侧发
+      const sideGeom = new THREE.SphereGeometry(0.08, 6, 5);
+      const sideL = new THREE.Mesh(sideGeom, hairMat);
+      sideL.position.set(-0.28, -0.05, 0.05);
+      sideL.scale.set(0.7, 1.2, 0.7);
+      group.add(sideL);
+      const sideR = sideL.clone();
+      sideR.position.x = 0.28;
+      group.add(sideR);
+      break;
+    }
+
+    case 'long': {
+      // 长发 - 飘逸长发
+      const mainGeom = new THREE.SphereGeometry(0.35, 14, 10, 0, Math.PI * 2, 0, Math.PI * 0.65);
+      const main = new THREE.Mesh(mainGeom, hairMat);
+      main.position.y = 0.02;
+      main.castShadow = true;
+      group.add(main);
+
+      // 头顶蓬松
+      const topGeom = new THREE.SphereGeometry(0.2, 10, 8, 0, Math.PI * 2, 0, Math.PI * 0.5);
+      const top = new THREE.Mesh(topGeom, hairMat);
+      top.position.set(0, 0.18, -0.02);
+      top.scale.set(1.05, 0.9, 0.9);
+      group.add(top);
+
+      // 刘海
+      const bangsGeom = new THREE.SphereGeometry(0.33, 10, 6, 0, Math.PI * 2, 0, Math.PI * 0.35);
+      const bangs = new THREE.Mesh(bangsGeom, hairMat);
+      bangs.position.set(0, -0.02, 0.15);
+      bangs.rotation.x = 0.35;
+      group.add(bangs);
+
+      // 侧长发
+      const sideGeom = new THREE.SphereGeometry(0.1, 8, 6);
+      const sideL = new THREE.Mesh(sideGeom, hairMat);
+      sideL.position.set(-0.3, -0.1, 0.05);
+      sideL.scale.set(0.8, 2.8, 0.85);
+      sideL.rotation.z = 0.1;
+      group.add(sideL);
+      const sideR = sideL.clone();
+      sideR.position.x = 0.3;
+      sideR.rotation.z = -0.1;
+      group.add(sideR);
+
+      // 后发（长）
+      const backGeom = new THREE.SphereGeometry(0.2, 10, 8);
+      const back = new THREE.Mesh(backGeom, hairDarkMat);
+      back.position.set(0, -0.2, -0.25);
+      back.scale.set(1.5, 3, 0.9);
+      back.rotation.x = -0.15;
+      group.add(back);
+      break;
+    }
+
+    case 'spiky': {
+      // 刺猬头 - 一根根竖起
+      const mainGeom = new THREE.SphereGeometry(0.33, 14, 10, 0, Math.PI * 2, 0, Math.PI * 0.55);
+      const main = new THREE.Mesh(mainGeom, hairMat);
+      main.position.y = 0;
+      main.castShadow = true;
+      group.add(main);
+
+      // 多根尖刺
+      const spikePositions = [
+        { x: 0, y: 0.3, z: 0, sx: 0.4, sy: 1.2, sz: 0.4 },
+        { x: 0.15, y: 0.25, z: 0.05, sx: 0.3, sy: 1.1, sz: 0.3 },
+        { x: -0.15, y: 0.25, z: 0.05, sx: 0.3, sy: 1.1, sz: 0.3 },
+        { x: 0.1, y: 0.28, z: -0.1, sx: 0.28, sy: 1, sz: 0.28 },
+        { x: -0.1, y: 0.28, z: -0.1, sx: 0.28, sy: 1, sz: 0.28 },
+        { x: 0.2, y: 0.15, z: 0.1, sx: 0.25, sy: 0.9, sz: 0.25 },
+        { x: -0.2, y: 0.15, z: 0.1, sx: 0.25, sy: 0.9, sz: 0.25 },
+        { x: 0, y: 0.2, z: 0.18, sx: 0.3, sy: 0.8, sz: 0.3 },
+      ];
+      spikePositions.forEach(pos => {
+        const spikeGeom = new THREE.ConeGeometry(0.06, 0.3, 6);
+        const spike = new THREE.Mesh(spikeGeom, hairMat);
+        spike.position.set(pos.x, pos.y, pos.z);
+        spike.scale.set(pos.sx, pos.sy, pos.sz);
+        spike.rotation.x = (pos.z > 0 ? -0.2 : 0.1) + Math.random() * 0.1;
+        spike.rotation.z = pos.x * 0.3;
+        group.add(spike);
+      });
+      break;
+    }
+
+    case 'ponytail': {
+      // 马尾辫
+      const mainGeom = new THREE.SphereGeometry(0.34, 14, 10, 0, Math.PI * 2, 0, Math.PI * 0.62);
+      const main = new THREE.Mesh(mainGeom, hairMat);
+      main.position.y = 0.02;
+      main.castShadow = true;
+      group.add(main);
+
+      // 刘海
+      const bangsGeom = new THREE.SphereGeometry(0.32, 10, 6, 0, Math.PI * 2, 0, Math.PI * 0.32);
+      const bangs = new THREE.Mesh(bangsGeom, hairMat);
+      bangs.position.set(0, -0.02, 0.15);
+      bangs.rotation.x = 0.32;
+      group.add(bangs);
+
+      // 侧发
+      const sideGeom = new THREE.SphereGeometry(0.07, 6, 5);
+      const sideL = new THREE.Mesh(sideGeom, hairMat);
+      sideL.position.set(-0.28, -0.05, 0.05);
+      sideL.scale.set(0.6, 1.3, 0.6);
+      group.add(sideL);
+      const sideR = sideL.clone();
+      sideR.position.x = 0.28;
+      group.add(sideR);
+
+      // 马尾（后方）
+      const ponytailBaseGeom = new THREE.SphereGeometry(0.12, 8, 6);
+      const ponytailBase = new THREE.Mesh(ponytailBaseGeom, hairMat);
+      ponytailBase.position.set(0, 0, -0.28);
+      ponytailBase.scale.set(1, 0.8, 1.2);
+      group.add(ponytailBase);
+
+      // 马尾主体
+      const tailGeom = new THREE.CylinderGeometry(0.06, 0.04, 0.8, 8);
+      const tail = new THREE.Mesh(tailGeom, hairDarkMat);
+      tail.position.set(0, -0.35, -0.3);
+      tail.rotation.x = 0.4;
+      tail.scale.set(1, 1, 1);
+      group.add(tail);
+
+      // 马尾末端
+      const tailTipGeom = new THREE.SphereGeometry(0.05, 6, 5);
+      const tailTip = new THREE.Mesh(tailTipGeom, hairDarkMat);
+      tailTip.position.set(0, -0.75, -0.15);
+      tailTip.scale.set(0.9, 1.2, 0.9);
+      group.add(tailTip);
+      break;
+    }
+
+    case 'bun': {
+      // 发髻
+      const mainGeom = new THREE.SphereGeometry(0.34, 14, 10, 0, Math.PI * 2, 0, Math.PI * 0.6);
+      const main = new THREE.Mesh(mainGeom, hairMat);
+      main.position.y = 0.02;
+      main.castShadow = true;
+      group.add(main);
+
+      // 刘海
+      const bangsGeom = new THREE.SphereGeometry(0.32, 10, 6, 0, Math.PI * 2, 0, Math.PI * 0.3);
+      const bangs = new THREE.Mesh(bangsGeom, hairMat);
+      bangs.position.set(0, -0.02, 0.15);
+      bangs.rotation.x = 0.3;
+      group.add(bangs);
+
+      // 侧发
+      const sideGeom = new THREE.SphereGeometry(0.07, 6, 5);
+      const sideL = new THREE.Mesh(sideGeom, hairMat);
+      sideL.position.set(-0.28, -0.05, 0.05);
+      sideL.scale.set(0.6, 1.2, 0.6);
+      group.add(sideL);
+      const sideR = sideL.clone();
+      sideR.position.x = 0.28;
+      group.add(sideR);
+
+      // 发髻主体（头顶圆盘形）
+      const bunBaseGeom = new THREE.SphereGeometry(0.2, 12, 10);
+      const bunBase = new THREE.Mesh(bunBaseGeom, hairMat);
+      bunBase.position.set(0, 0.3, -0.05);
+      bunBase.scale.set(1.3, 0.6, 1.2);
+      group.add(bunBase);
+
+      // 发髻丸子
+      const bunGeom = new THREE.SphereGeometry(0.15, 12, 10);
+      const bun = new THREE.Mesh(bunGeom, hairDarkMat);
+      bun.position.set(0, 0.38, -0.05);
+      bun.scale.set(1.1, 0.9, 1);
+      group.add(bun);
+
+      // 发簪
+      const pinGeom = new THREE.CylinderGeometry(0.015, 0.01, 0.35, 6);
+      const pinMat = new THREE.MeshPhongMaterial({ color: 0xd4af37, shininess: 100, specular: 0xffffaa });
+      const pin = new THREE.Mesh(pinGeom, pinMat);
+      pin.position.set(0, 0.35, -0.2);
+      pin.rotation.x = Math.PI / 2;
+      group.add(pin);
+      break;
+    }
+
+    case 'mohawk': {
+      // 莫西干
+      const mainGeom = new THREE.SphereGeometry(0.33, 14, 10, 0, Math.PI * 2, 0, Math.PI * 0.55);
+      const main = new THREE.Mesh(mainGeom, hairMat);
+      main.position.y = 0;
+      main.castShadow = true;
+      group.add(main);
+
+      // 莫西干中央发带（从前到后）
+      const mohawkPositions = [
+        { x: 0, y: 0.25, z: 0.18, h: 0.3, w: 0.15 },
+        { x: 0, y: 0.3, z: 0.08, h: 0.35, w: 0.18 },
+        { x: 0, y: 0.32, z: -0.02, h: 0.38, w: 0.2 },
+        { x: 0, y: 0.3, z: -0.12, h: 0.32, w: 0.18 },
+        { x: 0, y: 0.25, z: -0.22, h: 0.25, w: 0.14 },
+      ];
+      mohawkPositions.forEach(pos => {
+        const mohawkGeom = new THREE.BoxGeometry(pos.w, pos.h, 0.1);
+        const mohawk = new THREE.Mesh(mohawkGeom, hairMat);
+        mohawk.position.set(pos.x, pos.y, pos.z);
+        mohawk.rotation.x = pos.z * 0.5;
+        group.add(mohawk);
+
+        // 尖端
+        const tipGeom = new THREE.ConeGeometry(pos.w * 0.5, 0.1, 4);
+        const tip = new THREE.Mesh(tipGeom, hairDarkMat);
+        tip.position.set(pos.x, pos.y + pos.h / 2, pos.z);
+        tip.rotation.x = pos.z * 0.5;
+        group.add(tip);
+      });
+
+      // 两侧剃短
+      const sideShavedGeom = new THREE.SphereGeometry(0.3, 8, 6, 0, Math.PI * 2, 0, Math.PI * 0.4);
+      const sideShavedMat = new THREE.MeshPhongMaterial({ color: 0x1a1a1a, shininess: 5 });
+      // 左侧剃短
+      const sideShavedL = new THREE.Mesh(sideShavedGeom, sideShavedMat);
+      sideShavedL.position.set(-0.02, -0.02, 0);
+      sideShavedL.scale.set(0.5, 0.6, 1);
+      sideShavedL.rotation.z = 0.3;
+      group.add(sideShavedL);
+      // 右侧剃短
+      const sideShavedR = new THREE.Mesh(sideShavedGeom, sideShavedMat);
+      sideShavedR.position.set(0.02, -0.02, 0);
+      sideShavedR.scale.set(0.5, 0.6, 1);
+      sideShavedR.rotation.z = -0.3;
+      group.add(sideShavedR);
+      break;
+    }
+
+    default: {
+      // 默认短发
+      const mainGeom = new THREE.SphereGeometry(0.34, 14, 10, 0, Math.PI * 2, 0, Math.PI * 0.6);
+      const main = new THREE.Mesh(mainGeom, hairMat);
+      main.position.y = 0.02;
+      main.castShadow = true;
+      group.add(main);
+
+      const bangsGeom = new THREE.SphereGeometry(0.32, 10, 6, 0, Math.PI * 2, 0, Math.PI * 0.3);
+      const bangs = new THREE.Mesh(bangsGeom, hairMat);
+      bangs.position.set(0, -0.02, 0.15);
+      bangs.rotation.x = 0.3;
+      group.add(bangs);
+      break;
+    }
+  }
 
   return group;
 }
 
 // ========== 玩家角色 ==========
-function createPlayerMesh() {
+function createPlayerMesh(appearance) {
+  if (!appearance) appearance = defaultCharAppearance;
   const group = new THREE.Group();
 
+  const topConfig = CHAR_CUSTOMIZATION.tops.find(t => t.id === appearance.top) || CHAR_CUSTOMIZATION.tops[0];
+  const pantsConfig = CHAR_CUSTOMIZATION.pants.find(p => p.id === appearance.pants) || CHAR_CUSTOMIZATION.pants[0];
+  const hairColorConfig = CHAR_CUSTOMIZATION.hairColors.find(c => c.id === appearance.hairColor) || CHAR_CUSTOMIZATION.hairColors[0];
+  const isFemale = appearance.gender === 'female';
+
+  function darkenColor(hex, amount = 0.7) {
+    const r = ((hex >> 16) & 255) * amount;
+    const g = ((hex >> 8) & 255) * amount;
+    const b = (hex & 255) * amount;
+    return (r << 16) | (g << 8) | b;
+  }
+  function lightenColor(hex, amount = 1.3) {
+    const r = Math.min(255, ((hex >> 16) & 255) * amount);
+    const g = Math.min(255, ((hex >> 8) & 255) * amount);
+    const b = Math.min(255, (hex & 255) * amount);
+    return (r << 16) | (g << 8) | b;
+  }
+
   // ============================================================
-  // 材质定义（全部使用 MeshPhongMaterial 增加光泽和层次感）
+  // 材质定义
   // ============================================================
   const skinMat = new THREE.MeshPhongMaterial({
-    color: 0xf5d0a0, shininess: 30, specular: 0x443322
+    color: isFemale ? 0xf5d5a8 : 0xe8c8a0, shininess: 25, specular: 0x443322
+  });
+  const skinSoftMat = new THREE.MeshPhongMaterial({
+    color: isFemale ? 0xf0d0a0 : 0xe0c098, shininess: 20, specular: 0x332211
+  });
+  const lipMat = new THREE.MeshPhongMaterial({
+    color: isFemale ? 0xd47a6a : 0xc47060, shininess: 30, specular: 0xffaaaa
   });
   const tunicMat = new THREE.MeshPhongMaterial({
-    color: 0x7b9dc4, shininess: 25, specular: 0x223344
+    color: topConfig.color, shininess: 25, specular: 0x223344
   });
   const tunicDarkMat = new THREE.MeshPhongMaterial({
-    color: 0x5a7ba0, shininess: 20, specular: 0x112233
+    color: topConfig.colorDark, shininess: 20, specular: 0x112233
   });
   const tunicLightMat = new THREE.MeshPhongMaterial({
-    color: 0x9abce0, shininess: 30, specular: 0x334455
+    color: topConfig.colorLight, shininess: 30, specular: 0x334455
   });
   const pantsMat = new THREE.MeshPhongMaterial({
-    color: 0x4a6a90, shininess: 15, specular: 0x111122
+    color: pantsConfig.color, shininess: 15, specular: 0x111122
+  });
+  const pantsDarkMat = new THREE.MeshPhongMaterial({
+    color: pantsConfig.colorDark, shininess: 10, specular: 0x0a0a15
   });
   const leatherMat = new THREE.MeshPhongMaterial({
     color: 0x5c3a1e, shininess: 10, specular: 0x221100
   });
-  const leatherDarkMat = new THREE.MeshPhongMaterial({
-    color: 0x3a2510, shininess: 8, specular: 0x110800
-  });
-  const metalMat = new THREE.MeshPhongMaterial({
-    color: 0xc0c8d0, shininess: 100, specular: 0xffffff
-  });
-  const metalDarkMat = new THREE.MeshPhongMaterial({
-    color: 0x8090a0, shininess: 60, specular: 0xaabbcc
-  });
   const hairMat = new THREE.MeshPhongMaterial({
-    color: 0x3a7bd5, shininess: 45, specular: 0x4466aa
+    color: hairColorConfig.color, shininess: 45, specular: lightenColor(hairColorConfig.color, 1.5)
   });
   const hairDarkMat = new THREE.MeshPhongMaterial({
-    color: 0x2a5a9a, shininess: 30, specular: 0x223355
+    color: darkenColor(hairColorConfig.color, 0.7), shininess: 30, specular: hairColorConfig.color
   });
   const eyeMat = new THREE.MeshPhongMaterial({
-    color: 0x2a5a9a, shininess: 80, specular: 0x88ccff
+    color: isFemale ? 0x8b5cf6 : 0x2a5a9a, shininess: 80, specular: 0x88ccff
+  });
+  const eyeWhiteMat = new THREE.MeshPhongMaterial({
+    color: 0xfaf8f5, shininess: 40, specular: 0xffffff
   });
   const eyeHighlightMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
   const browMat = new THREE.MeshPhongMaterial({
-    color: 0x2a4a7a, shininess: 10
+    color: darkenColor(hairColorConfig.color, 0.5), shininess: 10
   });
   const bootMat = new THREE.MeshPhongMaterial({
-    color: 0x3a4a6a, shininess: 15, specular: 0x111122
+    color: pantsConfig.colorDark, shininess: 15, specular: 0x111122
   });
   const bootDarkMat = new THREE.MeshPhongMaterial({
-    color: 0x25304a, shininess: 10, specular: 0x0a0a15
-  });
-  const capeMat = new THREE.MeshPhongMaterial({
-    color: 0x2a4a7a, shininess: 15, side: THREE.DoubleSide, specular: 0x112233
-  });
-  const capeInnerMat = new THREE.MeshPhongMaterial({
-    color: 0x4a6a9a, shininess: 10, side: THREE.DoubleSide
+    color: darkenColor(pantsConfig.colorDark, 0.7), shininess: 10, specular: 0x0a0a15
   });
 
   // ============================================================
-  // 身体 / 躯干（银蓝色冒险者束腰外衣）
-  // 总高约 3.85，头径约 0.64，头身比约 1:6
+  // 躯干 - 更自然的人体形态（使用完整闭合几何体，避免镂空）
+  // 总高约 3.6，头高约 0.6，头身比 1:6
   // ============================================================
+  
+  // 胸腔（上躯干）- 椭圆形，男性更宽更厚，女性更纤细
+  const chestW = isFemale ? 0.34 : 0.4;
+  const chestD = isFemale ? 0.28 : 0.34;
+  const chestH = 0.55;
+  const chestGeom = new THREE.SphereGeometry(1, 16, 12);
+  const chest = new THREE.Mesh(chestGeom, tunicMat);
+  chest.position.y = 2.25;
+  chest.scale.set(chestW, chestH, chestD);
+  chest.castShadow = true;
+  group.add(chest);
 
-  // 主身体（束腰外衣主体）
-  const bodyGeom = new THREE.CapsuleGeometry(0.38, 0.6, 8, 14);
-  const body = new THREE.Mesh(bodyGeom, tunicMat);
-  body.position.y = 2.15;
-  body.castShadow = true;
-  group.add(body);
+  // 腹部/腰部（下躯干）- 胶囊体，比胸腔小，形成腰线
+  const waistW = isFemale ? 0.26 : 0.32;
+  const waistD = isFemale ? 0.22 : 0.28;
+  const waistH = 0.45;
+  const waistRadius = Math.min(waistW, waistD);
+  const waistGeom = new THREE.CapsuleGeometry(waistRadius, waistH * 0.6, 8, 12);
+  const waist = new THREE.Mesh(waistGeom, tunicMat);
+  waist.position.y = 1.7;
+  waist.scale.set(waistW / waistRadius, 1, waistD / waistRadius);
+  waist.castShadow = true;
+  group.add(waist);
 
-  // 内衣领口（白色V领）
-  const collarGeom = new THREE.ConeGeometry(0.22, 0.18, 8, 1, true);
+  // 臀部 - 完整球体，女性更宽更圆润
+  const hipW = isFemale ? 0.36 : 0.35;
+  const hipD = isFemale ? 0.32 : 0.3;
+  const hipH = 0.35;
+  const hipGeom = new THREE.SphereGeometry(1, 16, 12);
+  const hip = new THREE.Mesh(hipGeom, tunicDarkMat);
+  hip.position.y = 1.42;
+  hip.scale.set(hipW, hipH, hipD);
+  hip.castShadow = true;
+  group.add(hip);
+
+  // 衣领 V 领
+  const collarGeom = new THREE.ConeGeometry(0.2, 0.15, 8, 1, true);
   const collarMat = new THREE.MeshPhongMaterial({
     color: 0xe8eef5, shininess: 20, side: THREE.DoubleSide
   });
   const collar = new THREE.Mesh(collarGeom, collarMat);
-  collar.position.set(0, 2.52, 0.05);
+  collar.position.set(0, 2.5, 0.06);
   collar.rotation.x = Math.PI;
-  collar.scale.set(1, 0.6, 0.7);
+  collar.scale.set(1, 0.55, 0.65);
   group.add(collar);
 
-  // 胸前装饰带（十字交叉皮革带）
-  const chestStrapGeom1 = new THREE.BoxGeometry(0.06, 0.5, 0.04);
-  const chestStrapL = new THREE.Mesh(chestStrapGeom1, leatherMat);
-  chestStrapL.position.set(-0.05, 2.25, 0.35);
-  chestStrapL.rotation.z = 0.35;
-  chestStrapL.rotation.y = -0.1;
-  group.add(chestStrapL);
-  const chestStrapR = new THREE.Mesh(chestStrapGeom1, leatherMat);
-  chestStrapR.position.set(0.05, 2.25, 0.35);
-  chestStrapR.rotation.z = -0.35;
-  chestStrapR.rotation.y = 0.1;
-  group.add(chestStrapR);
-
-  // 胸甲（轻甲胸板）
-  const chestPlateGeom = new THREE.SphereGeometry(0.28, 12, 8, 0, Math.PI * 2, 0, Math.PI * 0.4);
-  const chestPlate = new THREE.Mesh(chestPlateGeom, metalDarkMat);
-  chestPlate.position.set(0, 2.25, 0.28);
-  chestPlate.rotation.x = 0.15;
-  chestPlate.scale.set(1.3, 0.8, 0.6);
-  group.add(chestPlate);
-
-  // 胸甲中央宝石
-  const gemGeom = new THREE.OctahedronGeometry(0.05, 0);
-  const gemMat = new THREE.MeshPhongMaterial({
-    color: 0x44aaff, shininess: 120, specular: 0xaaddff, emissive: 0x113355
-  });
-  const chestGem = new THREE.Mesh(gemGeom, gemMat);
-  chestGem.position.set(0, 2.28, 0.42);
-  chestGem.rotation.y = 0.5;
-  group.add(chestGem);
-
-  // 腰部横向装饰条
-  const waistTrimGeom = new THREE.BoxGeometry(0.65, 0.05, 0.35);
-  const waistTrim = new THREE.Mesh(waistTrimGeom, tunicLightMat);
-  waistTrim.position.set(0, 1.75, 0.05);
-  group.add(waistTrim);
-
-  // 肩甲（左右）
-  const pauldronGeom = new THREE.SphereGeometry(0.18, 10, 8, 0, Math.PI * 2, 0, Math.PI * 0.5);
-  const pauldronL = new THREE.Mesh(pauldronGeom, metalDarkMat);
-  pauldronL.position.set(-0.42, 2.62, 0);
-  pauldronL.rotation.z = 0.5;
-  pauldronL.rotation.x = -0.2;
-  pauldronL.scale.set(1, 0.7, 1.1);
-  pauldronL.castShadow = true;
-  group.add(pauldronL);
-  const pauldronR = new THREE.Mesh(pauldronGeom, metalDarkMat);
-  pauldronR.position.set(0.42, 2.62, 0);
-  pauldronR.rotation.z = -0.5;
-  pauldronR.rotation.x = -0.2;
-  pauldronR.scale.set(1, 0.7, 1.1);
-  pauldronR.castShadow = true;
-  group.add(pauldronR);
-
-  // 肩甲边缘装饰（金色镶边）
-  const pauldronTrimGeom = new THREE.TorusGeometry(0.15, 0.018, 6, 12, Math.PI);
-  const trimMat = new THREE.MeshPhongMaterial({
-    color: 0xd4af37, shininess: 100, specular: 0xffffaa
-  });
-  const pauldronTrimL = new THREE.Mesh(pauldronTrimGeom, trimMat);
-  pauldronTrimL.position.set(-0.42, 2.62, 0);
-  pauldronTrimL.rotation.z = 0.5;
-  pauldronTrimL.rotation.x = -Math.PI / 2;
-  pauldronTrimL.rotation.y = Math.PI / 2;
-  group.add(pauldronTrimL);
-  const pauldronTrimR = new THREE.Mesh(pauldronTrimGeom, trimMat);
-  pauldronTrimR.position.set(0.42, 2.62, 0);
-  pauldronTrimR.rotation.z = -0.5;
-  pauldronTrimR.rotation.x = -Math.PI / 2;
-  pauldronTrimR.rotation.y = -Math.PI / 2;
-  group.add(pauldronTrimR);
-
-  // 腰带（深棕色皮革宽腰带）
-  const beltGeom = new THREE.CylinderGeometry(0.42, 0.42, 0.10, 16);
+  // 腰带
+  const beltGeom = new THREE.CylinderGeometry(0.34, 0.34, 0.06, 16);
   const belt = new THREE.Mesh(beltGeom, leatherMat);
-  belt.position.y = 1.55;
+  belt.position.y = 1.58;
   group.add(belt);
 
-  // 腰带扣（银色方形带圆角）
-  const buckleGeom = new THREE.BoxGeometry(0.18, 0.14, 0.06);
-  const buckle = new THREE.Mesh(buckleGeom, metalMat);
-  buckle.position.set(0, 1.55, 0.4);
+  // 腰带扣
+  const buckleGeom = new THREE.BoxGeometry(0.12, 0.1, 0.04);
+  const buckleMat = new THREE.MeshPhongMaterial({
+    color: 0xc0c8d0, shininess: 100, specular: 0xffffff
+  });
+  const buckle = new THREE.Mesh(buckleGeom, buckleMat);
+  buckle.position.set(0, 1.58, 0.33);
   group.add(buckle);
-  // 腰带扣中央装饰
-  const buckleDetail = new THREE.Mesh(
-    new THREE.BoxGeometry(0.08, 0.06, 0.02),
-    trimMat
-  );
-  buckleDetail.position.set(0, 1.55, 0.44);
-  group.add(buckleDetail);
 
-  // 右侧腰包
-  const pouchGeom = new THREE.SphereGeometry(0.1, 10, 8);
-  const pouch = new THREE.Mesh(pouchGeom, leatherDarkMat);
-  pouch.position.set(0.3, 1.42, 0.2);
-  pouch.scale.set(0.9, 1.2, 0.7);
-  group.add(pouch);
-  // 腰包翻盖
-  const pouchFlapGeom = new THREE.SphereGeometry(0.09, 8, 6, 0, Math.PI * 2, 0, Math.PI * 0.4);
-  const pouchFlap = new THREE.Mesh(pouchFlapGeom, leatherMat);
-  pouchFlap.position.set(0.3, 1.48, 0.23);
-  pouchFlap.rotation.x = 0.3;
-  pouchFlap.scale.set(0.9, 0.7, 0.7);
-  group.add(pouchFlap);
-
-  // 腰布 / 战裙（前片）
-  const loinclothGeom = new THREE.PlaneGeometry(0.35, 0.45, 3, 2);
+  // 腰布前片
+  const loinclothGeom = new THREE.PlaneGeometry(0.28, 0.38, 3, 2);
   const loincloth = new THREE.Mesh(loinclothGeom, tunicDarkMat);
-  loincloth.position.set(0, 1.25, 0.32);
+  loincloth.position.set(0, 1.25, 0.3);
   loincloth.rotation.x = 0.15;
   loincloth.castShadow = true;
   group.add(loincloth);
-  // 腰布边缘装饰
-  const loinclothTrim = new THREE.Mesh(
-    new THREE.PlaneGeometry(0.35, 0.04),
-    trimMat
-  );
-  loinclothTrim.position.set(0, 1.03, 0.33);
-  loinclothTrim.rotation.x = 0.15;
-  group.add(loinclothTrim);
-
-  // 左侧腰布片
-  const loinclothSideL = new THREE.Mesh(
-    new THREE.PlaneGeometry(0.2, 0.35, 2, 2),
-    tunicDarkMat
-  );
-  loinclothSideL.position.set(-0.3, 1.3, 0.1);
-  loinclothSideL.rotation.y = Math.PI / 2.5;
-  loinclothSideL.rotation.x = 0.1;
-  group.add(loinclothSideL);
-  // 右侧腰布片
-  const loinclothSideR = new THREE.Mesh(
-    new THREE.PlaneGeometry(0.2, 0.35, 2, 2),
-    tunicDarkMat
-  );
-  loinclothSideR.position.set(0.3, 1.3, 0.1);
-  loinclothSideR.rotation.y = -Math.PI / 2.5;
-  loinclothSideR.rotation.x = 0.1;
-  group.add(loinclothSideR);
-
-  // 大腿绑带
-  const thighStrapGeom = new THREE.CylinderGeometry(0.17, 0.17, 0.04, 12);
-  const thighStrapL = new THREE.Mesh(thighStrapGeom, leatherMat);
-  thighStrapL.position.set(-0.2, 1.0, 0);
-  group.add(thighStrapL);
-  const thighStrapR = new THREE.Mesh(thighStrapGeom, leatherMat);
-  thighStrapR.position.set(0.2, 1.0, 0);
-  group.add(thighStrapR);
 
   // ============================================================
-  // 头部（更精致的面部 + 多层发型）
+  // 颈部
   // ============================================================
-
-  // 头部主体（略拉长，更像真人比例）
-  const headGeom = new THREE.SphereGeometry(0.32, 20, 16);
-  const head = new THREE.Mesh(headGeom, skinMat);
-  head.position.y = 3.18;
-  head.scale.set(1, 1.08, 1.02);
-  head.castShadow = true;
-  group.add(head);
-
-  // 脖子
-  const neckGeom = new THREE.CylinderGeometry(0.13, 0.15, 0.14, 12);
+  const neckGeom = new THREE.CylinderGeometry(0.11, 0.13, 0.15, 12);
   const neck = new THREE.Mesh(neckGeom, skinMat);
-  neck.position.y = 2.82;
+  neck.position.y = 2.78;
   group.add(neck);
 
-  // 眼睛（蓝色眼眸 + 高光）
-  const eyeGeom = new THREE.SphereGeometry(0.05, 10, 10);
-  const leftEye = new THREE.Mesh(eyeGeom, eyeMat);
-  leftEye.position.set(-0.11, 3.22, 0.285);
-  group.add(leftEye);
-  const rightEye = new THREE.Mesh(eyeGeom, eyeMat);
-  rightEye.position.set(0.11, 3.22, 0.285);
-  group.add(rightEye);
+  // 锁骨区域（微妙的锁骨凸起）
+  const clavicleL = new THREE.Mesh(
+    new THREE.SphereGeometry(0.04, 8, 6),
+    tunicMat
+  );
+  clavicleL.position.set(-0.2, 2.65, 0.2);
+  clavicleL.scale.set(2.5, 0.6, 1);
+  group.add(clavicleL);
+  const clavicleR = new THREE.Mesh(
+    new THREE.SphereGeometry(0.04, 8, 6),
+    tunicMat
+  );
+  clavicleR.position.set(0.2, 2.65, 0.2);
+  clavicleR.scale.set(2.5, 0.6, 1);
+  group.add(clavicleR);
+
+  // ============================================================
+  // 头部 - 更自然的真人面部
+  // ============================================================
+  
+  // 头部主体 - 鹅蛋脸/椭圆脸
+  const headGroup = new THREE.Group();
+  headGroup.position.y = 3.05;
+  group.add(headGroup);
+
+  const headGeom = new THREE.SphereGeometry(0.32, 24, 18);
+  const head = new THREE.Mesh(headGeom, skinMat);
+  head.scale.set(0.95, 1.08, 1.02);
+  head.castShadow = true;
+  headGroup.add(head);
+
+  // 下颚 - 让脸型更立体
+  const jawGeom = new THREE.SphereGeometry(0.26, 16, 12, 0, Math.PI * 2, 0.4, 0.4);
+  const jaw = new THREE.Mesh(jawGeom, skinMat);
+  jaw.position.y = -0.22;
+  jaw.scale.set(1, 0.7, 0.9);
+  headGroup.add(jaw);
+
+  // 下巴
+  const chinGeom = new THREE.SphereGeometry(0.08, 10, 8);
+  const chin = new THREE.Mesh(chinGeom, skinMat);
+  chin.position.set(0, -0.3, 0.12);
+  chin.scale.set(1, 0.8, 0.9);
+  headGroup.add(chin);
+
+  // 眼窝（微妙的凹陷感）
+  const eyeSocketL = new THREE.Mesh(
+    new THREE.SphereGeometry(0.08, 10, 8),
+    skinSoftMat
+  );
+  eyeSocketL.position.set(-0.11, 0.08, 0.26);
+  eyeSocketL.scale.set(1.2, 0.8, 0.5);
+  headGroup.add(eyeSocketL);
+  const eyeSocketR = new THREE.Mesh(
+    new THREE.SphereGeometry(0.08, 10, 8),
+    skinSoftMat
+  );
+  eyeSocketR.position.set(0.11, 0.08, 0.26);
+  eyeSocketR.scale.set(1.2, 0.8, 0.5);
+  headGroup.add(eyeSocketR);
+
+  // 眼白
+  const eyeWhiteGeom = new THREE.SphereGeometry(0.055, 12, 10);
+  const leftEyeWhite = new THREE.Mesh(eyeWhiteGeom, eyeWhiteMat);
+  leftEyeWhite.position.set(-0.11, 0.09, 0.28);
+  leftEyeWhite.scale.set(1, 0.75, 0.4);
+  headGroup.add(leftEyeWhite);
+  const rightEyeWhite = new THREE.Mesh(eyeWhiteGeom, eyeWhiteMat);
+  rightEyeWhite.position.set(0.11, 0.09, 0.28);
+  rightEyeWhite.scale.set(1, 0.75, 0.4);
+  headGroup.add(rightEyeWhite);
+
+  // 眼珠
+  const irisGeom = new THREE.SphereGeometry(0.038, 12, 10);
+  const leftIris = new THREE.Mesh(irisGeom, eyeMat);
+  leftIris.position.set(-0.11, 0.09, 0.305);
+  leftIris.scale.set(1, 1, 0.3);
+  headGroup.add(leftIris);
+  const rightIris = new THREE.Mesh(irisGeom, eyeMat);
+  rightIris.position.set(0.11, 0.09, 0.305);
+  rightIris.scale.set(1, 1, 0.3);
+  headGroup.add(rightIris);
+
+  // 瞳孔
+  const pupilGeom = new THREE.SphereGeometry(0.018, 8, 6);
+  const pupilMat = new THREE.MeshBasicMaterial({ color: 0x111122 });
+  const leftPupil = new THREE.Mesh(pupilGeom, pupilMat);
+  leftPupil.position.set(-0.11, 0.09, 0.318);
+  leftPupil.scale.set(1, 1, 0.2);
+  headGroup.add(leftPupil);
+  const rightPupil = new THREE.Mesh(pupilGeom, pupilMat);
+  rightPupil.position.set(0.11, 0.09, 0.318);
+  rightPupil.scale.set(1, 1, 0.2);
+  headGroup.add(rightPupil);
 
   // 眼睛高光
-  const eyeHlGeom = new THREE.SphereGeometry(0.018, 6, 6);
+  const eyeHlGeom = new THREE.SphereGeometry(0.012, 6, 6);
   const leftEyeHl = new THREE.Mesh(eyeHlGeom, eyeHighlightMat);
-  leftEyeHl.position.set(-0.095, 3.235, 0.325);
-  group.add(leftEyeHl);
+  leftEyeHl.position.set(-0.098, 0.1, 0.325);
+  headGroup.add(leftEyeHl);
   const rightEyeHl = new THREE.Mesh(eyeHlGeom, eyeHighlightMat);
-  rightEyeHl.position.set(0.125, 3.235, 0.325);
-  group.add(rightEyeHl);
+  rightEyeHl.position.set(0.122, 0.1, 0.325);
+  headGroup.add(rightEyeHl);
 
-  // 眉毛（深蓝色，更精细）
-  const browGeom = new THREE.BoxGeometry(0.12, 0.025, 0.015);
+  // 上眼睑
+  const upperLidGeom = new THREE.SphereGeometry(0.06, 8, 6, 0, Math.PI * 2, 0, Math.PI * 0.5);
+  const upperLidL = new THREE.Mesh(upperLidGeom, skinMat);
+  upperLidL.position.set(-0.11, 0.11, 0.29);
+  upperLidL.scale.set(1.1, 0.6, 0.5);
+  headGroup.add(upperLidL);
+  const upperLidR = new THREE.Mesh(upperLidGeom, skinMat);
+  upperLidR.position.set(0.11, 0.11, 0.29);
+  upperLidR.scale.set(1.1, 0.6, 0.5);
+  headGroup.add(upperLidR);
+
+  // 眉毛 - 更自然的弧形
+  const browShape = new THREE.Shape();
+  browShape.moveTo(-0.06, 0);
+  browShape.quadraticCurveTo(0, 0.015, 0.06, 0);
+  browShape.quadraticCurveTo(0, -0.005, -0.06, 0);
+  const browExtrudeSettings = { depth: 0.005, bevelEnabled: false };
+  const browGeom = new THREE.ExtrudeGeometry(browShape, browExtrudeSettings);
   const leftBrow = new THREE.Mesh(browGeom, browMat);
-  leftBrow.position.set(-0.11, 3.33, 0.3);
-  leftBrow.rotation.z = 0.12;
-  group.add(leftBrow);
+  leftBrow.position.set(-0.11, 0.18, 0.295);
+  leftBrow.rotation.y = -0.1;
+  headGroup.add(leftBrow);
   const rightBrow = new THREE.Mesh(browGeom, browMat);
-  rightBrow.position.set(0.11, 3.33, 0.3);
-  rightBrow.rotation.z = -0.12;
-  group.add(rightBrow);
+  rightBrow.position.set(0.11, 0.18, 0.295);
+  rightBrow.rotation.y = 0.1;
+  headGroup.add(rightBrow);
 
-  // 鼻子（小三角锥体）
-  const noseGeom = new THREE.ConeGeometry(0.035, 0.08, 4);
-  const nose = new THREE.Mesh(noseGeom, skinMat);
-  nose.position.set(0, 3.16, 0.31);
-  nose.rotation.x = -Math.PI / 2;
-  nose.rotation.y = Math.PI / 4;
-  group.add(nose);
+  // 鼻子 - 更立体的结构
+  const noseBridge = new THREE.Mesh(
+    new THREE.SphereGeometry(0.025, 8, 6),
+    skinMat
+  );
+  noseBridge.position.set(0, 0.04, 0.29);
+  noseBridge.scale.set(0.6, 2, 0.8);
+  headGroup.add(noseBridge);
 
-  // 嘴巴（细薄片）
-  const mouthGeom = new THREE.BoxGeometry(0.09, 0.012, 0.02);
-  const mouthMat = new THREE.MeshPhongMaterial({
-    color: 0xc47a6a, shininess: 20
-  });
-  const mouth = new THREE.Mesh(mouthGeom, mouthMat);
-  mouth.position.set(0, 3.06, 0.305);
-  group.add(mouth);
-  // 上唇
-  const upperLipGeom = new THREE.BoxGeometry(0.06, 0.008, 0.015);
-  const upperLip = new THREE.Mesh(upperLipGeom, mouthMat);
-  upperLip.position.set(0, 3.07, 0.308);
-  upperLip.scale.set(1, 1, 0.8);
-  group.add(upperLip);
+  const noseTip = new THREE.Mesh(
+    new THREE.SphereGeometry(0.035, 10, 8),
+    skinMat
+  );
+  noseTip.position.set(0, -0.02, 0.3);
+  noseTip.scale.set(1, 0.75, 0.85);
+  headGroup.add(noseTip);
 
-  // 耳朵（左右）
-  const earGeom = new THREE.SphereGeometry(0.06, 8, 6);
+  // 鼻孔
+  const nostrilGeom = new THREE.SphereGeometry(0.01, 6, 4);
+  const nostrilMat = new THREE.MeshPhongMaterial({ color: 0xc09070 });
+  const nostrilL = new THREE.Mesh(nostrilGeom, nostrilMat);
+  nostrilL.position.set(-0.012, -0.035, 0.295);
+  nostrilL.scale.set(1, 0.8, 0.5);
+  headGroup.add(nostrilL);
+  const nostrilR = new THREE.Mesh(nostrilGeom, nostrilMat);
+  nostrilR.position.set(0.012, -0.035, 0.295);
+  nostrilR.scale.set(1, 0.8, 0.5);
+  headGroup.add(nostrilR);
+
+  // 嘴巴 - 更自然的唇形
+  const upperLip = new THREE.Mesh(
+    new THREE.SphereGeometry(0.04, 8, 6, 0, Math.PI * 2, 0, Math.PI * 0.6),
+    lipMat
+  );
+  upperLip.position.set(0, -0.12, 0.3);
+  upperLip.scale.set(1.6, 0.5, 0.35);
+  upperLip.rotation.x = -0.3;
+  headGroup.add(upperLip);
+
+  const lowerLip = new THREE.Mesh(
+    new THREE.SphereGeometry(0.045, 10, 8),
+    lipMat
+  );
+  lowerLip.position.set(0, -0.15, 0.295);
+  lowerLip.scale.set(1.8, 0.55, 0.3);
+  headGroup.add(lowerLip);
+
+  // 唇珠
+  const cupidBow = new THREE.Mesh(
+    new THREE.SphereGeometry(0.012, 6, 5),
+    lipMat
+  );
+  cupidBow.position.set(0, -0.105, 0.305);
+  cupidBow.scale.set(1, 1.2, 0.8);
+  headGroup.add(cupidBow);
+
+  // 耳朵
+  const earGeom = new THREE.SphereGeometry(0.06, 10, 8);
   const leftEar = new THREE.Mesh(earGeom, skinMat);
-  leftEar.position.set(-0.31, 3.2, 0);
-  leftEar.scale.set(0.5, 1.1, 0.7);
-  group.add(leftEar);
+  leftEar.position.set(-0.3, 0.02, 0);
+  leftEar.scale.set(0.45, 1.1, 0.65);
+  headGroup.add(leftEar);
   const rightEar = new THREE.Mesh(earGeom, skinMat);
-  rightEar.position.set(0.31, 3.2, 0);
-  rightEar.scale.set(0.5, 1.1, 0.7);
-  group.add(rightEar);
+  rightEar.position.set(0.3, 0.02, 0);
+  rightEar.scale.set(0.45, 1.1, 0.65);
+  headGroup.add(rightEar);
 
   // 耳朵内耳
-  const innerEarGeom = new THREE.SphereGeometry(0.035, 6, 4);
+  const innerEarGeom = new THREE.SphereGeometry(0.03, 8, 6);
   const innerEarMat = new THREE.MeshPhongMaterial({
-    color: 0xe0b090, shininess: 20
+    color: 0xe0b090, shininess: 15
   });
   const innerEarL = new THREE.Mesh(innerEarGeom, innerEarMat);
-  innerEarL.position.set(-0.29, 3.2, 0);
-  innerEarL.scale.set(0.4, 0.8, 0.5);
-  group.add(innerEarL);
+  innerEarL.position.set(-0.28, 0.02, 0.01);
+  innerEarL.scale.set(0.4, 0.7, 0.4);
+  headGroup.add(innerEarL);
   const innerEarR = new THREE.Mesh(innerEarGeom, innerEarMat);
-  innerEarR.position.set(0.29, 3.2, 0);
-  innerEarR.scale.set(0.4, 0.8, 0.5);
-  group.add(innerEarR);
+  innerEarR.position.set(0.28, 0.02, 0.01);
+  innerEarR.scale.set(0.4, 0.7, 0.4);
+  headGroup.add(innerEarR);
 
-  // 蓝色头发（多层立体发型）
-  const hairGroup = new THREE.Group();
-
-  // 主发量（头顶和后脑勺）
-  const hairMainGeom = new THREE.SphereGeometry(0.35, 16, 12, 0, Math.PI * 2, 0, Math.PI * 0.68);
-  const hairMain = new THREE.Mesh(hairMainGeom, hairMat);
-  hairMain.position.y = 0.02;
-  hairMain.castShadow = true;
-  hairGroup.add(hairMain);
-
-  // 头顶蓬松发冠
-  const hairTopGeom = new THREE.SphereGeometry(0.22, 10, 8, 0, Math.PI * 2, 0, Math.PI * 0.55);
-  const hairTop = new THREE.Mesh(hairTopGeom, hairMat);
-  hairTop.position.set(0, 0.2, -0.02);
-  hairTop.scale.set(1.1, 1, 0.9);
-  hairGroup.add(hairTop);
-
-  // 刘海（前发，分层）
-  const bangsGeom = new THREE.SphereGeometry(0.34, 12, 8, 0, Math.PI * 2, 0, Math.PI * 0.38);
-  const bangs = new THREE.Mesh(bangsGeom, hairMat);
-  bangs.position.set(0, -0.02, 0.16);
-  bangs.rotation.x = 0.35;
-  hairGroup.add(bangs);
-
-  // 刘海碎发（中间一撮）
-  const bangsStrandGeom = new THREE.SphereGeometry(0.06, 6, 4);
-  const bangsStrand1 = new THREE.Mesh(bangsStrandGeom, hairMat);
-  bangsStrand1.position.set(0, -0.12, 0.32);
-  bangsStrand1.scale.set(0.8, 1.8, 0.6);
-  bangsStrand1.rotation.x = 0.2;
-  hairGroup.add(bangsStrand1);
-  const bangsStrand2 = new THREE.Mesh(bangsStrandGeom, hairMat);
-  bangsStrand2.position.set(-0.08, -0.10, 0.31);
-  bangsStrand2.scale.set(0.7, 1.5, 0.5);
-  bangsStrand2.rotation.x = 0.25;
-  bangsStrand2.rotation.z = -0.2;
-  hairGroup.add(bangsStrand2);
-  const bangsStrand3 = new THREE.Mesh(bangsStrandGeom, hairMat);
-  bangsStrand3.position.set(0.08, -0.10, 0.31);
-  bangsStrand3.scale.set(0.7, 1.5, 0.5);
-  bangsStrand3.rotation.x = 0.25;
-  bangsStrand3.rotation.z = 0.2;
-  hairGroup.add(bangsStrand3);
-
-  // 侧发（左侧）
-  const sideHairL = new THREE.Mesh(
-    new THREE.SphereGeometry(0.1, 8, 6),
-    hairMat
+  // 颧骨（微妙的凸起增加立体感）
+  const cheekL = new THREE.Mesh(
+    new THREE.SphereGeometry(0.05, 8, 6),
+    skinMat
   );
-  sideHairL.position.set(-0.3, -0.05, 0.05);
-  sideHairL.scale.set(0.8, 2.2, 0.9);
-  sideHairL.rotation.z = 0.15;
-  hairGroup.add(sideHairL);
-  // 侧发（右侧）
-  const sideHairR = new THREE.Mesh(
-    new THREE.SphereGeometry(0.1, 8, 6),
-    hairMat
+  cheekL.position.set(-0.17, -0.02, 0.24);
+  cheekL.scale.set(1.3, 0.8, 0.6);
+  headGroup.add(cheekL);
+  const cheekR = new THREE.Mesh(
+    new THREE.SphereGeometry(0.05, 8, 6),
+    skinMat
   );
-  sideHairR.position.set(0.3, -0.05, 0.05);
-  sideHairR.scale.set(0.8, 2.2, 0.9);
-  sideHairR.rotation.z = -0.15;
-  hairGroup.add(sideHairR);
+  cheekR.position.set(0.17, -0.02, 0.24);
+  cheekR.scale.set(1.3, 0.8, 0.6);
+  headGroup.add(cheekR);
 
-  // 后发（稍长的发尾）
-  const backHair = new THREE.Mesh(
-    new THREE.SphereGeometry(0.18, 10, 8),
-    hairDarkMat
-  );
-  backHair.position.set(0, -0.05, -0.28);
-  backHair.scale.set(1.3, 1.8, 0.8);
-  backHair.rotation.x = -0.2;
-  hairGroup.add(backHair);
-
-  // 发尾尖端
-  const hairTip = new THREE.Mesh(
-    new THREE.ConeGeometry(0.12, 0.2, 6),
-    hairDarkMat
-  );
-  hairTip.position.set(0, -0.25, -0.3);
-  hairTip.rotation.x = -0.5;
-  hairGroup.add(hairTip);
-
-  hairGroup.position.y = 3.18;
-  group.add(hairGroup);
+  // 头发
+  const hairGroup = createHairstyle(appearance.hairstyle, hairMat, hairDarkMat, isFemale);
+  headGroup.add(hairGroup);
 
   // ============================================================
-  // 手臂（层级结构：上臂 -> 前臂 -> 手）
-  // 上臂作为 userData.leftArm / rightArm 的引用
+  // 手臂 - 层级结构，更自然的肌肉形态
   // ============================================================
 
-  // 上臂几何体（肩部为原点，向下延伸，用于正确的关节旋转）
-  const upperArmGeom = new THREE.CapsuleGeometry(0.11, 0.42, 6, 10);
-  upperArmGeom.translate(0, -0.32, 0); // 肩部在原点，向下延伸
+  // 肩部
+  const shoulderGeom = new THREE.SphereGeometry(0.13, 12, 10);
+  const shoulderL = new THREE.Mesh(shoulderGeom, tunicMat);
+  shoulderL.position.set(-0.45, 2.62, 0);
+  shoulderL.scale.set(1, 0.9, 1);
+  shoulderL.castShadow = true;
+  group.add(shoulderL);
+  const shoulderR = new THREE.Mesh(shoulderGeom, tunicMat);
+  shoulderR.position.set(0.45, 2.62, 0);
+  shoulderR.scale.set(1, 0.9, 1);
+  shoulderR.castShadow = true;
+  group.add(shoulderR);
 
-  // 前臂几何体（肘部为原点，向下延伸）
-  const forearmGeom = new THREE.CapsuleGeometry(0.09, 0.35, 5, 9);
-  forearmGeom.translate(0, -0.265, 0);
+  // 上臂几何体（肩部为原点，向下延伸）
+  const upperArmGeom = new THREE.CapsuleGeometry(0.095, 0.4, 6, 10);
+  upperArmGeom.translate(0, -0.295, 0);
+
+  // 前臂几何体（肘部为原点，向下延伸，比上臂略细）
+  const forearmGeom = new THREE.CapsuleGeometry(0.075, 0.32, 5, 9);
+  forearmGeom.translate(0, -0.235, 0);
 
   // --- 左臂 ---
   const leftUpperArm = new THREE.Mesh(upperArmGeom, tunicMat);
-  leftUpperArm.position.set(-0.48, 2.68, 0);
-  leftUpperArm.rotation.z = 0.12;
+  leftUpperArm.position.set(-0.45, 2.62, 0);
+  leftUpperArm.rotation.z = 0.1;
   leftUpperArm.castShadow = true;
   group.add(leftUpperArm);
 
-  // 左上臂肩部连接处（装饰环）
-  const armCuffGeom = new THREE.TorusGeometry(0.12, 0.025, 6, 12);
-  const armCuffL = new THREE.Mesh(armCuffGeom, leatherMat);
-  armCuffL.position.set(-0.48, 2.68, 0);
-  armCuffL.rotation.x = Math.PI / 2;
-  armCuffL.rotation.z = 0.12;
-  group.add(armCuffL);
-
-  // 左肘护具
-  const elbowPadGeom = new THREE.SphereGeometry(0.08, 8, 6, 0, Math.PI * 2, 0, Math.PI * 0.6);
-  const elbowPadL = new THREE.Mesh(elbowPadGeom, metalDarkMat);
-  elbowPadL.position.set(0, -0.64, 0); // 上臂末端 = 0.42 + 2*0.11 = 0.64
-  elbowPadL.rotation.x = Math.PI;
-  elbowPadL.scale.set(1.1, 0.6, 1.1);
-  leftUpperArm.add(elbowPadL);
-
-  // 左前臂（作为上臂的子对象，随上臂摆动）
+  // 左前臂（作为上臂的子对象）
   const leftForearm = new THREE.Mesh(forearmGeom, skinMat);
-  leftForearm.position.set(0, -0.64, 0);
+  leftForearm.position.set(0, -0.59, 0);
   leftForearm.castShadow = true;
   leftUpperArm.add(leftForearm);
 
-  // 左护腕（皮革 + 金属）
-  const bracerGeom = new THREE.CylinderGeometry(0.1, 0.11, 0.18, 12);
-  const bracerL = new THREE.Mesh(bracerGeom, leatherDarkMat);
-  bracerL.position.set(0, -0.35, 0); // 前臂中部
-  leftForearm.add(bracerL);
-  // 护腕金属带
-  const bracerBandGeom = new THREE.TorusGeometry(0.105, 0.012, 6, 12);
-  const bracerBandL1 = new THREE.Mesh(bracerBandGeom, metalDarkMat);
-  bracerBandL1.position.set(0, -0.28, 0);
-  bracerBandL1.rotation.x = Math.PI / 2;
-  leftForearm.add(bracerBandL1);
-  const bracerBandL2 = new THREE.Mesh(bracerBandGeom, metalDarkMat);
-  bracerBandL2.position.set(0, -0.42, 0);
-  bracerBandL2.rotation.x = Math.PI / 2;
-  leftForearm.add(bracerBandL2);
-
-  // 左手（手套）
-  const handGeom = new THREE.SphereGeometry(0.085, 10, 8);
-  const gloveMat = new THREE.MeshPhongMaterial({
-    color: 0x4a3a2a, shininess: 15, specular: 0x221100
-  });
-  const leftHand = new THREE.Mesh(handGeom, gloveMat);
-  leftHand.position.set(0, -0.53, 0);
-  leftHand.scale.set(0.9, 1.1, 0.75);
-  leftForearm.add(leftHand);
-
-  // 左手拇指
-  const thumbGeom = new THREE.SphereGeometry(0.035, 6, 5);
-  const thumbL = new THREE.Mesh(thumbGeom, gloveMat);
-  thumbL.position.set(0.06, -0.48, 0);
-  thumbL.scale.set(1, 1.2, 0.8);
-  thumbL.rotation.z = 0.5;
-  leftForearm.add(thumbL);
+  // 左手
+  const leftHandGroup = createHand(skinMat, false);
+  leftHandGroup.position.set(0, -0.47, 0);
+  leftHandGroup.rotation.x = 0.05;
+  leftForearm.add(leftHandGroup);
 
   // --- 右臂 ---
   const rightUpperArm = new THREE.Mesh(upperArmGeom, tunicMat);
-  rightUpperArm.position.set(0.48, 2.68, 0);
-  rightUpperArm.rotation.z = -0.12;
+  rightUpperArm.position.set(0.45, 2.62, 0);
+  rightUpperArm.rotation.z = -0.1;
   rightUpperArm.castShadow = true;
   group.add(rightUpperArm);
 
-  // 右上臂肩部装饰环
-  const armCuffR = new THREE.Mesh(armCuffGeom, leatherMat);
-  armCuffR.position.set(0.48, 2.68, 0);
-  armCuffR.rotation.x = Math.PI / 2;
-  armCuffR.rotation.z = -0.12;
-  group.add(armCuffR);
-
-  // 右肘护具
-  const elbowPadR = new THREE.Mesh(elbowPadGeom, metalDarkMat);
-  elbowPadR.position.set(0, -0.64, 0);
-  elbowPadR.rotation.x = Math.PI;
-  elbowPadR.scale.set(1.1, 0.6, 1.1);
-  rightUpperArm.add(elbowPadR);
-
   // 右前臂（作为上臂的子对象）
   const rightForearm = new THREE.Mesh(forearmGeom, skinMat);
-  rightForearm.position.set(0, -0.64, 0);
+  rightForearm.position.set(0, -0.59, 0);
   rightForearm.castShadow = true;
   rightUpperArm.add(rightForearm);
 
-  // 右护腕
-  const bracerR = new THREE.Mesh(bracerGeom, leatherDarkMat);
-  bracerR.position.set(0, -0.35, 0);
-  rightForearm.add(bracerR);
-  // 护腕金属带
-  const bracerBandR1 = new THREE.Mesh(bracerBandGeom, metalDarkMat);
-  bracerBandR1.position.set(0, -0.28, 0);
-  bracerBandR1.rotation.x = Math.PI / 2;
-  rightForearm.add(bracerBandR1);
-  const bracerBandR2 = new THREE.Mesh(bracerBandGeom, metalDarkMat);
-  bracerBandR2.position.set(0, -0.42, 0);
-  bracerBandR2.rotation.x = Math.PI / 2;
-  rightForearm.add(bracerBandR2);
-
-  // 右手（手套）
-  const rightHand = new THREE.Mesh(handGeom, gloveMat);
-  rightHand.position.set(0, -0.53, 0);
-  rightHand.scale.set(0.9, 1.1, 0.75);
-  rightForearm.add(rightHand);
-
-  // 右手拇指
-  const thumbR = new THREE.Mesh(thumbGeom, gloveMat);
-  thumbR.position.set(-0.06, -0.48, 0);
-  thumbR.scale.set(1, 1.2, 0.8);
-  thumbR.rotation.z = -0.5;
-  rightForearm.add(thumbR);
+  // 右手
+  const rightHandGroup = createHand(skinMat, true);
+  rightHandGroup.position.set(0, -0.47, 0);
+  rightHandGroup.rotation.x = 0.05;
+  rightForearm.add(rightHandGroup);
 
   // ============================================================
-  // 腿部（层级结构：大腿 -> 小腿 -> 靴子）
-  // 大腿作为 userData.leftLeg / rightLeg 的引用
+  // 腿部 - 层级结构，更自然的腿部形态
   // ============================================================
 
   // 大腿几何体（髋部为原点，向下延伸）
-  const thighGeom = new THREE.CapsuleGeometry(0.15, 0.48, 6, 10);
-  thighGeom.translate(0, -0.39, 0); // 髋部在原点，向下延伸
+  const thighGeom = new THREE.CapsuleGeometry(0.13, 0.42, 6, 10);
+  thighGeom.translate(0, -0.34, 0);
 
-  // 小腿几何体（膝盖为原点，向下延伸）
-  const calfGeom = new THREE.CapsuleGeometry(0.12, 0.42, 5, 9);
-  calfGeom.translate(0, -0.33, 0);
+  // 小腿几何体（膝盖为原点，向下延伸，小腿肚略粗）
+  const calfGeom = new THREE.CapsuleGeometry(0.1, 0.38, 5, 9);
+  calfGeom.translate(0, -0.29, 0);
 
   // --- 左腿 ---
   const leftThigh = new THREE.Mesh(thighGeom, pantsMat);
-  leftThigh.position.set(-0.2, 1.45, 0);
+  leftThigh.position.set(-0.18, 1.38, 0);
   leftThigh.castShadow = true;
   group.add(leftThigh);
 
-  // 左膝护具
-  const kneePadGeom = new THREE.SphereGeometry(0.1, 8, 6, 0, Math.PI * 2, 0, Math.PI * 0.55);
-  const kneePadL = new THREE.Mesh(kneePadGeom, metalDarkMat);
-  kneePadL.position.set(0, -0.78, 0); // 大腿末端 = 0.48 + 2*0.15 = 0.78
-  kneePadL.rotation.x = Math.PI;
-  kneePadL.scale.set(1, 0.55, 1);
-  leftThigh.add(kneePadL);
+  // 左膝
+  const kneeL = new THREE.Mesh(
+    new THREE.SphereGeometry(0.085, 10, 8),
+    pantsMat
+  );
+  kneeL.position.set(0, -0.68, 0.02);
+  kneeL.scale.set(1, 0.7, 0.9);
+  leftThigh.add(kneeL);
 
-  // 左小腿（作为大腿的子对象，随大腿摆动）
+  // 左小腿（作为大腿的子对象）
   const leftCalf = new THREE.Mesh(calfGeom, pantsMat);
-  leftCalf.position.set(0, -0.78, 0);
+  leftCalf.position.set(0, -0.68, 0);
   leftCalf.castShadow = true;
   leftThigh.add(leftCalf);
 
-  // 左护胫（小腿前侧）
-  const greaveGeom = new THREE.BoxGeometry(0.14, 0.3, 0.04);
-  const greaveL = new THREE.Mesh(greaveGeom, leatherDarkMat);
-  greaveL.position.set(0, -0.3, 0.1);
-  greaveL.scale.set(1, 1, 0.5);
-  leftCalf.add(greaveL);
-  // 护胫金属边
-  const greaveTrimGeom = new THREE.BoxGeometry(0.15, 0.02, 0.05);
-  const greaveTrimL1 = new THREE.Mesh(greaveTrimGeom, metalDarkMat);
-  greaveTrimL1.position.set(0, -0.16, 0.11);
-  leftCalf.add(greaveTrimL1);
-  const greaveTrimL2 = new THREE.Mesh(greaveTrimGeom, metalDarkMat);
-  greaveTrimL2.position.set(0, -0.44, 0.11);
-  leftCalf.add(greaveTrimL2);
+  // 小腿肚（后侧凸起）
+  const calfMuscleL = new THREE.Mesh(
+    new THREE.SphereGeometry(0.08, 10, 8),
+    pantsMat
+  );
+  calfMuscleL.position.set(0, -0.2, -0.05);
+  calfMuscleL.scale.set(0.8, 1.3, 0.8);
+  leftCalf.add(calfMuscleL);
 
-  // 左脚靴（分层细节：鞋底 + 鞋帮 + 鞋头 + 鞋带）
-  const bootGroupL = new THREE.Group();
-  bootGroupL.position.set(0, -0.66, 0.05);
-  leftCalf.add(bootGroupL);
-
-  // 鞋底
-  const soleGeom = new THREE.BoxGeometry(0.2, 0.06, 0.34);
-  const soleL = new THREE.Mesh(soleGeom, bootDarkMat);
-  soleL.position.y = -0.03;
-  soleL.castShadow = true;
-  bootGroupL.add(soleL);
-
-  // 鞋帮（主体）
-  const bootUpperGeom = new THREE.BoxGeometry(0.18, 0.18, 0.3);
-  const bootUpperL = new THREE.Mesh(bootUpperGeom, bootMat);
-  bootUpperL.position.y = 0.09;
-  bootUpperL.castShadow = true;
-  bootGroupL.add(bootUpperL);
-
-  // 鞋头（加固）
-  const toeCapGeom = new THREE.SphereGeometry(0.09, 8, 6);
-  const toeCapL = new THREE.Mesh(toeCapGeom, bootDarkMat);
-  toeCapL.position.set(0, 0.04, 0.14);
-  toeCapL.scale.set(1, 0.9, 1.1);
-  bootGroupL.add(toeCapL);
-
-  // 靴筒（向上延伸包住小腿下部）
-  const bootCuffGeom = new THREE.CylinderGeometry(0.13, 0.11, 0.1, 10);
-  const bootCuffL = new THREE.Mesh(bootCuffGeom, bootMat);
-  bootCuffL.position.set(0, 0.22, 0);
-  bootGroupL.add(bootCuffL);
-
-  // 靴子装饰扣
-  const bootBuckleGeom = new THREE.BoxGeometry(0.06, 0.05, 0.02);
-  const bootBuckleL = new THREE.Mesh(bootBuckleGeom, metalMat);
-  bootBuckleL.position.set(0, 0.14, 0.16);
-  bootGroupL.add(bootBuckleL);
-
-  // 靴子鞋带（横向）
-  const laceGeom = new THREE.CylinderGeometry(0.006, 0.006, 0.14, 6);
-  const laceMat = new THREE.MeshPhongMaterial({ color: 0x2a2a3a });
-  for (let i = 0; i < 3; i++) {
-    const lace = new THREE.Mesh(laceGeom, laceMat);
-    lace.position.set(0, 0.05 + i * 0.05, 0.15);
-    lace.rotation.z = Math.PI / 2;
-    bootGroupL.add(lace);
-  }
+  // 左脚靴
+  const bootL = createBoot(bootMat, bootDarkMat);
+  bootL.position.set(0, -0.58, 0.05);
+  leftCalf.add(bootL);
 
   // --- 右腿 ---
   const rightThigh = new THREE.Mesh(thighGeom, pantsMat);
-  rightThigh.position.set(0.2, 1.45, 0);
+  rightThigh.position.set(0.18, 1.38, 0);
   rightThigh.castShadow = true;
   group.add(rightThigh);
 
-  // 右膝护具
-  const kneePadR = new THREE.Mesh(kneePadGeom, metalDarkMat);
-  kneePadR.position.set(0, -0.78, 0);
-  kneePadR.rotation.x = Math.PI;
-  kneePadR.scale.set(1, 0.55, 1);
-  rightThigh.add(kneePadR);
+  // 右膝
+  const kneeR = new THREE.Mesh(
+    new THREE.SphereGeometry(0.085, 10, 8),
+    pantsMat
+  );
+  kneeR.position.set(0, -0.68, 0.02);
+  kneeR.scale.set(1, 0.7, 0.9);
+  rightThigh.add(kneeR);
 
   // 右小腿（作为大腿的子对象）
   const rightCalf = new THREE.Mesh(calfGeom, pantsMat);
-  rightCalf.position.set(0, -0.78, 0);
+  rightCalf.position.set(0, -0.68, 0);
   rightCalf.castShadow = true;
   rightThigh.add(rightCalf);
 
-  // 右护胫
-  const greaveR = new THREE.Mesh(greaveGeom, leatherDarkMat);
-  greaveR.position.set(0, -0.3, 0.1);
-  greaveR.scale.set(1, 1, 0.5);
-  rightCalf.add(greaveR);
-  const greaveTrimR1 = new THREE.Mesh(greaveTrimGeom, metalDarkMat);
-  greaveTrimR1.position.set(0, -0.16, 0.11);
-  rightCalf.add(greaveTrimR1);
-  const greaveTrimR2 = new THREE.Mesh(greaveTrimGeom, metalDarkMat);
-  greaveTrimR2.position.set(0, -0.44, 0.11);
-  rightCalf.add(greaveTrimR2);
+  // 小腿肚
+  const calfMuscleR = new THREE.Mesh(
+    new THREE.SphereGeometry(0.08, 10, 8),
+    pantsMat
+  );
+  calfMuscleR.position.set(0, -0.2, -0.05);
+  calfMuscleR.scale.set(0.8, 1.3, 0.8);
+  rightCalf.add(calfMuscleR);
 
-  // 右脚靴（细节与左脚对称）
-  const bootGroupR = new THREE.Group();
-  bootGroupR.position.set(0, -0.66, 0.05);
-  rightCalf.add(bootGroupR);
-
-  const soleR = new THREE.Mesh(soleGeom, bootDarkMat);
-  soleR.position.y = -0.03;
-  soleR.castShadow = true;
-  bootGroupR.add(soleR);
-
-  const bootUpperR = new THREE.Mesh(bootUpperGeom, bootMat);
-  bootUpperR.position.y = 0.09;
-  bootUpperR.castShadow = true;
-  bootGroupR.add(bootUpperR);
-
-  const toeCapR = new THREE.Mesh(toeCapGeom, bootDarkMat);
-  toeCapR.position.set(0, 0.04, 0.14);
-  toeCapR.scale.set(1, 0.9, 1.1);
-  bootGroupR.add(toeCapR);
-
-  const bootCuffR = new THREE.Mesh(bootCuffGeom, bootMat);
-  bootCuffR.position.set(0, 0.22, 0);
-  bootGroupR.add(bootCuffR);
-
-  const bootBuckleR = new THREE.Mesh(bootBuckleGeom, metalMat);
-  bootBuckleR.position.set(0, 0.14, 0.16);
-  bootGroupR.add(bootBuckleR);
-
-  for (let i = 0; i < 3; i++) {
-    const lace = new THREE.Mesh(laceGeom, laceMat);
-    lace.position.set(0, 0.05 + i * 0.05, 0.15);
-    lace.rotation.z = Math.PI / 2;
-    bootGroupR.add(lace);
-  }
+  // 右脚靴
+  const bootR = createBoot(bootMat, bootDarkMat);
+  bootR.position.set(0, -0.58, 0.05);
+  rightCalf.add(bootR);
 
   // ============================================================
-  // 披风（更精致的双层披风）
+  // 披风（简洁版）
   // ============================================================
   const capeGroup = new THREE.Group();
-
-  // 披风外层
-  const capeOuterGeom = new THREE.PlaneGeometry(0.9, 1.5, 4, 5);
-  const capeOuter = new THREE.Mesh(capeOuterGeom, capeMat);
-  capeOuter.position.set(0, 0, 0);
-  capeOuter.castShadow = true;
-  capeGroup.add(capeOuter);
-
-  // 披风内层
-  const capeInner = new THREE.Mesh(capeOuterGeom, capeInnerMat);
-  capeInner.position.set(0, 0, 0.02);
-  capeInner.scale.set(0.95, 0.95, 1);
-  capeGroup.add(capeInner);
-
-  // 披风立领
-  const capeCollarGeom = new THREE.PlaneGeometry(0.5, 0.25, 3, 2);
-  const capeCollar = new THREE.Mesh(capeCollarGeom, capeMat);
-  capeCollar.position.set(0, 0.68, 0.08);
-  capeCollar.rotation.x = -0.6;
-  capeGroup.add(capeCollar);
-
-  // 披风扣
-  const capeClaspGeom = new THREE.CircleGeometry(0.05, 10);
-  const capeClasp = new THREE.Mesh(capeClaspGeom, metalMat);
-  capeClasp.position.set(0, 0.55, 0.12);
-  capeGroup.add(capeClasp);
-  const capeClaspGem = new THREE.Mesh(
-    new THREE.OctahedronGeometry(0.025, 0),
-    gemMat
-  );
-  capeClaspGem.position.set(0, 0.55, 0.15);
-  capeGroup.add(capeClaspGem);
-
-  capeGroup.position.set(0, 2.0, -0.3);
-  capeGroup.rotation.x = 0.08;
+  const capeGeom = new THREE.PlaneGeometry(0.85, 1.4, 4, 5);
+  const capeMat = new THREE.MeshPhongMaterial({
+    color: topConfig.colorDark, shininess: 15, side: THREE.DoubleSide
+  });
+  const cape = new THREE.Mesh(capeGeom, capeMat);
+  cape.castShadow = true;
+  capeGroup.add(cape);
+  capeGroup.position.set(0, 1.95, -0.28);
+  capeGroup.rotation.x = 0.1;
   group.add(capeGroup);
 
   // ============================================================
-  // 存储引用（保留所有必要的 userData 字段）
-  // leftArm / rightArm 指向上臂
-  // leftLeg / rightLeg 指向大腿
+  // 存储引用
   // ============================================================
   group.userData = {
     leftArm: leftUpperArm,
     rightArm: rightUpperArm,
     leftLeg: leftThigh,
     rightLeg: rightThigh,
-    body,
+    body: chest,
     walkPhase: 0
   };
 
   return group;
+}
+
+// 创建手部（带手指）
+function createHand(skinMat, isRight) {
+  const handGroup = new THREE.Group();
+  const mirror = isRight ? 1 : -1;
+
+  // 手掌
+  const palmGeom = new THREE.SphereGeometry(0.07, 12, 10);
+  const palm = new THREE.Mesh(palmGeom, skinMat);
+  palm.scale.set(0.85, 1.05, 0.55);
+  palm.position.set(0, 0, 0);
+  handGroup.add(palm);
+
+  // 手指参数
+  const fingerLengths = [0.065, 0.075, 0.07, 0.055]; // 食、中、无名、小指
+  const fingerY = [0.04, 0.045, 0.035, 0.015];
+  const fingerZ = [0.04, 0.038, 0.035, 0.025];
+  const fingerX = [-0.045, -0.015, 0.015, 0.04];
+
+  // 四根手指
+  for (let i = 0; i < 4; i++) {
+    const fingerGroup = new THREE.Group();
+    fingerGroup.position.set(fingerX[i] * mirror, fingerY[i], fingerZ[i]);
+    
+    // 指根
+    const f1 = new THREE.Mesh(
+      new THREE.CapsuleGeometry(0.018, fingerLengths[i] * 0.4, 4, 6),
+      skinMat
+    );
+    f1.position.y = -fingerLengths[i] * 0.2;
+    fingerGroup.add(f1);
+    
+    // 指中
+    const f2 = new THREE.Mesh(
+      new THREE.CapsuleGeometry(0.015, fingerLengths[i] * 0.35, 4, 6),
+      skinMat
+    );
+    f2.position.y = -fingerLengths[i] * 0.55;
+    fingerGroup.add(f2);
+    
+    // 指尖
+    const f3 = new THREE.Mesh(
+      new THREE.SphereGeometry(0.013, 8, 6),
+      skinMat
+    );
+    f3.position.y = -fingerLengths[i] * 0.8;
+    f3.scale.set(1, 1.1, 0.9);
+    fingerGroup.add(f3);
+    
+    fingerGroup.rotation.x = -0.15;
+    handGroup.add(fingerGroup);
+  }
+
+  // 拇指
+  const thumbGroup = new THREE.Group();
+  thumbGroup.position.set(0.055 * mirror, 0, 0.02);
+  thumbGroup.rotation.z = (isRight ? 0.6 : -0.6);
+  thumbGroup.rotation.y = 0.3;
+  
+  const thumb1 = new THREE.Mesh(
+    new THREE.CapsuleGeometry(0.022, 0.03, 4, 6),
+    skinMat
+  );
+  thumb1.position.y = -0.02;
+  thumbGroup.add(thumb1);
+  
+  const thumb2 = new THREE.Mesh(
+    new THREE.SphereGeometry(0.018, 8, 6),
+    skinMat
+  );
+  thumb2.position.y = -0.05;
+  thumb2.scale.set(1, 1.2, 0.9);
+  thumbGroup.add(thumb2);
+  
+  handGroup.add(thumbGroup);
+
+  return handGroup;
+}
+
+// 创建靴子
+function createBoot(bootMat, bootDarkMat) {
+  const bootGroup = new THREE.Group();
+
+  // 鞋底
+  const soleGeom = new THREE.BoxGeometry(0.17, 0.05, 0.3);
+  const sole = new THREE.Mesh(soleGeom, bootDarkMat);
+  sole.position.y = -0.025;
+  sole.castShadow = true;
+  bootGroup.add(sole);
+
+  // 鞋帮（主体）- 更圆润的形状
+  const bootUpperGeom = new THREE.SphereGeometry(0.1, 12, 10);
+  const bootUpper = new THREE.Mesh(bootUpperGeom, bootMat);
+  bootUpper.position.y = 0.07;
+  bootUpper.scale.set(0.85, 1.1, 1.4);
+  bootUpper.castShadow = true;
+  bootGroup.add(bootUpper);
+
+  // 鞋头
+  const toeCap = new THREE.Mesh(
+    new THREE.SphereGeometry(0.07, 10, 8),
+    bootDarkMat
+  );
+  toeCap.position.set(0, 0.03, 0.13);
+  toeCap.scale.set(1, 0.9, 1.1);
+  bootGroup.add(toeCap);
+
+  // 靴筒
+  const bootCuffGeom = new THREE.CylinderGeometry(0.11, 0.095, 0.08, 12);
+  const bootCuff = new THREE.Mesh(bootCuffGeom, bootMat);
+  bootCuff.position.set(0, 0.18, 0);
+  bootGroup.add(bootCuff);
+
+  return bootGroup;
 }
 
 // ========== 魂兽 ==========
@@ -8641,6 +9601,9 @@ function showSoulAvatar() {
       case 'sword':
         soulAvatar = createSwordAvatar(soul.color);
         break;
+      case 'haotian_hammer':
+        soulAvatar = createHaotianHammerAvatar(soul.color);
+        break;
     }
     
     if (soulAvatar) {
@@ -10540,6 +11503,169 @@ function createSwordAvatar(color) {
   return group;
 }
 
+// 昊天锤虚影
+function createHaotianHammerAvatar(color) {
+  const group = new THREE.Group();
+
+  const darkIronMat = new THREE.MeshPhongMaterial({
+    color: 0x2a2a2a,
+    emissive: 0x1a1a1a,
+    emissiveIntensity: 0.3,
+    transparent: true,
+    opacity: 0.85,
+    shininess: 60,
+    specular: 0x666666
+  });
+
+  const goldMat = new THREE.MeshPhongMaterial({
+    color: 0xffd700,
+    emissive: 0xdaa520,
+    emissiveIntensity: 0.6,
+    transparent: true,
+    opacity: 0.9,
+    shininess: 100,
+    specular: 0xffffaa
+  });
+
+  const glowMat = new THREE.MeshBasicMaterial({
+    color: 0xffd700,
+    transparent: true,
+    opacity: 0.3
+  });
+
+  // ===== 锤头 =====
+  // 主体（短粗的圆柱体）
+  const headGeom = new THREE.CylinderGeometry(0.5, 0.55, 0.9, 12);
+  const head = new THREE.Mesh(headGeom, darkIronMat.clone());
+  head.rotation.z = Math.PI / 2;
+  head.position.y = 0.3;
+  group.add(head);
+
+  // 锤头两端凸起（锤面）
+  [-0.5, 0.5].forEach(x => {
+    const faceGeom = new THREE.CylinderGeometry(0.55, 0.5, 0.15, 12);
+    const face = new THREE.Mesh(faceGeom, darkIronMat.clone());
+    face.rotation.z = Math.PI / 2;
+    face.position.set(x, 0.3, 0);
+    group.add(face);
+
+    // 锤面金色装饰环
+    const ringGeom = new THREE.TorusGeometry(0.45, 0.05, 6, 16);
+    const ring = new THREE.Mesh(ringGeom, goldMat.clone());
+    ring.rotation.y = Math.PI / 2;
+    ring.position.set(x + (x > 0 ? 0.08 : -0.08), 0.3, 0);
+    group.add(ring);
+  });
+
+  // 锤头中央金色纹饰
+  const centerBandGeom = new THREE.TorusGeometry(0.52, 0.06, 6, 16);
+  const centerBand = new THREE.Mesh(centerBandGeom, goldMat.clone());
+  centerBand.rotation.y = Math.PI / 2;
+  centerBand.position.set(0, 0.3, 0);
+  group.add(centerBand);
+
+  // 锤头上的金色符文装饰
+  for (let i = 0; i < 4; i++) {
+    const angle = (i / 4) * Math.PI * 2;
+    const runeGeom = new THREE.BoxGeometry(0.15, 0.08, 0.04);
+    const rune = new THREE.Mesh(runeGeom, goldMat.clone());
+    rune.position.set(
+      Math.cos(angle) * 0.5,
+      0.3,
+      Math.sin(angle) * 0.5
+    );
+    rune.rotation.y = angle;
+    group.add(rune);
+  }
+
+  // ===== 锤柄 =====
+  const handleGeom = new THREE.CylinderGeometry(0.1, 0.12, 1.8, 10);
+  const handleMat = new THREE.MeshPhongMaterial({
+    color: 0x4a3020,
+    emissive: 0x2a1810,
+    emissiveIntensity: 0.2,
+    transparent: true,
+    opacity: 0.8,
+    shininess: 30
+  });
+  const handle = new THREE.Mesh(handleGeom, handleMat);
+  handle.position.y = -1.0;
+  group.add(handle);
+
+  // 锤柄缠绕纹理
+  for (let i = 0; i < 12; i++) {
+    const wrapY = -0.3 + i * 0.13;
+    const wrapGeom = new THREE.TorusGeometry(0.11, 0.02, 4, 10);
+    const wrap = new THREE.Mesh(wrapGeom, new THREE.MeshPhongMaterial({
+      color: 0x6b4423,
+      transparent: true,
+      opacity: 0.7
+    }));
+    wrap.position.y = wrapY;
+    wrap.rotation.x = Math.PI / 2;
+    group.add(wrap);
+  }
+
+  // 锤柄顶部金色护手
+  const guardGeom = new THREE.CylinderGeometry(0.25, 0.2, 0.12, 10);
+  const guard = new THREE.Mesh(guardGeom, goldMat.clone());
+  guard.position.y = -0.15;
+  group.add(guard);
+
+  // 锤柄底部金色装饰
+  const pommelGeom = new THREE.SphereGeometry(0.15, 10, 8);
+  const pommel = new THREE.Mesh(pommelGeom, goldMat.clone());
+  pommel.position.y = -1.85;
+  group.add(pommel);
+
+  // ===== 昊天锤光晕 =====
+  // 整体光晕
+  const hammerGlowGeom = new THREE.SphereGeometry(1.2, 16, 12);
+  const hammerGlowMat = new THREE.MeshBasicMaterial({
+    color: 0xffd700,
+    transparent: true,
+    opacity: 0.08
+  });
+  const hammerGlow = new THREE.Mesh(hammerGlowGeom, hammerGlowMat);
+  hammerGlow.position.y = 0.2;
+  group.add(hammerGlow);
+
+  // 锤头周围的闪电/能量粒子
+  const particleCount = 12;
+  for (let i = 0; i < particleCount; i++) {
+    const angle = (i / particleCount) * Math.PI * 2;
+    const radius = 0.8 + Math.random() * 0.3;
+    const height = -0.2 + Math.random() * 1.0;
+    const particleGeom = new THREE.OctahedronGeometry(0.04 + Math.random() * 0.03);
+    const particle = new THREE.Mesh(particleGeom, new THREE.MeshBasicMaterial({
+      color: Math.random() > 0.5 ? 0xffd700 : 0xffffff,
+      transparent: true,
+      opacity: 0.7
+    }));
+    particle.position.set(
+      Math.cos(angle) * radius,
+      height,
+      Math.sin(angle) * radius
+    );
+    particle.userData.orbitSpeed = 0.5 + Math.random() * 1;
+    particle.userData.orbitRadius = radius;
+    particle.userData.orbitHeight = height;
+    particle.userData.orbitPhase = Math.random() * Math.PI * 2;
+    group.add(particle);
+  }
+
+  // 底部光环
+  const ringGeom = new THREE.TorusGeometry(0.8, 0.03, 6, 20);
+  const ring = new THREE.Mesh(ringGeom, goldMat.clone());
+  ring.rotation.x = Math.PI / 2;
+  ring.position.y = -0.5;
+  ring.material.opacity = 0.5;
+  group.add(ring);
+
+  group.position.y = 0.5;
+  return group;
+}
+
 function dealDamageToBeast(beast, damage) {
   if (beast.dead) return;
   const finalDmg = Math.max(1, damage);
@@ -10641,22 +11767,28 @@ function calcExpGain(baseExp) {
 const GACHA_CONFIG = {
   singleCost: 160,
   tenCost: 1600,
-  // 奖池角色
+  pityCount: 80, // 80抽保底唐三
+  // 奖池角色 - 仅唐三
   characters: [
     { id: 'tangsan', name: '唐三', rarity: 5, element: 'control', title: '千手修罗', desc: '蓝银草昊天锤双生武魂，先天满魂力' },
-    { id: 'xiaowu', name: '小舞', rarity: 4, element: 'assassin', title: '柔骨魅兔', desc: '十万年魂兽化形，身法灵动' },
-    { id: 'dai_mu_bai', name: '戴沐白', rarity: 4, element: 'attack', title: '邪眸白虎', desc: '白虎武魂，强攻系战魂师' },
-    { id: 'zhu_qing', name: '朱竹清', rarity: 4, element: 'assassin', title: '幽冥灵猫', desc: '幽冥灵猫武魂，敏攻系战魂师' },
-    { id: 'ma_hong_jun', name: '马红俊', rarity: 4, element: 'attack', title: '邪火凤凰', desc: '凤凰武魂，强攻系战魂师' },
-    { id: 'ao_si_car', name: '奥斯卡', rarity: 3, element: 'support', title: '香肠专卖', desc: '食物系器魂师，天才辅助' },
-    { id: 'rong_rong', name: '宁荣荣', rarity: 3, element: 'support', title: '七宝琉璃', desc: '七宝琉璃塔，第一辅助武魂' },
-    { id: 'tang_hao', name: '唐昊', rarity: 5, element: 'attack', title: '昊天斗罗', desc: '昊天锤武魂，封号斗罗' },
-    { id: 'yi_xiao', name: '独孤博', rarity: 3, element: 'control', title: '毒斗罗', desc: '碧磷蛇皇，封号斗罗' },
-    { id: 'chen_xin', name: '剑斗罗', rarity: 4, element: 'attack', title: '剑道尘心', desc: '七杀剑武魂，封号斗罗' },
   ],
-  // 各稀有度概率
-  rarityProb: { 5: 0.02, 4: 0.08, 3: 0.25, 2: 0.35, 1: 0.30 },
+  // 普通奖励池（除了唐三之外的奖励：仅小型武器和普通药水）
+  normalRewards: [
+    // 小型武器
+    { id: 'iron_sword', name: '铁剑', type: 'weapon', rarity: 2, quality: 0, baseAtk: 8, desc: '普通铁制长剑，锋利耐用。' },
+    { id: 'steel_sword', name: '钢剑', type: 'weapon', rarity: 3, quality: 1, baseAtk: 15, desc: '精钢打造的长剑，攻击力更强。' },
+    // 普通药水
+    { id: 'hp_small', name: '小型回血药', type: 'potion', rarity: 1, subType: 'hp', value: 50, count: 3, desc: '恢复50点生命值，简单的草药制成。' },
+    { id: 'hp_small', name: '小型回血药', type: 'potion', rarity: 1, subType: 'hp', value: 50, count: 5, desc: '恢复50点生命值，简单的草药制成。' },
+    { id: 'mp_small', name: '小型回蓝药', type: 'potion', rarity: 1, subType: 'mp', value: 40, count: 3, desc: '恢复40点魂力，补充魂力消耗。' },
+    { id: 'mp_small', name: '小型回蓝药', type: 'potion', rarity: 1, subType: 'mp', value: 40, count: 5, desc: '恢复40点魂力，补充魂力消耗。' },
+  ],
+  // 各稀有度概率（普通奖励池）
+  rarityProb: { 5: 0, 4: 0, 3: 0.20, 2: 0.40, 1: 0.40 },
 };
+
+// 抽卡保底计数（全局）
+let gachaPityCount = 0;
 
 // 稀有度星级显示
 function getStars(rarity) {
@@ -10720,39 +11852,94 @@ function doGacha(count) {
   SoundSystem.playGacha();
 
   const results = [];
-  let hasThreeStar = false;
+  let gotTangSan = false;
 
   for (let i = 0; i < count; i++) {
-    // 十连最后一个保底三星
-    let rarity;
-    if (count === 10 && i === 9 && !hasThreeStar) {
-      // 保底：至少三星
-      rarity = rollRarity(3);
+    gachaPityCount++;
+    let reward;
+
+    // 80抽保底唐三
+    if (gachaPityCount >= GACHA_CONFIG.pityCount) {
+      // 保底出唐三
+      const tangsan = GACHA_CONFIG.characters.find(c => c.id === 'tangsan');
+      reward = { ...tangsan, type: 'character', isPity: true };
+      gachaPityCount = 0;
+      gotTangSan = true;
     } else {
-      rarity = rollRarity(1);
-    }
-    
-    if (rarity >= 3) hasThreeStar = true;
-
-    // 从对应稀有度中随机选一个角色
-    const pool = GACHA_CONFIG.characters.filter(c => c.rarity === rarity);
-    let char;
-    if (pool.length > 0) {
-      char = pool[Math.floor(Math.random() * pool.length)];
-    } else {
-      // 如果没有对应稀有度的角色，用低一级的
-      const lowerPool = GACHA_CONFIG.characters.filter(c => c.rarity === Math.max(1, rarity - 1));
-      char = lowerPool[Math.floor(Math.random() * lowerPool.length)];
+      // 抽取稀有度
+      const rarity = rollRarity(1);
+      
+      // 从普通奖励池中抽取
+      const pool = GACHA_CONFIG.normalRewards.filter(r => r.rarity === rarity);
+      if (pool.length > 0) {
+        reward = { ...pool[Math.floor(Math.random() * pool.length)] };
+      } else {
+        // 低一级稀有度
+        const lowerPool = GACHA_CONFIG.normalRewards.filter(r => r.rarity === Math.max(1, rarity - 1));
+        reward = { ...lowerPool[Math.floor(Math.random() * lowerPool.length)] };
+      }
     }
 
-    results.push(char);
+    results.push(reward);
 
-    // 添加到玩家角色收藏
-    addCharacter(char);
+    // 发放奖励
+    grantGachaReward(reward);
   }
 
   // 显示结果
   showGachaResult(results);
+}
+
+// 发放抽奖奖励
+function grantGachaReward(reward) {
+  if (reward.type === 'character' && reward.id === 'tangsan') {
+    // 抽到唐三：给予唐三武魂觉醒卡
+    const card = {
+      id: 'tangsan_awakening_card',
+      name: '唐三武魂觉醒卡',
+      type: 'potion',
+      subType: 'awakening',
+      awakeningSoul: 'haotian_hammer',
+      stackSize: 1,
+      desc: '使用后觉醒昊天锤武魂，覆盖原有武魂，继承魂环，魂技替换为昊天锤魂技，经验获取+20%。',
+      icon: '🔨',
+      count: 1,
+    };
+    addToBag(card);
+  } else if (reward.type === 'potion') {
+    // 药水类：直接加入背包
+    const potionData = {
+      id: reward.id,
+      name: reward.name,
+      type: 'potion',
+      subType: reward.subType,
+      value: reward.value,
+      hpValue: reward.hpValue,
+      mpValue: reward.mpValue,
+      stackSize: CONFIG.POTION_ITEMS.find(p => p.id === reward.id)?.stackSize || 99,
+      desc: reward.desc,
+      icon: CONFIG.POTION_ITEMS.find(p => p.id === reward.id)?.icon || '🧪',
+      count: reward.count || 1,
+    };
+    addToBag(potionData);
+  } else if (reward.type === 'weapon' || reward.type === 'armor' || reward.type === 'accessory') {
+    // 装备类
+    const equip = {
+      id: 'equip_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6),
+      name: reward.name,
+      type: 'equip',
+      equipSlot: reward.type,
+      quality: reward.quality || 0,
+      baseAtk: reward.baseAtk || 0,
+      baseDef: reward.baseDef || 0,
+      baseHp: reward.baseHp || 0,
+      baseMp: reward.baseMp || 0,
+      baseSpirit: reward.baseSpirit || 0,
+      price: Math.floor((reward.baseAtk + reward.baseDef + reward.baseHp / 3 + reward.baseMp / 3) * 15),
+      desc: reward.desc,
+    };
+    addToBag(equip);
+  }
 }
 
 // 抽取稀有度
@@ -10777,11 +11964,10 @@ function rollRarity(minRarity) {
   return minRarity;
 }
 
-// 添加角色到玩家收藏
+// 添加角色到玩家收藏（保留原函数兼容）
 function addCharacter(char) {
   const existing = game.player.characters.find(c => c.id === char.id);
   if (existing) {
-    // 重复角色转换为碎片或经验
     existing.dupCount = (existing.dupCount || 0) + 1;
   } else {
     game.player.characters.push({ ...char, dupCount: 0 });
@@ -10795,25 +11981,47 @@ function showGachaResult(results) {
 
   container.innerHTML = '';
   
-  results.forEach((char, idx) => {
+  results.forEach((reward, idx) => {
     const card = document.createElement('div');
     card.className = 'gacha-result-card';
     card.style.animationDelay = `${idx * 0.15}s`;
     
-    const color = getRarityColor(char.rarity);
+    const color = getRarityColor(reward.rarity);
+    const isCharacter = reward.type === 'character';
+    const isPotion = reward.type === 'potion';
+    const isEquip = reward.type === 'weapon' || reward.type === 'armor' || reward.type === 'accessory';
+    
+    let icon = '🎁';
+    let titleText = '';
+    
+    if (isCharacter) {
+      icon = reward.name.charAt(0);
+      titleText = reward.title || '';
+    } else if (isPotion) {
+      const potionData = CONFIG.POTION_ITEMS.find(p => p.id === reward.id);
+      icon = potionData?.icon || '🧪';
+      titleText = reward.count > 1 ? `x${reward.count}` : '消耗品';
+    } else if (isEquip) {
+      if (reward.type === 'weapon') icon = '⚔️';
+      else if (reward.type === 'armor') icon = '🛡️';
+      else icon = '💍';
+      titleText = reward.type === 'weapon' ? '武器' : reward.type === 'armor' ? '防具' : '饰品';
+    }
+    
     card.innerHTML = `
       <div class="w-28 h-40 rounded-xl border-2 relative overflow-hidden" style="border-color: ${color}; box-shadow: 0 0 20px ${color}50;">
         <div class="absolute inset-0 bg-gradient-to-b from-slate-800 to-slate-900"></div>
         <div class="absolute inset-0 flex items-center justify-center">
           <div class="w-16 h-16 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, ${color}80, ${color}40);">
-            <span class="text-2xl font-bold text-white">${char.name.charAt(0)}</span>
+            <span class="text-2xl font-bold text-white">${icon}</span>
           </div>
         </div>
         <div class="absolute bottom-0 left-0 right-0 p-2 text-center bg-gradient-to-t from-black/80 to-transparent">
-          <div class="text-xs font-bold" style="color: ${color}">${getStars(char.rarity)}</div>
-          <div class="text-sm font-bold text-white mt-0.5">${char.name}</div>
-          <div class="text-[10px] text-amber-200/70">${char.title}</div>
+          <div class="text-xs font-bold" style="color: ${color}">${getStars(reward.rarity)}</div>
+          <div class="text-sm font-bold text-white mt-0.5">${reward.name}</div>
+          <div class="text-[10px] text-amber-200/70">${titleText}</div>
         </div>
+        ${reward.isPity ? '<div class="absolute top-1 right-1 px-1.5 py-0.5 bg-red-600 rounded text-[10px] text-white font-bold">保底</div>' : ''}
       </div>
     `;
     container.appendChild(card);
@@ -12358,11 +13566,17 @@ function spawnSkillEffect(startPos, dir, color, range, idx) {
 // ========== 经验与升级 ==========
 function gainExp(amount) {
   const p = game.player;
+  // 昊天锤经验倍率：武魂为昊天锤时，经验获取x1.2
+  let expMult = 1;
+  if (p.martialSoul) {
+    const soul = CONFIG.MARTIAL_SOULS.find(s => s.id === p.martialSoul);
+    if (soul && soul.expMult) expMult = soul.expMult;
+  }
   // 等级衰减：等级越高，获得经验越少（极轻度衰减，高级魂兽依然有高收益）
   // 公式：基础经验 * (1 / (1 + (等级-1) * 0.008))
   // 例如：1级=100%, 10级=93%, 20级=87%, 30级=81%, 50级=72%, 100级=56%
   const levelFactor = 1 / (1 + (p.level - 1) * 0.008);
-  const finalExp = Math.floor(amount * levelFactor);
+  const finalExp = Math.floor(amount * levelFactor * expMult);
   p.exp += finalExp;
   while (p.exp >= p.expToNext && p.level < 100) {
     p.exp -= p.expToNext;
@@ -13113,6 +14327,9 @@ function updatePlayer(dt) {
 // ========== 魂兽AI ==========
 function updateBeasts(dt) {
   const p = game.player;
+  // 性能优化：使用帧计数实现远处魂兽降频更新
+  if (game.beastUpdateFrame === undefined) game.beastUpdateFrame = 0;
+  game.beastUpdateFrame++;
 
   for (const beast of game.beasts) {
     if (beast.dead) continue;
@@ -13121,9 +14338,27 @@ function updateBeasts(dt) {
     const pPos = p.mesh.position;
     const dist = bPos.distanceTo(pPos);
 
+    // 性能优化：远处的魂兽降频更新
+    // 近距离(<50): 每帧更新, 中距离(50-100): 每2帧更新, 远距离(>100): 每4帧更新
+    let updateInterval = 1;
+    if (dist > 100) updateInterval = 4;
+    else if (dist > 50) updateInterval = 2;
+    
+    // 追击或攻击状态的魂兽始终每帧更新
+    if (beast.state === 'chase' || beast.state === 'attack') updateInterval = 1;
+    
+    if (game.beastUpdateFrame % updateInterval !== 0) {
+      // 降帧时仍更新高度
+      bPos.y = getTerrainHeight(bPos.x, bPos.z);
+      continue;
+    }
+
+    // 使用缩放的dt补偿降频
+    const scaledDt = dt * updateInterval;
+
     // 受击闪烁
     if (beast.hitFlash > 0) {
-      beast.hitFlash -= dt;
+      beast.hitFlash -= scaledDt;
       beast.mesh.traverse((c) => {
         if (c.material && c.material.emissive) {
           c.material.emissive.setHex(beast.hitFlash > 0 ? 0xffffff : 0x000000);
@@ -13139,17 +14374,17 @@ function updateBeasts(dt) {
     const t = performance.now() * 0.003;
     
     if (mainRing) {
-      mainRing.rotation.z += dt * 2;
+      mainRing.rotation.z += scaledDt * 2;
       mainRing.position.y = baseY + Math.sin(t) * 0.1;
     }
     if (glowRing) {
-      glowRing.rotation.z -= dt * 1.2;
+      glowRing.rotation.z -= scaledDt * 1.2;
       glowRing.position.y = baseY + Math.sin(t + 0.5) * 0.08;
       glowRing.material.opacity = 0.25 + Math.sin(t * 1.5) * 0.15;
       glowRing.scale.setScalar(1 + Math.sin(t * 0.8) * 0.05);
     }
     if (innerRing) {
-      innerRing.rotation.z += dt * 3;
+      innerRing.rotation.z += scaledDt * 3;
       innerRing.position.y = baseY + Math.sin(t + 1) * 0.12;
     }
 
@@ -13182,7 +14417,7 @@ function updateBeasts(dt) {
 
     // 状态机
     if (beast.state === 'idle') {
-      beast.idleTimer -= dt;
+      beast.idleTimer -= scaledDt;
       if (beast.idleTimer <= 0) {
         // 随机游荡
         beast.wanderDir.set(Math.random() - 0.5, 0, Math.random() - 0.5).normalize();
@@ -13190,8 +14425,8 @@ function updateBeasts(dt) {
       }
       // 慢慢游荡
       const speed = beast.speed * 0.3;
-      const nextX = bPos.x + beast.wanderDir.x * speed * dt;
-      const nextZ = bPos.z + beast.wanderDir.z * speed * dt;
+      const nextX = bPos.x + beast.wanderDir.x * speed * scaledDt;
+      const nextZ = bPos.z + beast.wanderDir.z * speed * scaledDt;
       
       // 检查是否会进入村庄
       const distToVillage = Math.sqrt(
@@ -13244,8 +14479,8 @@ function updateBeasts(dt) {
         // 追击
         const dir = new THREE.Vector3().subVectors(pPos, bPos).normalize();
         dir.y = 0;
-        const nextX = bPos.x + dir.x * beast.speed * dt;
-        const nextZ = bPos.z + dir.z * beast.speed * dt;
+        const nextX = bPos.x + dir.x * beast.speed * scaledDt;
+        const nextZ = bPos.z + dir.z * beast.speed * scaledDt;
         
         // 检查是否会进入村庄
         const distToVillage = Math.sqrt(
@@ -13270,7 +14505,7 @@ function updateBeasts(dt) {
 
       // 攻击冷却递减
       if (beast.attackCooldown > 0) {
-        beast.attackCooldown -= dt;
+        beast.attackCooldown -= scaledDt;
       }
       // 玩家进入村庄则停止攻击
       const playerDistToVillage = Math.sqrt(
@@ -13502,8 +14737,11 @@ function updateBagUI() {
         slot.innerHTML = `<div class="text-lg" style="color:${color}">${equipIcon}</div>`;
       } else if (item.type === 'potion') {
         const potionData = CONFIG.POTION_ITEMS.find(p => p.id === item.potionId);
-        const icon = potionData ? potionData.icon : '🧪';
-        slot.style.borderColor = '#22c55e';
+        // 优先使用item自身的icon（如觉醒卡），否则使用配置中的icon，最后用默认
+        const icon = item.icon || (potionData ? potionData.icon : '🧪');
+        // 觉醒卡用金色边框
+        const borderColor = item.subType === 'awakening' ? '#f59e0b' : '#22c55e';
+        slot.style.borderColor = borderColor;
         slot.innerHTML = `<div class="text-lg">${icon}</div>`;
         // 堆叠数量
         if (item.count && item.count > 1) {
@@ -13597,40 +14835,65 @@ function selectItem(idx) {
     html += `<button class="px-3 py-1.5 rounded text-sm text-amber-100/60 hover:bg-red-900/30 border border-red-900/30" onclick="discardItem(${idx})">丢弃</button>`;
     html += `</div>`;
   } else if (item.type === 'potion') {
-    const potionData = CONFIG.POTION_ITEMS.find(p => p.id === item.potionId);
-    if (potionData) {
-      html += `<div class="font-bold text-lg mb-1" style="color:#22c55e">${item.name}</div>`;
-      html += `<div class="text-amber-100/60 text-xs mb-2">消耗品 · 数量: ${item.count || 1}</div>`;
-      html += `<div class="text-xs text-amber-100/70 mb-3 p-2 bg-black/20 rounded">${potionData.desc}</div>`;
-      
+    // 觉醒卡特殊显示
+    if (item.subType === 'awakening') {
+      const soul = CONFIG.MARTIAL_SOULS.find(s => s.id === item.awakeningSoul);
+      html += `<div class="font-bold text-lg mb-1" style="color:#f59e0b">${item.name}</div>`;
+      html += `<div class="text-amber-100/60 text-xs mb-2">武魂觉醒卡 · 数量: ${item.count || 1}</div>`;
+      html += `<div class="text-xs text-amber-100/70 mb-3 p-2 bg-black/20 rounded">${item.desc || '使用后觉醒新武魂'}</div>`;
       // 效果说明
       html += `<div class="text-xs mb-3 space-y-1">`;
-      if (potionData.subType === 'hp') {
-        html += `<div class="text-green-400">恢复 ${potionData.value} 点生命值</div>`;
-      } else if (potionData.subType === 'mp') {
-        html += `<div class="text-blue-300">恢复 ${potionData.value} 点魂力</div>`;
-      } else if (potionData.subType === 'all') {
-        html += `<div class="text-green-400">恢复 ${potionData.hpValue} 点生命值</div>`;
-        html += `<div class="text-blue-300">恢复 ${potionData.mpValue} 点魂力</div>`;
-      } else if (potionData.subType === 'exp') {
-        html += `<div class="text-yellow-400">获得 ${potionData.value} 点经验值</div>`;
-      } else if (potionData.subType === 'stone') {
-        html += `<div class="text-cyan-300">${potionData.value} 个碎片可合成 1 灵石</div>`;
+      if (soul) {
+        html += `<div class="text-yellow-400">觉醒武魂：${soul.name}</div>`;
+        html += `<div class="text-amber-200">${soul.desc}</div>`;
+        if (soul.expMult && soul.expMult !== 1) {
+          html += `<div class="text-green-400">经验获取 +${Math.round((soul.expMult - 1) * 100)}%</div>`;
+        }
       }
       html += `</div>`;
-      
-      const sellPrice = Math.floor(potionData.price * 0.4 * (item.count || 1));
-      html += `<div class="text-xs text-amber-100/50 mb-3">出售价格：<span class="text-cyan-300">${sellPrice} 💎</span>（单个 ${Math.floor(potionData.price * 0.4)}）</div>`;
-      
+      // 出售价格
+      html += `<div class="text-xs text-amber-100/50 mb-3">出售价格：<span class="text-cyan-300">0 💎</span>（绑定物品不可出售）</div>`;
+      // 操作按钮
       html += `<div class="flex gap-2">`;
-      if (potionData.subType === 'stone') {
-        html += `<button class="btn-gold flex-1 py-1.5 rounded text-sm" onclick="synthesizeStone(${idx})">合成灵石</button>`;
-      } else {
-        html += `<button class="btn-gold flex-1 py-1.5 rounded text-sm" onclick="usePotion(${idx})">使用</button>`;
-      }
-      html += `<button class="px-3 py-1.5 rounded text-sm text-amber-100/60 hover:bg-amber-900/30 border border-amber-700/30" onclick="sellItem(${idx})">出售</button>`;
+      html += `<button class="btn-gold flex-1 py-1.5 rounded text-sm" onclick="usePotion(${idx})">使用</button>`;
       html += `<button class="px-3 py-1.5 rounded text-sm text-amber-100/60 hover:bg-red-900/30 border border-red-900/30" onclick="discardItem(${idx})">丢弃</button>`;
       html += `</div>`;
+    } else {
+      const potionData = CONFIG.POTION_ITEMS.find(p => p.id === item.potionId);
+      if (potionData) {
+        html += `<div class="font-bold text-lg mb-1" style="color:#22c55e">${item.name}</div>`;
+        html += `<div class="text-amber-100/60 text-xs mb-2">消耗品 · 数量: ${item.count || 1}</div>`;
+        html += `<div class="text-xs text-amber-100/70 mb-3 p-2 bg-black/20 rounded">${potionData.desc}</div>`;
+        
+        // 效果说明
+        html += `<div class="text-xs mb-3 space-y-1">`;
+        if (potionData.subType === 'hp') {
+          html += `<div class="text-green-400">恢复 ${potionData.value} 点生命值</div>`;
+        } else if (potionData.subType === 'mp') {
+          html += `<div class="text-blue-300">恢复 ${potionData.value} 点魂力</div>`;
+        } else if (potionData.subType === 'all') {
+          html += `<div class="text-green-400">恢复 ${potionData.hpValue} 点生命值</div>`;
+          html += `<div class="text-blue-300">恢复 ${potionData.mpValue} 点魂力</div>`;
+        } else if (potionData.subType === 'exp') {
+          html += `<div class="text-yellow-400">获得 ${potionData.value} 点经验值</div>`;
+        } else if (potionData.subType === 'stone') {
+          html += `<div class="text-cyan-300">${potionData.value} 个碎片可合成 1 灵石</div>`;
+        }
+        html += `</div>`;
+        
+        const sellPrice = Math.floor(potionData.price * 0.4 * (item.count || 1));
+        html += `<div class="text-xs text-amber-100/50 mb-3">出售价格：<span class="text-cyan-300">${sellPrice} 💎</span>（单个 ${Math.floor(potionData.price * 0.4)}）</div>`;
+        
+        html += `<div class="flex gap-2">`;
+        if (potionData.subType === 'stone') {
+          html += `<button class="btn-gold flex-1 py-1.5 rounded text-sm" onclick="synthesizeStone(${idx})">合成灵石</button>`;
+        } else {
+          html += `<button class="btn-gold flex-1 py-1.5 rounded text-sm" onclick="usePotion(${idx})">使用</button>`;
+        }
+        html += `<button class="px-3 py-1.5 rounded text-sm text-amber-100/60 hover:bg-amber-900/30 border border-amber-700/30" onclick="sellItem(${idx})">出售</button>`;
+        html += `<button class="px-3 py-1.5 rounded text-sm text-amber-100/60 hover:bg-red-900/30 border border-red-900/30" onclick="discardItem(${idx})">丢弃</button>`;
+        html += `</div>`;
+      }
     }
   }
 
@@ -13642,6 +14905,41 @@ function usePotion(bagIdx) {
   const p = game.player;
   const item = p.bag[bagIdx];
   if (!item || item.type !== 'potion') return;
+  
+  // 觉醒卡特殊处理：直接从item读取属性
+  if (item.subType === 'awakening') {
+    const soulId = item.awakeningSoul;
+    const soul = CONFIG.MARTIAL_SOULS.find(s => s.id === soulId);
+    if (!soul) {
+      showHint('觉醒失败：武魂不存在！');
+      return;
+    }
+    if (p.martialSoul === soulId) {
+      showHint(`你已经觉醒了${soul.name}！`);
+      return;
+    }
+    // 保存当前魂环（继承原有魂环）
+    const savedRings = JSON.parse(JSON.stringify(p.rings || []));
+    // 替换武魂
+    p.martialSoul = soulId;
+    p.martialSoulAwakened = true;
+    // 恢复魂环（魂环不变，魂技自动替换为新武魂的魂技）
+    p.rings = savedRings;
+    // 播放觉醒特效
+    showSoulAvatar();
+    showHint(`觉醒成功！获得新武魂：${soul.name}！魂技已替换，经验获取+${Math.round((soul.expMult - 1) * 100)}%！`);
+    SoundSystem.playLevelUp();
+    // 消耗觉醒卡
+    item.count = (item.count || 1) - 1;
+    if (item.count <= 0) {
+      p.bag.splice(bagIdx, 1);
+      game.selectedItem = -1;
+      document.getElementById('item-detail').innerHTML = '<div class="text-amber-100/40 text-center py-6">点击物品查看详情</div>';
+    }
+    updateHUD();
+    updateBagUI();
+    return;
+  }
   
   const potionData = CONFIG.POTION_ITEMS.find(pt => pt.id === item.potionId);
   if (!potionData) return;
@@ -13976,11 +15274,315 @@ function togglePanel(id) {
   }
 }
 
+// ========== 角色创建/捏脸系统 ==========
+let charPreview = {
+  scene: null,
+  camera: null,
+  renderer: null,
+  mesh: null,
+  rotationY: 0,
+  isDragging: false,
+  lastX: 0,
+  zoom: 1,
+  animId: null,
+};
+
+let currentAppearance = { ...defaultCharAppearance };
+
+// 打开角色创建界面
+function openCharacterCreate() {
+  document.getElementById('start-menu').classList.add('hidden');
+  document.getElementById('character-create-panel').classList.remove('hidden');
+  initCharPreview();
+  buildCharCustomizationUI();
+  updateCharPreview();
+}
+
+// 关闭角色创建界面（返回主菜单）
+function closeCharacterCreate() {
+  document.getElementById('character-create-panel').classList.add('hidden');
+  document.getElementById('start-menu').classList.remove('hidden');
+  if (charPreview.animId) {
+    cancelAnimationFrame(charPreview.animId);
+    charPreview.animId = null;
+  }
+  if (charPreview.renderer) {
+    charPreview.renderer.dispose();
+    charPreview.renderer = null;
+  }
+}
+
+// 确保角色创建相关函数在全局作用域可用
+window.openCharacterCreate = openCharacterCreate;
+window.closeCharacterCreate = closeCharacterCreate;
+
+// 初始化3D预览
+function initCharPreview() {
+  const container = document.getElementById('character-preview-container');
+  if (!container) return;
+
+  const width = container.clientWidth;
+  const height = container.clientHeight;
+
+  // 场景
+  charPreview.scene = new THREE.Scene();
+  charPreview.scene.background = new THREE.Color(0x1a1a3a);
+
+  // 相机
+  charPreview.camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+  charPreview.camera.position.set(0, 2, 5);
+  charPreview.camera.lookAt(0, 2, 0);
+
+  // 渲染器
+  charPreview.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  charPreview.renderer.setSize(width, height);
+  charPreview.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1));
+  charPreview.renderer.shadowMap.enabled = true;
+  container.innerHTML = '';
+  container.appendChild(charPreview.renderer.domElement);
+
+  // 灯光
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+  charPreview.scene.add(ambientLight);
+
+  const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+  dirLight.position.set(3, 5, 3);
+  dirLight.castShadow = true;
+  charPreview.scene.add(dirLight);
+
+  const fillLight = new THREE.DirectionalLight(0x88aaff, 0.3);
+  fillLight.position.set(-3, 2, -2);
+  charPreview.scene.add(fillLight);
+
+  // 底座
+  const baseGeom = new THREE.CylinderGeometry(1.2, 1.5, 0.1, 32);
+  const baseMat = new THREE.MeshPhongMaterial({ color: 0x2a2a5a, shininess: 50 });
+  const base = new THREE.Mesh(baseGeom, baseMat);
+  base.position.y = 0.05;
+  base.receiveShadow = true;
+  charPreview.scene.add(base);
+
+  // 装饰光环
+  const ringGeom = new THREE.TorusGeometry(1, 0.03, 8, 32);
+  const ringMat = new THREE.MeshPhongMaterial({ color: 0x6688ff, emissive: 0x3344aa, shininess: 100 });
+  const ring = new THREE.Mesh(ringGeom, ringMat);
+  ring.position.y = 0.15;
+  ring.rotation.x = Math.PI / 2;
+  charPreview.scene.add(ring);
+  charPreview.decoRing = ring;
+
+  // 鼠标交互
+  const canvas = charPreview.renderer.domElement;
+  canvas.style.cursor = 'grab';
+
+  canvas.addEventListener('mousedown', (e) => {
+    charPreview.isDragging = true;
+    charPreview.lastX = e.clientX;
+    canvas.style.cursor = 'grabbing';
+  });
+
+  window.addEventListener('mousemove', (e) => {
+    if (!charPreview.isDragging) return;
+    const deltaX = e.clientX - charPreview.lastX;
+    charPreview.rotationY += deltaX * 0.01;
+    charPreview.lastX = e.clientX;
+  });
+
+  window.addEventListener('mouseup', () => {
+    charPreview.isDragging = false;
+    if (charPreview.renderer) {
+      charPreview.renderer.domElement.style.cursor = 'grab';
+    }
+  });
+
+  // 滚轮缩放
+  canvas.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    charPreview.zoom = Math.max(0.6, Math.min(1.8, charPreview.zoom + e.deltaY * 0.001));
+    charPreview.camera.position.z = 5 / charPreview.zoom;
+  });
+
+  // 开始渲染循环
+  animateCharPreview();
+}
+
+// 预览动画循环
+function animateCharPreview() {
+  charPreview.animId = requestAnimationFrame(animateCharPreview);
+
+  if (!charPreview.mesh) {
+    charPreview.renderer.render(charPreview.scene, charPreview.camera);
+    return;
+  }
+
+  // 自动缓慢旋转（未拖动时）
+  if (!charPreview.isDragging) {
+    charPreview.rotationY += 0.003;
+  }
+
+  // 应用旋转
+  charPreview.mesh.rotation.y = charPreview.rotationY;
+
+  // 装饰光环旋转
+  if (charPreview.decoRing) {
+    charPreview.decoRing.rotation.z += 0.005;
+  }
+
+  charPreview.renderer.render(charPreview.scene, charPreview.camera);
+}
+
+// 更新角色预览
+function updateCharPreview() {
+  if (!charPreview.scene) return;
+
+  // 移除旧模型
+  if (charPreview.mesh) {
+    charPreview.scene.remove(charPreview.mesh);
+    charPreview.mesh.traverse((child) => {
+      if (child.geometry) child.geometry.dispose();
+      if (child.material) {
+        if (Array.isArray(child.material)) {
+          child.material.forEach(m => m.dispose());
+        } else {
+          child.material.dispose();
+        }
+      }
+    });
+    charPreview.mesh = null;
+  }
+
+  // 创建新模型
+  const mesh = createPlayerMesh(currentAppearance);
+  mesh.position.y = 0.1;
+  mesh.scale.setScalar(0.9);
+  charPreview.scene.add(mesh);
+  charPreview.mesh = mesh;
+}
+
+// 构建自定义UI按钮
+function buildCharCustomizationUI() {
+  // 性别按钮
+  document.querySelectorAll('.gender-btn').forEach(btn => {
+    btn.classList.remove('btn-gold', 'bg-amber-900/50');
+    if (btn.dataset.gender === currentAppearance.gender) {
+      btn.classList.add('btn-gold');
+    }
+    btn.onclick = () => {
+      currentAppearance.gender = btn.dataset.gender;
+      buildCharCustomizationUI();
+      updateCharPreview();
+    };
+  });
+
+  // 发型按钮
+  const hairContainer = document.getElementById('hairstyle-btns');
+  if (hairContainer) {
+    hairContainer.innerHTML = '';
+    CHAR_CUSTOMIZATION.hairstyles.forEach(style => {
+      const btn = document.createElement('button');
+      btn.className = 'char-option py-2 px-2 rounded-lg border text-xs font-bold transition ' +
+        (currentAppearance.hairstyle === style.id
+          ? 'btn-gold'
+          : 'border-amber-600/40 text-amber-200/80 hover:bg-amber-900/30');
+      btn.textContent = style.name;
+      btn.onclick = () => {
+        currentAppearance.hairstyle = style.id;
+        buildCharCustomizationUI();
+        updateCharPreview();
+      };
+      hairContainer.appendChild(btn);
+    });
+  }
+
+  // 发色按钮
+  const colorContainer = document.getElementById('haircolor-btns');
+  if (colorContainer) {
+    colorContainer.innerHTML = '';
+    CHAR_CUSTOMIZATION.hairColors.forEach(color => {
+      const btn = document.createElement('button');
+      const isSelected = currentAppearance.hairColor === color.id;
+      btn.className = 'w-8 h-8 rounded-full border-2 transition hover:scale-110 ' +
+        (isSelected ? 'border-white scale-110 shadow-lg' : 'border-white/30');
+      btn.style.backgroundColor = color.colorHex;
+      btn.title = color.name;
+      btn.onclick = () => {
+        currentAppearance.hairColor = color.id;
+        buildCharCustomizationUI();
+        updateCharPreview();
+      };
+      colorContainer.appendChild(btn);
+    });
+  }
+
+  // 上衣按钮
+  const topContainer = document.getElementById('top-btns');
+  if (topContainer) {
+    topContainer.innerHTML = '';
+    CHAR_CUSTOMIZATION.tops.forEach(top => {
+      const btn = document.createElement('button');
+      btn.className = 'char-option py-2 px-2 rounded-lg border text-xs font-bold transition ' +
+        (currentAppearance.top === top.id
+          ? 'btn-gold'
+          : 'border-amber-600/40 text-amber-200/80 hover:bg-amber-900/30');
+      btn.textContent = top.name;
+      btn.onclick = () => {
+        currentAppearance.top = top.id;
+        buildCharCustomizationUI();
+        updateCharPreview();
+      };
+      topContainer.appendChild(btn);
+    });
+  }
+
+  // 裤子按钮
+  const pantsContainer = document.getElementById('pants-btns');
+  if (pantsContainer) {
+    pantsContainer.innerHTML = '';
+    CHAR_CUSTOMIZATION.pants.forEach(pants => {
+      const btn = document.createElement('button');
+      btn.className = 'char-option py-2 px-2 rounded-lg border text-xs font-bold transition ' +
+        (currentAppearance.pants === pants.id
+          ? 'btn-gold'
+          : 'border-amber-600/40 text-amber-200/80 hover:bg-amber-900/30');
+      btn.textContent = pants.name;
+      btn.onclick = () => {
+        currentAppearance.pants = pants.id;
+        buildCharCustomizationUI();
+        updateCharPreview();
+      };
+      pantsContainer.appendChild(btn);
+    });
+  }
+}
+
+// 确认创建角色，进入游戏
+function confirmCharacterCreate() {
+  // 保存外观到玩家对象
+  game.playerAppearance = { ...currentAppearance };
+  
+  // 关闭预览
+  if (charPreview.animId) {
+    cancelAnimationFrame(charPreview.animId);
+    charPreview.animId = null;
+  }
+  if (charPreview.renderer) {
+    charPreview.renderer.dispose();
+    charPreview.renderer = null;
+  }
+
+  document.getElementById('character-create-panel').classList.add('hidden');
+  
+  // 开始游戏
+  startGame(true);
+}
+
 // ========== 游戏状态控制 ==========
 function startGame(isFirstPlay = true) {
   game.state = 'playing';
   game.player = createPlayer();
-  game.player.mesh = createPlayerMesh();
+  // 使用自定义外观创建角色模型
+  const appearance = game.playerAppearance || defaultCharAppearance;
+  game.player.mesh = createPlayerMesh(appearance);
   // 出生在圣魂村
   const spawnX = CONFIG.VILLAGE.centerX;
   const spawnZ = CONFIG.VILLAGE.centerZ + 5;
@@ -14024,6 +15626,9 @@ function startGame(isFirstPlay = true) {
   document.getElementById('death-panel').classList.add('hidden');
   document.getElementById('pause-menu').classList.add('hidden');
   document.getElementById('hud').classList.remove('hidden');
+
+  // 播放游戏背景音乐
+  MusicSystem.playGame();
 
   updateHUD();
   updateSkillSlots();
@@ -14233,18 +15838,183 @@ function getSoulIcon(soulId) {
   return icons[soulId] || '✦';
 }
 
-// 确认武魂觉醒
+// 确认武魂觉醒 -> 进入测魂力
 function confirmAwakening() {
   document.getElementById('awakening-panel').classList.add('hidden');
+  
+  // 显示测魂力面板
+  document.getElementById('soul-power-panel').classList.remove('hidden');
+  
+  // 重置测魂力界面状态
+  document.getElementById('btn-test-soul-power').classList.remove('hidden');
+  document.getElementById('btn-confirm-soul-power').classList.add('hidden');
+  document.getElementById('soul-power-result').classList.add('hidden');
+  document.getElementById('crystal-level').style.opacity = '0';
+  document.getElementById('crystal-level').textContent = '?';
+  document.getElementById('crystal-glow').style.opacity = '0';
+  document.getElementById('crystal-ball').style.boxShadow = 
+    'inset -10px -10px 30px rgba(0,0,0,0.3),' +
+    'inset 10px 10px 30px rgba(255,255,255,0.5),' +
+    '0 0 40px rgba(100,150,255,0.3)';
+}
+
+// 测试魂力
+function testSoulPower() {
+  const btnTest = document.getElementById('btn-test-soul-power');
+  const btnConfirm = document.getElementById('btn-confirm-soul-power');
+  const resultDiv = document.getElementById('soul-power-result');
+  const glowDiv = document.getElementById('crystal-glow');
+  const crystalBall = document.getElementById('crystal-ball');
+  const levelDiv = document.getElementById('crystal-level');
+  
+  btnTest.classList.add('hidden');
+  document.getElementById('soul-power-hint').textContent = '魂力正在注入水晶球...';
+  
+  // 水晶球发光渐强
+  glowDiv.style.opacity = '1';
+  
+  // 数字跳动动画
+  let count = 0;
+  const totalRolls = 25;
+  const rollInterval = setInterval(() => {
+    levelDiv.style.opacity = '1';
+    levelDiv.textContent = Math.floor(Math.random() * 10) + 1;
+    
+    // 水晶球颜色随数字变化
+    const hue = Math.random() * 60 + 180; // 青蓝色调
+    crystalBall.style.boxShadow = 
+      `inset -10px -10px 30px rgba(0,0,0,0.3),` +
+      `inset 10px 10px 30px rgba(255,255,255,0.5),` +
+      `0 0 ${40 + Math.random() * 30}px hsla(${hue}, 80%, 60%, 0.6)`;
+    
+    count++;
+    if (count >= totalRolls) {
+      clearInterval(rollInterval);
+      
+      // 计算先天魂力：
+      // 60% 概率 1-3级（普通）
+      // 25% 概率 4-6级（不错）
+      // 10% 概率 7-9级（天才）
+      // 5% 概率 10级（先天满魂力，传说）
+      let innateLevel;
+      const rand = Math.random();
+      if (rand < 0.6) {
+        innateLevel = Math.floor(Math.random() * 3) + 1;
+      } else if (rand < 0.85) {
+        innateLevel = Math.floor(Math.random() * 3) + 4;
+      } else if (rand < 0.95) {
+        innateLevel = Math.floor(Math.random() * 3) + 7;
+      } else {
+        innateLevel = 10;
+      }
+      
+      // 设置玩家等级
+      game.player.level = innateLevel;
+      game.player.innateSoulPower = innateLevel;
+      
+      // 显示最终结果
+      setTimeout(() => {
+        levelDiv.textContent = innateLevel;
+        
+        // 根据等级设置颜色
+        let levelColor, realm, comment, glowColor;
+        if (innateLevel <= 3) {
+          levelColor = '#9ca3af'; // 灰色
+          realm = '魂士';
+          comment = '魂力平平，修炼之路较为艰难...';
+          glowColor = 'rgba(156, 163, 175, 0.6)';
+        } else if (innateLevel <= 6) {
+          levelColor = '#22d3ee'; // 青色
+          realm = '魂士';
+          comment = '天赋尚可，勤能补拙，未来可期！';
+          glowColor = 'rgba(34, 211, 238, 0.7)';
+        } else if (innateLevel <= 9) {
+          levelColor = '#a855f7'; // 紫色
+          realm = '魂士';
+          comment = '天才之资！此等天赋，实属罕见！';
+          glowColor = 'rgba(168, 85, 247, 0.8)';
+        } else {
+          levelColor = '#fbbf24'; // 金色
+          realm = '魂士';
+          comment = '先天满魂力！万年难遇的绝世天才！';
+          glowColor = 'rgba(251, 191, 36, 0.9)';
+        }
+        
+        levelDiv.style.color = levelColor;
+        document.getElementById('soul-power-level').textContent = innateLevel;
+        document.getElementById('soul-power-level').style.color = levelColor;
+        document.getElementById('soul-power-realm').textContent = realm;
+        document.getElementById('soul-power-realm').style.color = levelColor;
+        document.getElementById('soul-power-comment').textContent = comment;
+        
+        // 水晶球最终光辉
+        glowDiv.style.background = `radial-gradient(circle, ${glowColor} 0%, transparent 70%)`;
+        crystalBall.style.boxShadow = 
+          `inset -10px -10px 30px rgba(0,0,0,0.3),` +
+          `inset 10px 10px 30px rgba(255,255,255,0.5),` +
+          `0 0 60px ${glowColor}`;
+        
+        // 创建爆发粒子效果
+        createCrystalParticles(levelColor);
+        
+        resultDiv.classList.remove('hidden');
+        btnConfirm.classList.remove('hidden');
+        document.getElementById('soul-power-hint').textContent = '测试完成！';
+        
+        // 播放音效
+        if (innateLevel >= 10) {
+          SoundSystem.playLevelUp();
+        }
+      }, 300);
+    }
+  }, 120);
+}
+
+// 创建水晶球粒子效果
+function createCrystalParticles(color) {
+  const container = document.getElementById('crystal-particles');
+  container.innerHTML = '';
+  
+  for (let i = 0; i < 20; i++) {
+    const particle = document.createElement('div');
+    const size = Math.random() * 8 + 4;
+    const left = Math.random() * 100;
+    const delay = Math.random() * 0.5;
+    const duration = Math.random() * 1.5 + 1;
+    
+    particle.style.cssText = `
+      position: absolute;
+      width: ${size}px;
+      height: ${size}px;
+      left: ${left}%;
+      bottom: 20%;
+      background: ${color};
+      border-radius: 50%;
+      opacity: 0;
+      box-shadow: 0 0 ${size * 2}px ${color};
+      animation: particleRise ${duration}s ease-out ${delay}s forwards;
+    `;
+    container.appendChild(particle);
+  }
+}
+
+// 确认测魂力结果
+function confirmSoulPower() {
+  document.getElementById('soul-power-panel').classList.add('hidden');
   game.storyState = 'none';
   
-  const soul = CONFIG.MARTIAL_SOULS.find(s => s.id === game.player.martialSoul);
-  if (soul) {
-    showHint(`觉醒成功！你的武魂是【${soul.name}】！`);
+  const level = game.player.level;
+  let msg = `先天魂力 ${level} 级！`;
+  if (level >= 10) {
+    msg = '先天满魂力！你是万年难遇的绝世天才！';
+  } else if (level >= 7) {
+    msg = `先天魂力 ${level} 级！天才之资，前途无量！`;
   }
+  showHint(msg);
   
   updateHUD();
   updateSkillSlots();
+  updateCharacterPanel();
 }
 
 function pauseGame() {
@@ -14285,6 +16055,411 @@ function quitToMenu() {
   game.beasts = [];
   for (const it of game.items) game.scene.remove(it.mesh);
   game.items = [];
+
+  // 播放主菜单音乐
+  MusicSystem.playMenu();
+}
+
+// ========== 现实时间同步 + 季节天气系统 ==========
+function getBeijingTime() {
+  // 获取北京时间（UTC+8）
+  const now = new Date();
+  const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+  return new Date(utc + 8 * 3600000);
+}
+
+function getDayProgress() {
+  // 获取一天中的进度 0-1（0=午夜0点, 0.25=6点日出, 0.5=12点正午, 0.75=18点日落）
+  const bjTime = getBeijingTime();
+  const hours = bjTime.getHours();
+  const minutes = bjTime.getMinutes();
+  const seconds = bjTime.getSeconds();
+  return (hours * 3600 + minutes * 60 + seconds) / 86400;
+}
+
+function getSeason() {
+  // 根据现实日期判断季节（北半球）
+  // 3-5月春, 6-8月夏, 9-11月秋, 12-2月冬
+  const bjTime = getBeijingTime();
+  const month = bjTime.getMonth(); // 0-11
+  if (month >= 2 && month <= 4) return 0; // 春
+  if (month >= 5 && month <= 7) return 1; // 夏
+  if (month >= 8 && month <= 10) return 2; // 秋
+  return 3; // 冬
+}
+
+function getSeasonName(season) {
+  const names = ['春', '夏', '秋', '冬'];
+  return names[season];
+}
+
+// 更新昼夜（基于现实北京时间）
+function updateDayNight(dt) {
+  if (!game.dayNight || !game.dayNight.enabled) return;
+
+  // 获取现实时间
+  const t = getDayProgress();
+  const season = getSeason();
+  game.dayNight.season = season;
+  game.dayNight.seasonName = getSeasonName(season);
+
+  // 季节对日出日落时间的影响
+  // 夏季日出早日落晚，冬季日出晚日落早
+  let sunriseOffset = 0;
+  let sunsetOffset = 0;
+  if (season === 0) { // 春
+    sunriseOffset = -0.02;
+    sunsetOffset = 0.02;
+  } else if (season === 1) { // 夏
+    sunriseOffset = -0.05;
+    sunsetOffset = 0.05;
+  } else if (season === 2) { // 秋
+    sunriseOffset = 0.02;
+    sunsetOffset = -0.02;
+  } else { // 冬
+    sunriseOffset = 0.05;
+    sunsetOffset = -0.05;
+  }
+
+  const sunriseT = 0.25 + sunriseOffset; // 日出时间（约6点）
+  const sunsetT = 0.75 + sunsetOffset;  // 日落时间（约18点）
+
+  // 计算太阳因子
+  let sunFactor = 0;
+  const dawnDuration = 0.06; // 日出过渡时长
+  const duskDuration = 0.06; // 日落过渡时长
+
+  if (t >= sunriseT - dawnDuration && t <= sunriseT + dawnDuration) {
+    // 日出
+    sunFactor = (t - (sunriseT - dawnDuration)) / (dawnDuration * 2);
+  } else if (t > sunriseT + dawnDuration && t < sunsetT - duskDuration) {
+    // 白天
+    sunFactor = 1;
+  } else if (t >= sunsetT - duskDuration && t <= sunsetT + duskDuration) {
+    // 日落
+    sunFactor = 1 - (t - (sunsetT - duskDuration)) / (duskDuration * 2);
+  } else {
+    // 夜晚
+    sunFactor = 0;
+  }
+  sunFactor = Math.max(0, Math.min(1, sunFactor));
+  sunFactor = sunFactor * sunFactor * (3 - 2 * sunFactor); // smoothstep
+
+  const moonFactor = 1 - sunFactor;
+
+  // 太阳位置
+  const sunAngle = (t - 0.25) * Math.PI * 2;
+  const sunHeight = Math.sin(sunAngle);
+  const sunDist = 100;
+  game.sunLight.position.set(
+    Math.cos(sunAngle) * sunDist,
+    Math.max(sunHeight * 80, -20),
+    30
+  );
+
+  // 月光位置
+  game.moonLight.position.set(
+    -Math.cos(sunAngle) * sunDist,
+    Math.max(-sunHeight * 60, 10),
+    -30
+  );
+
+  // 季节颜色调整
+  let skyTint = new THREE.Color(1, 1, 1);
+  let sunTint = new THREE.Color(1, 1, 1);
+  let ambientTint = new THREE.Color(1, 1, 1);
+  let hemiSkyTint = new THREE.Color(1, 1, 1);
+  let hemiGroundTint = new THREE.Color(1, 1, 1);
+
+  if (season === 0) { // 春 - 嫩绿清新
+    skyTint.setHex(0xaaddff);
+    sunTint.setHex(0xffffee);
+    ambientTint.setHex(0xbbeeaa);
+    hemiSkyTint.setHex(0x99ddff);
+    hemiGroundTint.setHex(0x4a7a3a);
+  } else if (season === 1) { // 夏 - 明亮炎热
+    skyTint.setHex(0x88ccff);
+    sunTint.setHex(0xffffcc);
+    ambientTint.setHex(0xaadd99);
+    hemiSkyTint.setHex(0x77ccee);
+    hemiGroundTint.setHex(0x3a6a2a);
+  } else if (season === 2) { // 秋 - 金黄萧瑟
+    skyTint.setHex(0xffcc99);
+    sunTint.setHex(0xffddaa);
+    ambientTint.setHex(0xddaa77);
+    hemiSkyTint.setHex(0xffbb88);
+    hemiGroundTint.setHex(0x8b6914);
+  } else { // 冬 - 寒冷萧瑟
+    skyTint.setHex(0xaabbcc);
+    sunTint.setHex(0xddeeff);
+    ambientTint.setHex(0xaabbcc);
+    hemiSkyTint.setHex(0x99aabb);
+    hemiGroundTint.setHex(0x556677);
+  }
+
+  // 太阳光强度和颜色
+  game.sunLight.intensity = 0.1 + sunFactor * 0.9;
+  game.sunLight.color.copy(sunTint);
+
+  // 月光
+  game.moonLight.intensity = moonFactor * 0.3;
+
+  // 环境光
+  game.ambientLight.intensity = 0.15 + sunFactor * 0.35;
+  game.ambientLight.color.copy(ambientTint);
+
+  // 半球光
+  game.hemiLight.intensity = 0.1 + sunFactor * 0.3;
+  game.hemiLight.color.copy(hemiSkyTint);
+  game.hemiLight.groundColor.copy(hemiGroundTint);
+
+  // 天空颜色
+  let skyColor = new THREE.Color();
+  if (t < sunriseT - dawnDuration || t > sunsetT + duskDuration) {
+    // 夜晚
+    skyColor.setHex(0x0a0a20);
+    if (season === 3) skyColor.lerp(new THREE.Color(0x1a2535), 0.5); // 冬夜偏蓝
+  } else if (t >= sunriseT - dawnDuration && t < sunriseT + dawnDuration) {
+    // 日出
+    const f = (t - (sunriseT - dawnDuration)) / (dawnDuration * 2);
+    const nightColor = new THREE.Color(0x0a0a20);
+    const sunriseColor = new THREE.Color(season === 1 ? 0xffaa66 : 0xffbb88);
+    skyColor.copy(nightColor).lerp(sunriseColor, Math.min(f * 2, 1));
+    if (f > 0.5) {
+      const dayColor = new THREE.Color(0x87ceeb).multiply(skyTint);
+      skyColor.lerp(dayColor, (f - 0.5) * 2);
+    }
+  } else if (t >= sunsetT - duskDuration && t <= sunsetT + duskDuration) {
+    // 日落
+    const f = (t - (sunsetT - duskDuration)) / (duskDuration * 2);
+    const dayColor = new THREE.Color(0x87ceeb).multiply(skyTint);
+    const sunsetColor = new THREE.Color(season === 2 ? 0xff7744 : 0xff8866);
+    if (f < 0.5) {
+      skyColor.copy(dayColor).lerp(sunsetColor, f * 2);
+    } else {
+      const nightColor = new THREE.Color(0x0a0a20);
+      skyColor.copy(sunsetColor).lerp(nightColor, (f - 0.5) * 2);
+    }
+  } else {
+    // 白天
+    skyColor.setHex(0x87ceeb).multiply(skyTint);
+  }
+  game.scene.background = skyColor;
+
+  // 天气对天空颜色的影响
+  const weather = game.dayNight.weather;
+  if (weather === 'rain') {
+    skyColor.lerp(new THREE.Color(0x556677), 0.4);
+    game.scene.background = skyColor;
+  } else if (weather === 'cloudy') {
+    skyColor.lerp(new THREE.Color(0x99aabb), 0.3);
+    game.scene.background = skyColor;
+  } else if (weather === 'snow') {
+    skyColor.lerp(new THREE.Color(0xccddee), 0.2);
+    game.scene.background = skyColor;
+  }
+
+  // 雾气
+  const fogColor = skyColor.clone().multiplyScalar(0.75);
+  game.scene.fog.color = fogColor;
+  game.scene.fog.far = 150 + sunFactor * 80;
+
+  // 夏季雾气更淡更热，冬季雾气更浓
+  if (season === 1) game.scene.fog.far *= 1.1;
+  if (season === 3) game.scene.fog.far *= 0.85;
+
+  // 雨雪天雾气更浓
+  if (weather === 'rain') game.scene.fog.far *= 0.7;
+  if (weather === 'snow') game.scene.fog.far *= 0.75;
+  if (weather === 'cloudy') game.scene.fog.far *= 0.9;
+
+  // 路灯
+  updateStreetLamps(sunFactor);
+
+  // 天气系统
+  updateWeather(dt, season, sunFactor);
+
+  // 天气对光照的额外影响（雨天更暗）
+  applyWeatherLighting();
+}
+
+// 天气对光照的影响
+function applyWeatherLighting() {
+  const weather = game.dayNight.weather;
+  if (weather === 'rain') {
+    game.ambientLight.intensity *= 0.75;
+    game.sunLight.intensity *= 0.7;
+    game.hemiLight.intensity *= 0.75;
+  } else if (weather === 'snow') {
+    game.ambientLight.intensity *= 0.85;
+    game.sunLight.intensity *= 0.8;
+    game.hemiLight.intensity *= 0.85;
+  } else if (weather === 'cloudy') {
+    game.ambientLight.intensity *= 0.9;
+    game.sunLight.intensity *= 0.85;
+    game.hemiLight.intensity *= 0.9;
+  }
+}
+
+// 天气系统
+function updateWeather(dt, season, sunFactor) {
+  game.dayNight.weatherTimer -= dt;
+
+  if (game.dayNight.weatherTimer <= 0) {
+    // 随机切换天气
+    const r = Math.random();
+    let newWeather = 'clear';
+
+    if (season === 1) { // 夏 - 多雨
+      if (r < 0.4) newWeather = 'rain';
+      else if (r < 0.55) newWeather = 'cloudy';
+      else newWeather = 'clear';
+    } else if (season === 3) { // 冬 - 多雪
+      if (r < 0.35) newWeather = 'snow';
+      else if (r < 0.5) newWeather = 'cloudy';
+      else newWeather = 'clear';
+    } else if (season === 0) { // 春 - 小雨多
+      if (r < 0.25) newWeather = 'rain';
+      else if (r < 0.4) newWeather = 'cloudy';
+      else newWeather = 'clear';
+    } else { // 秋 - 多云
+      if (r < 0.15) newWeather = 'rain';
+      else if (r < 0.45) newWeather = 'cloudy';
+      else newWeather = 'clear';
+    }
+
+    if (newWeather !== game.dayNight.weather) {
+      changeWeather(newWeather);
+    }
+    // 天气持续 60-180 秒
+    game.dayNight.weatherTimer = 60 + Math.random() * 120;
+  }
+
+  // 更新降水粒子
+  updatePrecipitation(dt);
+}
+
+// 切换天气
+function changeWeather(weather) {
+  game.dayNight.weather = weather;
+
+  // 清除旧粒子
+  if (game.dayNight.precipParticles) {
+    game.scene.remove(game.dayNight.precipParticles);
+    game.dayNight.precipParticles.geometry.dispose();
+    game.dayNight.precipParticles.material.dispose();
+    game.dayNight.precipParticles = null;
+  }
+
+  if (weather === 'rain' || weather === 'snow') {
+    createPrecipitation(weather);
+  }
+}
+
+// 创建降水粒子（雨/雪）
+function createPrecipitation(type) {
+  const particleCount = type === 'rain' ? 3000 : 2000;
+  const geometry = new THREE.BufferGeometry();
+  const positions = new Float32Array(particleCount * 3);
+  const velocities = new Float32Array(particleCount);
+  const sizes = new Float32Array(particleCount);
+
+  const range = 200;
+  const height = 80;
+
+  for (let i = 0; i < particleCount; i++) {
+    positions[i * 3] = (Math.random() - 0.5) * range;
+    positions[i * 3 + 1] = Math.random() * height;
+    positions[i * 3 + 2] = (Math.random() - 0.5) * range;
+    velocities[i] = type === 'rain' ? (40 + Math.random() * 30) : (2 + Math.random() * 2);
+    sizes[i] = type === 'rain' ? (0.08 + Math.random() * 0.05) : (0.2 + Math.random() * 0.15);
+  }
+
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geometry.userData.velocities = velocities;
+  geometry.userData.type = type;
+  geometry.userData.height = height;
+  geometry.userData.range = range;
+
+  const material = new THREE.PointsMaterial({
+    color: type === 'rain' ? 0xbbddee : 0xffffff,
+    size: type === 'rain' ? 0.1 : 0.25,
+    transparent: true,
+    opacity: type === 'rain' ? 0.5 : 0.8,
+    sizeAttenuation: true,
+  });
+
+  const particles = new THREE.Points(geometry, material);
+  game.dayNight.precipParticles = particles;
+  game.scene.add(particles);
+}
+
+// 更新降水粒子
+function updatePrecipitation(dt) {
+  const particles = game.dayNight.precipParticles;
+  if (!particles) return;
+
+  const positions = particles.geometry.attributes.position.array;
+  const velocities = particles.geometry.userData.velocities;
+  const type = particles.geometry.userData.type;
+  const height = particles.geometry.userData.height;
+  const range = particles.geometry.userData.range;
+
+  // 跟随玩家位置
+  const playerX = game.player ? game.player.mesh.position.x : 0;
+  const playerZ = game.player ? game.player.mesh.position.z : 0;
+
+  for (let i = 0; i < positions.length / 3; i++) {
+    const idx = i * 3;
+    // 下落
+    positions[idx + 1] -= velocities[i] * dt;
+
+    // 雪有横向飘动
+    if (type === 'snow') {
+      positions[idx] += Math.sin(performance.now() * 0.001 + i) * 0.5 * dt;
+    }
+
+    // 落地后重置到顶部
+    if (positions[idx + 1] < 0) {
+      positions[idx] = playerX + (Math.random() - 0.5) * range;
+      positions[idx + 1] = height;
+      positions[idx + 2] = playerZ + (Math.random() - 0.5) * range;
+    }
+
+    // 保持在玩家附近
+    if (Math.abs(positions[idx] - playerX) > range / 2) {
+      positions[idx] = playerX + (Math.random() - 0.5) * range;
+    }
+    if (Math.abs(positions[idx + 2] - playerZ) > range / 2) {
+      positions[idx + 2] = playerZ + (Math.random() - 0.5) * range;
+    }
+  }
+
+  particles.geometry.attributes.position.needsUpdate = true;
+
+  // 夜晚雨/雪稍暗
+  const nightFactor = 1 - (game.sunLight.intensity - 0.1) / 0.9;
+  particles.material.opacity = (type === 'rain' ? 0.6 : 0.8) * (1 - nightFactor * 0.3);
+}
+
+// 更新路灯状态
+function updateStreetLamps(sunFactor) {
+  if (!game.village || !game.village.lamps) return;
+  const lampOn = sunFactor < 0.4 ? 1 : 0;
+  const target = lampOn;
+  game.village.lamps.forEach((lamp, i) => {
+    if (lamp.userData.lightIntensity === undefined) lamp.userData.lightIntensity = 0;
+    lamp.userData.lightIntensity += (target - lamp.userData.lightIntensity) * 0.02;
+    const intensity = lamp.userData.lightIntensity;
+    lamp.traverse((child) => {
+      if (child.isPointLight) {
+        child.intensity = intensity * 1.5;
+      }
+      if (child.isMesh && child.material && child.material.emissive) {
+        child.material.emissiveIntensity = intensity;
+      }
+    });
+  });
 }
 
 // ========== 主循环 ==========
@@ -14296,6 +16471,9 @@ function gameLoop() {
     let dt = (now - game.lastTime) / 1000;
     game.lastTime = now;
     dt = Math.min(dt, 0.1); // 防止切Tab后大跳
+
+    // 昼夜更新（任何状态都运行，保持氛围）
+    updateDayNight(dt);
 
     if (game.state !== 'playing') {
       game.renderer.render(game.scene, game.camera);
@@ -14321,13 +16499,61 @@ function gameLoop() {
 
 // ========== UI 事件绑定 ==========
 function initUI() {
-  document.getElementById('btn-start').addEventListener('click', startGame);
+  // 全局按钮点击音效（事件委托）
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if (btn) {
+      SoundSystem.playButtonClick();
+    }
+  });
+
+  // 开场动画（不可跳过）
+  const introVideo = document.getElementById('intro-video');
+  const introPanel = document.getElementById('intro-video-panel');
+
+  function showStartMenu() {
+    if (introPanel && !introPanel.classList.contains('hidden')) {
+      introPanel.classList.add('hidden');
+      document.getElementById('start-menu').classList.remove('hidden');
+      if (introVideo) {
+        introVideo.pause();
+      }
+      // 播放主菜单音乐
+      MusicSystem.playMenu();
+    }
+  }
+
+  if (introVideo) {
+    introVideo.addEventListener('ended', showStartMenu);
+    // 尝试自动播放
+    introVideo.play().catch(() => {
+      // 自动播放失败时，显示点击继续提示
+      const hint = document.createElement('div');
+      hint.style.cssText = 'position:absolute;bottom:20%;left:50%;transform:translateX(-50%);color:#fbbf24;font-size:18px;letter-spacing:0.3em;animation:hintFade 2s ease-in-out infinite;cursor:pointer;z-index:10;';
+      hint.textContent = '点 击 屏 幕 开 始';
+      introPanel.appendChild(hint);
+      introPanel.addEventListener('click', () => {
+        introVideo.play();
+        hint.remove();
+      }, { once: true });
+    });
+  } else {
+    // 视频不存在，直接显示菜单
+    showStartMenu();
+  }
+
+  document.getElementById('btn-start').addEventListener('click', openCharacterCreate);
   document.getElementById('btn-help').addEventListener('click', () => {
     document.getElementById('help-panel').classList.remove('hidden');
   });
   document.getElementById('btn-close-help').addEventListener('click', () => {
     document.getElementById('help-panel').classList.add('hidden');
   });
+
+  // 角色创建面板
+  document.getElementById('btn-char-back').addEventListener('click', closeCharacterCreate);
+  document.getElementById('btn-char-confirm').addEventListener('click', confirmCharacterCreate);
+
   document.getElementById('btn-resume').addEventListener('click', resumeGame);
   document.getElementById('btn-restart').addEventListener('click', restartGame);
   document.getElementById('btn-quit').addEventListener('click', quitToMenu);
@@ -14336,6 +16562,10 @@ function initUI() {
   // 武魂觉醒面板
   document.getElementById('btn-awaken').addEventListener('click', awakenMartialSoul);
   document.getElementById('btn-confirm-awakening').addEventListener('click', confirmAwakening);
+  
+  // 测魂力面板
+  document.getElementById('btn-test-soul-power').addEventListener('click', testSoulPower);
+  document.getElementById('btn-confirm-soul-power').addEventListener('click', confirmSoulPower);
   
   document.getElementById('btn-close-char').addEventListener('click', () => {
     document.getElementById('character-panel').classList.add('hidden');
@@ -14364,6 +16594,116 @@ function initUI() {
       updateBagUI();
     });
   });
+
+  // 设置系统
+  const btnSettings = document.getElementById('btn-settings');
+  if (btnSettings) {
+    btnSettings.addEventListener('click', () => {
+      document.getElementById('settings-panel').classList.remove('hidden');
+      SoundSystem.playPanelOpen();
+    });
+  }
+  const btnCloseSettings = document.getElementById('btn-close-settings');
+  if (btnCloseSettings) {
+    btnCloseSettings.addEventListener('click', () => {
+      document.getElementById('settings-panel').classList.add('hidden');
+      SoundSystem.playPanelClose();
+    });
+  }
+  // 音乐音量
+  const musicSlider = document.getElementById('music-volume-slider');
+  if (musicSlider) {
+    musicSlider.addEventListener('input', (e) => {
+      const val = e.target.value;
+      document.getElementById('music-volume-value').textContent = val + '%';
+      if (MusicSystem && MusicSystem.masterGain) {
+        MusicSystem.masterGain.gain.value = val / 100 * 0.2;
+      }
+    });
+  }
+  // 音效音量
+  const soundSlider = document.getElementById('sound-volume-slider');
+  if (soundSlider) {
+    soundSlider.addEventListener('input', (e) => {
+      const val = e.target.value;
+      document.getElementById('sound-volume-value').textContent = val + '%';
+      if (SoundSystem && SoundSystem.masterGain) {
+        SoundSystem.masterGain.gain.value = val / 100 * 0.5;
+      }
+    });
+  }
+  // 昼夜天气开关
+  const toggleDayNight = document.getElementById('toggle-daynight');
+  if (toggleDayNight) {
+    toggleDayNight.addEventListener('change', (e) => {
+      game.dayNightEnabled = e.target.checked;
+      if (game.dayNight.precipParticles) {
+        game.dayNight.precipParticles.visible = e.target.checked;
+      }
+      SoundSystem.playTone(600, 0.05, 'sine', 0.1);
+    });
+  }
+  // 粒子特效开关
+  const toggleParticles = document.getElementById('toggle-particles');
+  if (toggleParticles) {
+    toggleParticles.addEventListener('change', (e) => {
+      game.particlesEnabled = e.target.checked;
+      SoundSystem.playTone(600, 0.05, 'sine', 0.1);
+    });
+  }
+
+  // 兑换码系统
+  const REDEEM_CODES = {
+    '鸡哥666': { type: 'stones', amount: 3000, name: '3000灵石', used: false },
+  };
+  // 从localStorage读取已使用的兑换码
+  const usedRedeemCodes = JSON.parse(localStorage.getItem('usedRedeemCodes') || '[]');
+  usedRedeemCodes.forEach(code => {
+    if (REDEEM_CODES[code]) REDEEM_CODES[code].used = true;
+  });
+
+  const btnRedeem = document.getElementById('btn-redeem');
+  if (btnRedeem) {
+    btnRedeem.addEventListener('click', () => {
+      const input = document.getElementById('redeem-code-input');
+      const resultEl = document.getElementById('redeem-result');
+      const code = input.value.trim();
+      if (!code) {
+        resultEl.textContent = '请输入兑换码';
+        resultEl.className = 'text-sm mt-2 h-5 text-red-400';
+        return;
+      }
+      const reward = REDEEM_CODES[code];
+      if (!reward) {
+        resultEl.textContent = '兑换码无效';
+        resultEl.className = 'text-sm mt-2 h-5 text-red-400';
+        SoundSystem.playTone(200, 0.15, 'sawtooth', 0.1);
+        return;
+      }
+      if (reward.used) {
+        resultEl.textContent = '该兑换码已使用';
+        resultEl.className = 'text-sm mt-2 h-5 text-red-400';
+        SoundSystem.playTone(200, 0.15, 'sawtooth', 0.1);
+        return;
+      }
+      // 发放奖励
+      if (reward.type === 'stones') {
+        game.player.spiritStones += reward.amount;
+        updateHUD();
+      }
+      reward.used = true;
+      // 保存到localStorage
+      const usedList = JSON.parse(localStorage.getItem('usedRedeemCodes') || '[]');
+      if (!usedList.includes(code)) {
+        usedList.push(code);
+        localStorage.setItem('usedRedeemCodes', JSON.stringify(usedList));
+      }
+      resultEl.textContent = '兑换成功！获得 ' + reward.name;
+      resultEl.className = 'text-sm mt-2 h-5 text-green-400';
+      input.value = '';
+      SoundSystem.playLevelUp();
+    });
+  }
 
   // 抽奖系统
   const btnGacha = document.getElementById('btn-gacha');
@@ -14495,6 +16835,7 @@ function init() {
     initInput();
     initUI();
     SoundSystem.init();
+    MusicSystem.init();
     initMenuParticles();
 
     // 初始相机位置（菜单时展示场景）
