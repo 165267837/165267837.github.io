@@ -196,9 +196,19 @@
     height: 200px;
     pointer-events: auto;
     touch-action: none;
-    /* 扩大触控热区，超出可视范围也能响应 */
-    padding: 40px;
-    margin: -40px;
+    /* 移除padding+负margin方式，避免视觉位置偏移 */
+    padding: 0;
+    margin: 0;
+  }
+  /* 用伪元素扩大触控热区，不影响视觉位置 */
+  .joystick-container::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    left: -40px;
+    right: -40px;
+    bottom: -40px;
+    pointer-events: auto;
   }
   .joystick-base {
     width: 100%;
@@ -682,61 +692,95 @@
   
   /* 强制横屏模式下的控件优化（相当于横屏模式） */
   body.force-landscape .joystick-container {
-    bottom: 20px;
-    left: 30px;
-    width: 110px;
-    height: 110px;
+    bottom: 16px;
+    left: 16px;
+    width: 80px;
+    height: 80px;
+    /* 移除负margin，改用伪元素扩大触控热区，避免视觉偏移 */
+    padding: 0;
+    margin: 0;
+  }
+  /* 用伪元素扩大触控热区，不影响视觉位置 */
+  body.force-landscape .joystick-container::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
+    pointer-events: auto;
   }
   body.force-landscape .joystick-stick {
-    width: 48px;
-    height: 48px;
+    width: 34px;
+    height: 34px;
   }
   body.force-landscape .action-buttons {
-    bottom: 15px;
-    right: 20px;
-    gap: 6px;
+    bottom: 14px;
+    right: 14px;
+    gap: 3px;
+    /* 改为横向布局，技能按钮在左，攻击按钮在右，充分利用横屏宽度 */
+    flex-direction: row;
+    align-items: flex-end;
   }
   body.force-landscape .skill-buttons {
-    gap: 5px;
-    margin-bottom: 2px;
+    gap: 3px;
+    margin-bottom: 0;
+    /* 技能按钮改为两列（3+2），降低高度避免与交互按钮重叠 */
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-content: flex-end;
+    max-width: none;
+    order: 2;
+    height: 108px; /* 3个按钮高度 + 间距 = 3*34 + 2*3 = 108px */
+    width: 71px; /* 2个按钮宽度 + 间距 = 2*34 + 3 = 71px */
   }
   body.force-landscape .btn-skill {
-    width: 40px;
-    height: 40px;
-    font-size: 9px;
+    width: 34px;
+    height: 34px;
+    font-size: 7px;
   }
   body.force-landscape .btn-jump {
-    width: 44px;
-    height: 44px;
-    font-size: 10px;
-  }
-  body.force-landscape .btn-rings {
     width: 38px;
     height: 38px;
     font-size: 8px;
   }
+  body.force-landscape .btn-rings {
+    width: 32px;
+    height: 32px;
+    font-size: 7px;
+  }
+  body.force-landscape .jump-row {
+    gap: 4px;
+    display: flex;
+    flex-direction: column;
+    order: 1;
+    margin-right: 4px;
+  }
   body.force-landscape .btn-attack-main {
-    width: 60px;
-    height: 60px;
-    font-size: 11px;
+    width: 50px;
+    height: 50px;
+    font-size: 9px;
+    margin-top: 0;
+    order: 3;
   }
   body.force-landscape .btn-interact {
     bottom: 130px;
-    right: 25px;
-    width: 48px;
-    height: 48px;
-    font-size: 11px;
+    right: 14px;
+    width: 40px;
+    height: 40px;
+    font-size: 9px;
   }
   body.force-landscape .mobile-shortcuts {
-    top: 60px;
-    right: 8px;
-    gap: 5px;
+    top: 45px;
+    right: 6px;
+    gap: 4px;
   }
   body.force-landscape .btn-shortcut {
-    width: 34px;
-    height: 34px;
-    font-size: 10px;
-    border-radius: 8px;
+    width: 30px;
+    height: 30px;
+    font-size: 9px;
+    border-radius: 6px;
   }
   
   /* 强制横屏模式下面板高度修复（避免使用vh单位导致面板过高） */
