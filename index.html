@@ -15744,9 +15744,41 @@ const MobileControls = {
   // 初始化屏幕方向检测
   initOrientation() {
     this.isForcedLandscape = false; // 是否处于强制横屏模式
+    this.orientationLocked = false; // 方向检测是否被锁定（如软键盘弹出时）
+    
+    // 获取屏幕物理方向（不受软键盘影响）
+    const getScreenOrientation = () => {
+      // 优先使用 screen.orientation API（最准确）
+      if (window.screen && window.screen.orientation) {
+        const type = window.screen.orientation.type;
+        return type.startsWith('landscape');
+      }
+      // 备选：使用 screen.width / screen.height（物理屏幕尺寸，不受视口影响）
+      if (window.screen) {
+        return window.screen.width > window.screen.height;
+      }
+      // 最后兜底：使用视口尺寸
+      return window.innerWidth > window.innerHeight;
+    };
     
     const checkOrientation = () => {
-      const isLandscape = window.innerWidth > window.innerHeight;
+      // 如果方向被锁定（如软键盘弹出），只更新渲染器尺寸，不切换横屏模式
+      if (this.orientationLocked) {
+        // 更新渲染器尺寸以适应新的视口
+        if (game.renderer) {
+          if (this.isForcedLandscape) {
+            game.renderer.setSize(window.innerHeight, window.innerWidth);
+            game.camera.aspect = window.innerHeight / window.innerWidth;
+          } else {
+            game.renderer.setSize(window.innerWidth, window.innerHeight);
+            game.camera.aspect = window.innerWidth / window.innerHeight;
+          }
+          game.camera.updateProjectionMatrix();
+        }
+        return;
+      }
+      
+      const isLandscape = getScreenOrientation();
       
       if (isLandscape) {
         // 横屏：正常显示
@@ -15781,8 +15813,12 @@ const MobileControls = {
     // 初始检测
     checkOrientation();
 
-    // 监听窗口大小变化
-    window.addEventListener('resize', checkOrientation);
+    // 监听窗口大小变化（防抖处理，避免软键盘弹出频繁触发）
+    let resizeTimer = null;
+    window.addEventListener('resize', () => {
+      if (resizeTimer) clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(checkOrientation, 150);
+    });
     
     // 监听屏幕方向变化
     if (window.screen && window.screen.orientation) {
@@ -15792,6 +15828,23 @@ const MobileControls = {
     }
     window.addEventListener('orientationchange', () => {
       setTimeout(checkOrientation, 300);
+    });
+    
+    // 监听输入框聚焦/失焦，锁定方向检测避免软键盘干扰
+    const inputSelector = 'input[type="text"], input[type="number"], input[type="password"], textarea';
+    document.addEventListener('focusin', (e) => {
+      if (e.target.matches && e.target.matches(inputSelector)) {
+        this.orientationLocked = true;
+      }
+    });
+    document.addEventListener('focusout', (e) => {
+      if (e.target.matches && e.target.matches(inputSelector)) {
+        // 延迟解锁，等待软键盘完全收起
+        setTimeout(() => {
+          this.orientationLocked = false;
+          checkOrientation();
+        }, 300);
+      }
     });
   },
   
