@@ -611,7 +611,23 @@
   body.force-landscape #quest-panel > div,
   body.force-landscape #settings-panel > div,
   body.force-landscape #help-panel > div {
-    max-height: 85% !important;
+    max-height: 90% !important;
+    padding: 1rem !important;
+  }
+  body.force-landscape #settings-panel h2 {
+    font-size: 1.25rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+  body.force-landscape #settings-panel .space-y-6 {
+    gap: 0.75rem !important;
+  }
+  body.force-landscape #settings-panel .space-y-6 > * {
+    margin-top: 0 !important;
+    margin-bottom: 0.75rem !important;
+  }
+  body.force-landscape #settings-panel button {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
   }
   body.force-landscape #awakening-icon {
     font-size: 3rem !important;
@@ -1814,10 +1830,10 @@
 
 <!-- 设置面板 -->
 <div id="settings-panel" class="fixed inset-0 bg-black/70 flex items-center justify-center z-[60] hidden">
-  <div class="glass-panel rounded-xl p-8 max-w-md w-full mx-4">
-    <h2 class="text-2xl font-bold text-amber-300 mb-6 text-center tracking-[0.3em]">设 置</h2>
+  <div class="glass-panel rounded-xl p-6 md:p-8 max-w-md w-full mx-4 max-h-[85vh] flex flex-col">
+    <h2 class="text-2xl font-bold text-amber-300 mb-6 text-center tracking-[0.3em] flex-shrink-0">设 置</h2>
     
-    <div class="space-y-6">
+    <div class="space-y-6 overflow-y-auto pr-2 flex-1 min-h-0">
       <!-- 音乐音量 -->
       <div>
         <div class="flex justify-between items-center mb-2">
@@ -1874,7 +1890,7 @@
     </div>
     
     <!-- 关闭按钮 -->
-    <button id="btn-close-settings" class="w-full mt-8 py-3 rounded-lg font-bold border border-amber-600/50 text-amber-200 hover:bg-amber-900/30 transition tracking-[0.2em]">
+    <button id="btn-close-settings" class="w-full mt-6 py-3 rounded-lg font-bold border border-amber-600/50 text-amber-200 hover:bg-amber-900/30 transition tracking-[0.2em] flex-shrink-0">
       关 闭
     </button>
   </div>
@@ -3320,9 +3336,9 @@ function initThree() {
   try {
     game.renderer = new THREE.WebGLRenderer({ 
       canvas, 
-      antialias: !isMobile,  // 移动端关闭抗锯齿，提升性能
+      antialias: !isMobile,  // PC端开启抗锯齿，移动端关闭以保证性能
       alpha: false,
-      powerPreference: isMobile ? 'low-power' : 'default'
+      powerPreference: isMobile ? 'high-performance' : 'default' // 移动端优先高性能
     });
   } catch (e) {
     throw new Error('WebGL 初始化失败，请检查浏览器是否支持 WebGL');
@@ -3344,21 +3360,25 @@ function initThree() {
   const renderWidth = isForcedLandscape ? window.innerHeight : window.innerWidth;
   const renderHeight = isForcedLandscape ? window.innerWidth : window.innerHeight;
   game.renderer.setSize(renderWidth, renderHeight);
-  // 性能优化：移动端像素比限制为1，大幅减少像素填充率
-  game.renderer.setPixelRatio(isMobile ? Math.min(window.devicePixelRatio, 1) : Math.min(window.devicePixelRatio, 2));
-  game.renderer.shadowMap.enabled = !isMobile; // 移动端关闭阴影，大幅提升性能
-  if (!isMobile) {
-    // 性能优化：使用PCFShadowMap替代PCFSoftShadowMap，减少阴影计算开销
+  // 移动端像素比提升到1.5，画质明显提升（从1提升到1.5，比PC的2低一档）
+  // 像素填充率增加约2.25倍，但现代手机GPU可以承受
+  game.renderer.setPixelRatio(isMobile ? Math.min(window.devicePixelRatio, 1.5) : Math.min(window.devicePixelRatio, 2));
+  // 移动端开启低质量阴影（PCFShadowMap，低分辨率），大幅提升画面立体感
+  game.renderer.shadowMap.enabled = true;
+  if (isMobile) {
+    // 移动端使用低分辨率阴影，性能开销小
+    game.renderer.shadowMap.type = THREE.PCFShadowMap;
+  } else {
+    // PC端使用更高质量阴影
     game.renderer.shadowMap.type = THREE.PCFShadowMap;
   }
   game.renderer.outputEncoding = THREE.sRGBEncoding;
 
   game.scene = new THREE.Scene();
   game.scene.background = new THREE.Color(0x87ceeb);
-  // 移动端缩短雾距离，减少可见范围，降低绘制压力
-  game.scene.fog = new THREE.Fog(0xaaddff, isMobile ? 40 : 60, isMobile ? 140 : 200);
+  game.scene.fog = new THREE.Fog(0xaaddff, isMobile ? 50 : 60, isMobile ? 170 : 200);
 
-  game.camera = new THREE.PerspectiveCamera(70, renderWidth / renderHeight, 0.1, isMobile ? 300 : 500);
+  game.camera = new THREE.PerspectiveCamera(70, renderWidth / renderHeight, 0.1, isMobile ? 400 : 500);
 
   game.clock = new THREE.Clock();
 
@@ -3382,15 +3402,27 @@ function initThree() {
   game.sunLight = new THREE.DirectionalLight(0xfff5d6, 1);
   game.sunLight.position.set(50, 80, 30);
   game.sunLight.castShadow = true;
-  // 性能优化：降低阴影贴图分辨率从2048到1024
-  game.sunLight.shadow.mapSize.width = 1024;
-  game.sunLight.shadow.mapSize.height = 1024;
-  game.sunLight.shadow.camera.left = -80;
-  game.sunLight.shadow.camera.right = 80;
-  game.sunLight.shadow.camera.top = 80;
-  game.sunLight.shadow.camera.bottom = -80;
-  game.sunLight.shadow.camera.near = 0.5;
-  game.sunLight.shadow.camera.far = 200;
+  // 移动端使用更低分辨率阴影（512x512），并缩小阴影范围提高清晰度
+  if (isMobile) {
+    game.sunLight.shadow.mapSize.width = 512;
+    game.sunLight.shadow.mapSize.height = 512;
+    game.sunLight.shadow.camera.left = -40;
+    game.sunLight.shadow.camera.right = 40;
+    game.sunLight.shadow.camera.top = 40;
+    game.sunLight.shadow.camera.bottom = -40;
+    game.sunLight.shadow.camera.near = 0.5;
+    game.sunLight.shadow.camera.far = 150;
+  } else {
+    // PC端使用1024x1024阴影
+    game.sunLight.shadow.mapSize.width = 1024;
+    game.sunLight.shadow.mapSize.height = 1024;
+    game.sunLight.shadow.camera.left = -80;
+    game.sunLight.shadow.camera.right = 80;
+    game.sunLight.shadow.camera.top = 80;
+    game.sunLight.shadow.camera.bottom = -80;
+    game.sunLight.shadow.camera.near = 0.5;
+    game.sunLight.shadow.camera.far = 200;
+  }
   // 性能优化：增加阴影偏移减少自阴影计算
   game.sunLight.shadow.bias = -0.0005;
   game.scene.add(game.sunLight);
@@ -3630,6 +3662,16 @@ function initTrees() {
     const tree = createTree();
     tree.position.set(x, y, z);
     tree.scale.setScalar(0.8 + Math.random() * 0.8);
+    // 移动端优化：树木不投射阴影，减少阴影绘制开销
+    // （建筑和玩家仍然投射阴影，保证基本立体感）
+    const isMobile = typeof MobileControls !== 'undefined' && MobileControls.isMobile;
+    if (isMobile) {
+      tree.traverse((child) => {
+        if (child.isMesh) {
+          child.castShadow = false;
+        }
+      });
+    }
     game.scene.add(tree);
     game.trees.push(tree);
 
@@ -9717,6 +9759,15 @@ function spawnOneBeast() {
   }
 
   const beast = createBeast(typeIdx, grade, x, z);
+  // 移动端优化：魂兽不投射阴影，减少阴影绘制开销
+  const isMobile = typeof MobileControls !== 'undefined' && MobileControls.isMobile;
+  if (isMobile) {
+    beast.mesh.traverse((child) => {
+      if (child.isMesh) {
+        child.castShadow = false;
+      }
+    });
+  }
   game.beasts.push(beast);
   return beast;
 }
@@ -9800,8 +9851,8 @@ function initInput() {
     // 灵敏度：原神风格，左右稍快于上下
     game.cameraYaw -= e.movementX * 0.0035;
     game.cameraPitch -= e.movementY * 0.003;
-    // 俯仰限制：约 -60° ~ +60°
-    game.cameraPitch = Math.max(-1.05, Math.min(1.05, game.cameraPitch));
+    // 俯仰限制：约 -35° ~ +60°（向下视角收窄，防止看到脚底下虚空）
+    game.cameraPitch = Math.max(-0.6, Math.min(1.05, game.cameraPitch));
   });
 
   // 禁用右键菜单
@@ -14622,24 +14673,56 @@ function unequipItem(slot) {
 function updateCamera(dt) {
   const p = game.player;
   const yaw = game.cameraYaw;
-  const pitch = game.cameraPitch;
-  const dist = game.cameraDistance;
+  let pitch = game.cameraPitch;
+  let dist = game.cameraDistance;
 
   // 相机目标点：角色胸部高度
   const targetPos = p.mesh.position.clone();
   targetPos.y += 1.6;
 
-  // 相机位置 = 目标点 + 偏移（球坐标系）
+  // 计算相机位置（球坐标系）
   // yaw=0 时相机在角色正后方（-Z方向），pitch 正值向上看
-  const offsetX = Math.sin(yaw) * Math.cos(pitch) * dist;
-  const offsetY = Math.sin(pitch) * dist + 1.0;
-  const offsetZ = Math.cos(yaw) * Math.cos(pitch) * dist;
+  let offsetX = Math.sin(yaw) * Math.cos(pitch) * dist;
+  let offsetY = Math.sin(pitch) * dist + 1.0;
+  let offsetZ = Math.cos(yaw) * Math.cos(pitch) * dist;
 
-  const desiredCamPos = new THREE.Vector3(
+  let desiredCamPos = new THREE.Vector3(
     targetPos.x + offsetX,
     targetPos.y + offsetY,
     targetPos.z + offsetZ
   );
+
+  // 相机地面碰撞检测：如果相机低于地面以上1.5单位，自动拉近相机
+  // 这样不会看到脚底下的虚空，同时保持视角自然
+  const minCameraHeight = 1.5;
+  let adjustedDist = dist;
+  
+  if (desiredCamPos.y < minCameraHeight) {
+    // 二分法找到相机刚好在地面以上的距离
+    let minDist = 2;
+    let maxDist = dist;
+    for (let i = 0; i < 8; i++) {
+      const midDist = (minDist + maxDist) / 2;
+      const midY = targetPos.y + Math.sin(pitch) * midDist + 1.0;
+      if (midY < minCameraHeight) {
+        maxDist = midDist;
+      } else {
+        minDist = midDist;
+      }
+    }
+    adjustedDist = minDist;
+    
+    // 用调整后的距离重新计算相机位置
+    offsetX = Math.sin(yaw) * Math.cos(pitch) * adjustedDist;
+    offsetY = Math.sin(pitch) * adjustedDist + 1.0;
+    offsetZ = Math.cos(yaw) * Math.cos(pitch) * adjustedDist;
+    
+    desiredCamPos = new THREE.Vector3(
+      targetPos.x + offsetX,
+      targetPos.y + offsetY,
+      targetPos.z + offsetZ
+    );
+  }
 
   // 平滑跟随（原神风格：相机有轻微滞后感，不生硬）
   const smoothFactor = Math.min(1, dt * 12);
@@ -15148,7 +15231,8 @@ const MobileControls = {
       // 高灵敏度，滑动屏幕轻松转视角
       game.cameraYaw -= dx * 0.010;
       game.cameraPitch -= dy * 0.008;
-      game.cameraPitch = Math.max(-1.1, Math.min(1.1, game.cameraPitch));
+      // 俯仰限制：约 -35° ~ +60°（向下视角收窄，防止看到脚底下虚空）
+      game.cameraPitch = Math.max(-0.6, Math.min(1.1, game.cameraPitch));
     };
 
     const onTouchEnd = (e) => {
@@ -17820,9 +17904,8 @@ function gameLoop() {
     const now = performance.now();
     let dt = (now - game.lastTime) / 1000;
     
-    // 移动端帧率限制（30fps），降低CPU/GPU占用
-    const isMobile = typeof MobileControls !== 'undefined' && MobileControls.isMobile;
-    const minFrameTime = isMobile ? 1/30 : 1/60;
+    // 统一60fps帧率
+    const minFrameTime = 1/60;
     if (dt < minFrameTime) return;
     
     game.lastTime = now;
@@ -18290,11 +18373,11 @@ function init3DScene(callback) {
   // 用setTimeout让浏览器先渲染加载遮罩，再开始加载
   setTimeout(() => {
     try {
-      // 移动端性能优化：调整配置参数
+      // 移动端画质平衡：适当增加场景元素（从80/20提升到120/30）
       if (typeof MobileControls !== 'undefined' && MobileControls.isMobile) {
-        CONFIG.TREE_COUNT = 80;      // 减少树木数量
-        CONFIG.BEAST_COUNT = 20;     // 减少魂兽数量
-        console.log('[移动端] 已应用性能优化配置');
+        CONFIG.TREE_COUNT = 120;      // 树木数量提升
+        CONFIG.BEAST_COUNT = 30;     // 魂兽数量提升
+        console.log('[移动端] 已应用画质平衡配置');
       }
       
       initThree();
