@@ -13238,6 +13238,16 @@ function getNearestInteractable() {
   let nearestDist = Infinity;
   let nearestType = null;
   
+  // 武魂雕像（优先级最高）
+  if (game.village && game.village.statue) {
+    const dist = playerPos.distanceTo(game.village.statue.position);
+    if (dist < 5 && dist < nearestDist) {
+      nearest = game.village.statue;
+      nearestDist = dist;
+      nearestType = 'statue';
+    }
+  }
+  
   // 商人
   if (game.merchant) {
     const dist = playerPos.distanceTo(game.merchant.position);
@@ -13315,6 +13325,13 @@ function updateNPCInteractHint() {
   
   let text = '';
   switch(interactable.type) {
+    case 'statue':
+      if (game.player && game.player.martialSoulAwakened) {
+        text = '武魂雕像（已觉醒）';
+      } else {
+        text = '觉醒武魂';
+      }
+      break;
     case 'merchant':
       text = '与铁匠鸡哥交易';
       break;
@@ -14810,25 +14827,39 @@ const MobileControls = {
       if (game.state !== 'playing') return;
       if (camTouch.active) return;
       
-      // 只处理屏幕右半侧的触摸，且不是点在按钮上的
-      const touch = e.touches[0];
-      
-      // 如果点在UI控件上，不处理视角
-      if (touch.target.closest('.joystick-container') || 
-          touch.target.closest('.action-buttons') ||
-          touch.target.closest('.mobile-shortcuts') ||
-          touch.target.closest('.btn-interact') ||
-          touch.target.closest('.pointer-events-auto')) {
-        return;
+      // 找到一个合适的触摸点来控制视角（不是点在UI控件上的）
+      let validTouch = null;
+      for (let i = 0; i < e.touches.length; i++) {
+        const touch = e.touches[i];
+        
+        // 如果点在UI控件上，跳过
+        if (touch.target.closest('.joystick-container') || 
+            touch.target.closest('.action-buttons') ||
+            touch.target.closest('.mobile-shortcuts') ||
+            touch.target.closest('.btn-interact') ||
+            touch.target.closest('.pointer-events-auto')) {
+          continue;
+        }
+        
+        // 排除左下角摇杆区域（避免误触）
+        const joystickZoneX = 180; // 摇杆区域宽度
+        const joystickZoneY = 200; // 摇杆区域高度（从底部算起）
+        if (touch.clientX < joystickZoneX && 
+            touch.clientY > window.innerHeight - joystickZoneY) {
+          continue;
+        }
+        
+        // 这个触摸点可以用来控制视角
+        validTouch = touch;
+        break;
       }
       
-      // 只处理屏幕右半部分的触摸（作为视角区）
-      if (touch.clientX < window.innerWidth * 0.5) return;
+      if (!validTouch) return;
       
       camTouch.active = true;
-      camTouch.touchId = touch.identifier;
-      camTouch.lastX = touch.clientX;
-      camTouch.lastY = touch.clientY;
+      camTouch.touchId = validTouch.identifier;
+      camTouch.lastX = validTouch.clientX;
+      camTouch.lastY = validTouch.clientY;
     };
 
     const onTouchMove = (e) => {
@@ -14849,9 +14880,9 @@ const MobileControls = {
       camTouch.lastX = touch.clientX;
       camTouch.lastY = touch.clientY;
       
-      // 旋转视角（灵敏度与鼠标版类似）
-      game.cameraYaw -= dx * 0.005;
-      game.cameraPitch -= dy * 0.004;
+      // 提高灵敏度，让转视角更轻松
+      game.cameraYaw -= dx * 0.008;
+      game.cameraPitch -= dy * 0.006;
       game.cameraPitch = Math.max(-1.05, Math.min(1.05, game.cameraPitch));
     };
 
@@ -15086,6 +15117,28 @@ function updatePlayer(dt) {
 
   p.mesh.position.x += moveX;
   p.mesh.position.z += moveZ;
+
+  // 移动端：移动时相机自动转向移动方向（减少手动转视角的麻烦）
+  if (typeof MobileControls !== 'undefined' && MobileControls.isMobile) {
+    const moveLen = Math.sqrt(forward * forward + right * right);
+    if (moveLen > 0.2 && !MobileControls.cameraTouch.active) {
+      // 计算移动方向的角度
+      const moveWorldX = forwardX * forward + rightX * right;
+      const moveWorldZ = forwardZ * forward + rightZ * right;
+      const moveAngle = Math.atan2(moveWorldX, moveWorldZ);
+      // 相机yaw应该在移动方向的反方向（相机在角色身后）
+      const targetYaw = moveAngle + Math.PI;
+      // 平滑转向
+      let diff = targetYaw - game.cameraYaw;
+      // 归一化到 -PI ~ PI
+      while (diff > Math.PI) diff -= Math.PI * 2;
+      while (diff < -Math.PI) diff += Math.PI * 2;
+      // 慢速自动跟随（只有向前移动时才跟随，侧移/后退不跟随，避免晕）
+      if (forward > 0.3) {
+        game.cameraYaw += diff * Math.min(1, dt * 2.5);
+      }
+    }
+  }
 
   // 与房屋碰撞检测（多次迭代，确保不会穿墙）
   const playerRadius = 0.6; // 玩家碰撞半径
