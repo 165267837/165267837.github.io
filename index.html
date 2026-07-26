@@ -548,13 +548,12 @@
   }
   
   body.force-landscape #vignette {
-    width: 100vh !important;
-    height: 100vw !important;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(90deg);
-    transform-origin: center center;
-    position: fixed;
+    width: 100% !important;
+    height: 100% !important;
+    top: 0;
+    left: 0;
+    transform: none;
+    position: absolute;
   }
   
   /* 强制横屏模式下的控件优化（相当于横屏模式） */
@@ -17625,6 +17624,11 @@ function startGame(isFirstPlay = true) {
   document.getElementById('death-panel').classList.add('hidden');
   document.getElementById('pause-menu').classList.add('hidden');
   document.getElementById('hud').classList.remove('hidden');
+  
+  // 手机端隐藏十字准星
+  if (typeof MobileControls !== 'undefined' && MobileControls.isMobile) {
+    document.getElementById('crosshair').classList.add('hidden');
+  }
 
   // 播放游戏背景音乐
   MusicSystem.playGame();
