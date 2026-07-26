@@ -600,9 +600,10 @@
   body.force-landscape #character-create-panel .flex.gap-3 {
     max-height: calc(100% - 100px) !important;
   }
+  /* 强制横屏模式下觉醒/测魂力面板优化（已用flex布局，这里补充细节） */
   body.force-landscape #awakening-panel > div,
   body.force-landscape #soul-power-panel > div {
-    max-height: 90% !important;
+    max-height: 95% !important;
   }
   body.force-landscape #shop-panel > div,
   body.force-landscape #bag-panel > div,
@@ -612,43 +613,40 @@
   body.force-landscape #help-panel > div {
     max-height: 85% !important;
   }
-  
-  /* 强制横屏模式下减小觉醒/测魂力面板的动画区域 */
-  body.force-landscape #awakening-animation {
-    height: 140px !important;
-    margin-bottom: 16px !important;
-  }
   body.force-landscape #awakening-icon {
-    font-size: 4rem !important;
-  }
-  body.force-landscape #soul-power-panel .relative.h-72 {
-    height: 160px !important;
-    margin-bottom: 16px !important;
+    font-size: 3rem !important;
   }
   body.force-landscape #crystal-ball {
+    width: 80px !important;
+    height: 80px !important;
+  }
+  body.force-landscape #crystal-glow {
     width: 100px !important;
     height: 100px !important;
   }
-  body.force-landscape #crystal-glow {
-    width: 120px !important;
-    height: 120px !important;
-  }
   body.force-landscape #crystal-level {
-    font-size: 2rem !important;
+    font-size: 1.5rem !important;
   }
   body.force-landscape #awakening-panel h2,
   body.force-landscape #soul-power-panel h2 {
-    font-size: 1.5rem !important;
+    font-size: 1.25rem !important;
+    margin-bottom: 0.25rem !important;
   }
   body.force-landscape #awakening-soul-name {
-    font-size: 1.5rem !important;
+    font-size: 1.25rem !important;
   }
   body.force-landscape #soul-power-level {
-    font-size: 2.5rem !important;
+    font-size: 2rem !important;
   }
-  body.force-landscape #awakening-panel .mb-6,
-  body.force-landscape #soul-power-panel .mb-6 {
-    margin-bottom: 12px !important;
+  body.force-landscape #awakening-panel .mb-4,
+  body.force-landscape #soul-power-panel .mb-4 {
+    margin-bottom: 8px !important;
+  }
+  body.force-landscape #awakening-panel button,
+  body.force-landscape #soul-power-panel button {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+    font-size: 1rem !important;
   }
   
   /* 强制横屏模式下捏脸面板更紧凑 */
@@ -1632,50 +1630,52 @@
 
 <!-- 武魂觉醒面板 -->
 <div id="awakening-panel" class="fixed inset-0 bg-black/85 flex items-center justify-center z-[100] hidden">
-  <div class="text-center max-w-lg w-full mx-4">
-    <div class="mb-6">
+  <div class="text-center max-w-lg w-full mx-4 flex flex-col" style="max-height: 90vh;">
+    <div class="mb-4 flex-shrink-0">
       <div class="text-amber-400/60 text-sm mb-2">✦ 武魂觉醒仪式 ✦</div>
-      <h2 class="text-4xl font-bold text-amber-300 mb-2" style="text-shadow: 0 0 30px rgba(251,191,36,0.5);">武魂觉醒</h2>
+      <h2 class="text-3xl md:text-4xl font-bold text-amber-300 mb-2" style="text-shadow: 0 0 30px rgba(251,191,36,0.5);">武魂觉醒</h2>
       <p class="text-amber-100/60 text-sm">将手放在武魂石碑上，感受体内的武魂之力</p>
     </div>
     
     <!-- 觉醒动画区域 -->
-    <div id="awakening-animation" class="relative h-64 mb-6 flex items-center justify-center">
+    <div id="awakening-animation" class="relative flex-1 min-h-0 mb-4 flex items-center justify-center">
       <div id="awakening-glow" class="absolute inset-0 rounded-full opacity-0 transition-opacity duration-500" style="background: radial-gradient(circle, rgba(251,191,36,0.3) 0%, transparent 70%);"></div>
-      <div id="awakening-icon" class="text-8xl opacity-0 transition-all duration-500 transform scale-50">
+      <div id="awakening-icon" class="text-6xl md:text-8xl opacity-0 transition-all duration-500 transform scale-50">
         ❂
       </div>
     </div>
     
     <!-- 觉醒结果 -->
-    <div id="awakening-result" class="hidden mb-6">
+    <div id="awakening-result" class="hidden mb-4 flex-shrink-0 overflow-y-auto">
       <div class="text-amber-100/70 text-sm mb-2">你的武魂是</div>
-      <h3 id="awakening-soul-name" class="text-3xl font-bold mb-2" style="text-shadow: 0 0 20px currentColor;"></h3>
-      <p id="awakening-soul-desc" class="text-amber-100/60 text-sm mb-4"></p>
-      <div id="awakening-soul-type" class="inline-block px-4 py-1 rounded-full text-xs border mb-4"></div>
+      <h3 id="awakening-soul-name" class="text-2xl md:text-3xl font-bold mb-2" style="text-shadow: 0 0 20px currentColor;"></h3>
+      <p id="awakening-soul-desc" class="text-amber-100/60 text-sm mb-3"></p>
+      <div id="awakening-soul-type" class="inline-block px-4 py-1 rounded-full text-xs border mb-2"></div>
     </div>
     
     <!-- 抽取武魂按钮 -->
-    <button id="btn-awaken" class="btn-gold py-3 px-8 rounded-lg text-lg font-bold">
-      开始觉醒
-    </button>
-    <button id="btn-confirm-awakening" class="btn-gold py-3 px-8 rounded-lg text-lg font-bold hidden">
-      确认觉醒
-    </button>
+    <div class="flex-shrink-0">
+      <button id="btn-awaken" class="btn-gold py-3 px-8 rounded-lg text-lg font-bold">
+        开始觉醒
+      </button>
+      <button id="btn-confirm-awakening" class="btn-gold py-3 px-8 rounded-lg text-lg font-bold hidden">
+        确认觉醒
+      </button>
+    </div>
   </div>
 </div>
 
 <!-- 测魂力面板 -->
 <div id="soul-power-panel" class="fixed inset-0 bg-black/85 flex items-center justify-center z-[100] hidden">
-  <div class="text-center max-w-lg w-full mx-4">
-    <div class="mb-6">
+  <div class="text-center max-w-lg w-full mx-4 flex flex-col" style="max-height: 90vh;">
+    <div class="mb-4 flex-shrink-0">
       <div class="text-cyan-400/60 text-sm mb-2">✦ 魂力测试 ✦</div>
-      <h2 class="text-4xl font-bold text-cyan-300 mb-2" style="text-shadow: 0 0 30px rgba(34,211,238,0.5);">测魂力</h2>
+      <h2 class="text-3xl md:text-4xl font-bold text-cyan-300 mb-2" style="text-shadow: 0 0 30px rgba(34,211,238,0.5);">测魂力</h2>
       <p id="soul-power-hint" class="text-cyan-100/60 text-sm">将手放在魂力水晶球上，感受体内的魂力波动</p>
     </div>
     
     <!-- 水晶球动画区域 -->
-    <div class="relative h-72 mb-6 flex items-center justify-center">
+    <div class="relative flex-1 min-h-0 mb-4 flex items-center justify-center">
       <!-- 水晶球底座 -->
       <div class="absolute bottom-4 w-32 h-8 rounded-full bg-gradient-to-t from-gray-700 to-gray-500 opacity-80"></div>
       <div class="absolute bottom-8 w-24 h-4 rounded-full bg-gradient-to-t from-gray-600 to-gray-400 opacity-60"></div>
@@ -1686,7 +1686,7 @@
                   filter: blur(20px);"></div>
       
       <!-- 水晶球 -->
-      <div id="crystal-ball" class="relative w-40 h-40 rounded-full opacity-80 transition-all duration-1000"
+      <div id="crystal-ball" class="relative w-32 h-32 md:w-40 md:h-40 rounded-full opacity-80 transition-all duration-1000"
            style="background: radial-gradient(circle at 30% 30%, 
                    rgba(255,255,255,0.9) 0%, 
                    rgba(200,220,255,0.6) 20%, 
@@ -1703,7 +1703,7 @@
         <div class="absolute top-10 left-12 w-3 h-4 rounded-full bg-white/40 transform -rotate-12"></div>
         
         <!-- 魂力数值显示 -->
-        <div id="crystal-level" class="absolute inset-0 flex items-center justify-center text-5xl font-bold text-white opacity-0 transition-opacity duration-500"
+        <div id="crystal-level" class="absolute inset-0 flex items-center justify-center text-4xl md:text-5xl font-bold text-white opacity-0 transition-opacity duration-500"
              style="text-shadow: 0 0 20px rgba(255,255,255,0.8), 0 0 40px rgba(100,200,255,0.6);">
           ?
         </div>
@@ -1714,23 +1714,25 @@
     </div>
     
     <!-- 测试结果 -->
-    <div id="soul-power-result" class="hidden mb-6">
+    <div id="soul-power-result" class="hidden mb-4 flex-shrink-0 overflow-y-auto">
       <div class="text-cyan-100/70 text-sm mb-2">先天魂力</div>
-      <div class="flex items-center justify-center gap-3 mb-3">
-        <span id="soul-power-level" class="text-5xl font-bold" style="text-shadow: 0 0 20px currentColor;"></span>
-        <span class="text-2xl text-cyan-200">级</span>
+      <div class="flex items-center justify-center gap-3 mb-2">
+        <span id="soul-power-level" class="text-4xl md:text-5xl font-bold" style="text-shadow: 0 0 20px currentColor;"></span>
+        <span class="text-xl md:text-2xl text-cyan-200">级</span>
       </div>
-      <div id="soul-power-realm" class="text-xl mb-2"></div>
+      <div id="soul-power-realm" class="text-lg md:text-xl mb-2"></div>
       <p id="soul-power-comment" class="text-cyan-100/60 text-sm"></p>
     </div>
     
     <!-- 按钮 -->
-    <button id="btn-test-soul-power" class="btn-cyan py-3 px-8 rounded-lg text-lg font-bold">
-      开始测试
-    </button>
-    <button id="btn-confirm-soul-power" class="btn-cyan py-3 px-8 rounded-lg text-lg font-bold hidden">
-      确认
-    </button>
+    <div class="flex-shrink-0">
+      <button id="btn-test-soul-power" class="btn-cyan py-3 px-8 rounded-lg text-lg font-bold">
+        开始测试
+      </button>
+      <button id="btn-confirm-soul-power" class="btn-cyan py-3 px-8 rounded-lg text-lg font-bold hidden">
+        确认
+      </button>
+    </div>
   </div>
 </div>
 
