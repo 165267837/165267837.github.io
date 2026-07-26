@@ -514,60 +514,26 @@
     }
   }
 
-  /* ========== 竖屏提示遮罩 ========== */
-  .rotate-prompt {
+  /* ========== 强制横屏模式 ========== */
+  /* 竖屏时，整个游戏旋转90度，强制横屏显示 */
+  body.force-landscape {
     position: fixed;
-    inset: 0;
-    background: linear-gradient(135deg, #0a0515 0%, #1a0a2e 50%, #2d1b4e 100%);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    z-index: 9999;
-    color: #fbbf24;
-    text-align: center;
-    padding: 20px;
-  }
-  .rotate-prompt.show { display: flex; }
-  
-  .rotate-icon {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 20px;
-    animation: rotatePhone 2s ease-in-out infinite;
-  }
-  @keyframes rotatePhone {
-    0%, 100% { transform: rotate(0deg); }
-    50% { transform: rotate(90deg); }
+    width: 100vh;
+    height: 100vw;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(90deg);
+    transform-origin: center center;
+    overflow: hidden;
   }
   
-  .rotate-prompt h3 {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #fbbf24;
-    text-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+  body.force-landscape #game-canvas {
+    width: 100vh !important;
+    height: 100vw !important;
   }
-  .rotate-prompt p {
-    font-size: 14px;
-    color: rgba(251, 191, 36, 0.6);
-    line-height: 1.6;
-  }
-  .rotate-prompt .btn-continue-portrait {
-    margin-top: 30px;
-    padding: 10px 24px;
-    background: rgba(251, 191, 36, 0.15);
-    border: 1px solid rgba(251, 191, 36, 0.4);
-    border-radius: 8px;
-    color: #fbbf24;
-    font-size: 13px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .rotate-prompt .btn-continue-portrait:active {
-    background: rgba(251, 191, 36, 0.3);
-    transform: scale(0.95);
-  }
+  
+  /* 隐藏旧的竖屏提示 */
+  .rotate-prompt { display: none !important; }
 
   /* ========== 加载遮罩（3D场景加载时显示） ========== */
   .loading-overlay {
@@ -3186,7 +3152,11 @@ function initThree() {
     alert('游戏渲染上下文丢失，请刷新页面重试');
   }, false);
   
-  game.renderer.setSize(window.innerWidth, window.innerHeight);
+  // 强制横屏模式下，初始尺寸需要互换宽高
+  const isForcedLandscape = typeof MobileControls !== 'undefined' && MobileControls.isForcedLandscape;
+  const renderWidth = isForcedLandscape ? window.innerHeight : window.innerWidth;
+  const renderHeight = isForcedLandscape ? window.innerWidth : window.innerHeight;
+  game.renderer.setSize(renderWidth, renderHeight);
   // 性能优化：移动端像素比限制为1，大幅减少像素填充率
   game.renderer.setPixelRatio(isMobile ? Math.min(window.devicePixelRatio, 1) : Math.min(window.devicePixelRatio, 2));
   game.renderer.shadowMap.enabled = !isMobile; // 移动端关闭阴影，大幅提升性能
@@ -3201,7 +3171,7 @@ function initThree() {
   // 移动端缩短雾距离，减少可见范围，降低绘制压力
   game.scene.fog = new THREE.Fog(0xaaddff, isMobile ? 40 : 60, isMobile ? 140 : 200);
 
-  game.camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, isMobile ? 300 : 500);
+  game.camera = new THREE.PerspectiveCamera(70, renderWidth / renderHeight, 0.1, isMobile ? 300 : 500);
 
   game.clock = new THREE.Clock();
 
@@ -14712,16 +14682,32 @@ const MobileControls = {
 
   // 初始化屏幕方向检测
   initOrientation() {
-    const prompt = document.getElementById('rotate-prompt');
-    if (!prompt) return;
-
+    this.isForcedLandscape = false; // 是否处于强制横屏模式
+    
     const checkOrientation = () => {
       const isLandscape = window.innerWidth > window.innerHeight;
+      
       if (isLandscape) {
-        prompt.classList.remove('show');
+        // 横屏：正常显示
+        document.body.classList.remove('force-landscape');
+        this.isForcedLandscape = false;
       } else {
-        // 竖屏时强制显示提示（手机端必须横屏）
-        prompt.classList.add('show');
+        // 竖屏：强制横屏显示（旋转90度）
+        document.body.classList.add('force-landscape');
+        this.isForcedLandscape = true;
+      }
+      
+      // 更新渲染器尺寸
+      if (game.renderer) {
+        if (this.isForcedLandscape) {
+          // 强制横屏：宽高互换
+          game.renderer.setSize(window.innerHeight, window.innerWidth);
+          game.camera.aspect = window.innerHeight / window.innerWidth;
+        } else {
+          game.renderer.setSize(window.innerWidth, window.innerHeight);
+          game.camera.aspect = window.innerWidth / window.innerHeight;
+        }
+        game.camera.updateProjectionMatrix();
       }
     };
 
@@ -14733,11 +14719,31 @@ const MobileControls = {
     
     // 监听屏幕方向变化
     if (window.screen && window.screen.orientation) {
-      window.screen.orientation.addEventListener('change', checkOrientation);
+      window.screen.orientation.addEventListener('change', () => {
+        setTimeout(checkOrientation, 100);
+      });
     }
     window.addEventListener('orientationchange', () => {
       setTimeout(checkOrientation, 300);
     });
+  },
+  
+  // 将屏幕坐标转换为游戏画面坐标（强制横屏时需要旋转映射）
+  mapTouchToGame(clientX, clientY) {
+    if (!this.isForcedLandscape) {
+      return { x: clientX, y: clientY };
+    }
+    
+    // 强制横屏时，画面旋转了90度顺时针
+    // 触摸点坐标需要相应转换
+    // 屏幕竖屏时：宽=W, 高=H（W < H）
+    // 游戏画面横屏显示：宽=H, 高=W，旋转90度，居中
+    // 转换公式：x' = y, y' = W - x
+    const screenWidth = window.innerWidth; // 竖屏时的宽度（较小值）
+    return {
+      x: clientY,
+      y: screenWidth - clientX
+    };
   },
 
   // 初始化虚拟摇杆
@@ -14817,18 +14823,45 @@ const MobileControls = {
     let dx = clientX - joystick.centerX;
     let dy = clientY - joystick.centerY;
     
-    const dist = Math.sqrt(dx * dx + dy * dy);
-    if (dist > joystick.maxRadius) {
-      dx = (dx / dist) * joystick.maxRadius;
-      dy = (dy / dist) * joystick.maxRadius;
+    // 强制横屏时，摇杆输入方向需要旋转
+    // 画面顺时针旋转90度后：
+    // - 视觉向上（屏幕右方向，dx>0）= 向前走（moveZ<0）
+    // - 视觉向右（屏幕下方向，dy>0）= 向右走（moveX>0）
+    // 映射：moveX = dy, moveZ = -dx
+    let moveDx = dx;
+    let moveDy = dy;
+    if (this.isForcedLandscape) {
+      moveDx = dy;       // 屏幕向下（dy>0）= 游戏向右（moveX>0）
+      moveDy = -dx;      // 屏幕向右（dx>0）= 游戏向上（moveZ<0=向前）
     }
     
-    stick.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
+    const dist = Math.sqrt(moveDx * moveDx + moveDy * moveDy);
+    if (dist > joystick.maxRadius) {
+      moveDx = (moveDx / dist) * joystick.maxRadius;
+      moveDy = (moveDy / dist) * joystick.maxRadius;
+    }
+    
+    // 摇杆显示位置
+    // 容器本身被旋转了90度，stick的translate需要在容器坐标系中
+    // 视觉偏移(dx, dy) → 容器坐标(dy, -dx)
+    let displayDx = dx;
+    let displayDy = dy;
+    if (this.isForcedLandscape) {
+      displayDx = dy;
+      displayDy = -dx;
+      // 重新归一化显示位置
+      const displayDist = Math.sqrt(displayDx * displayDx + displayDy * displayDy);
+      if (displayDist > joystick.maxRadius) {
+        displayDx = (displayDx / displayDist) * joystick.maxRadius;
+        displayDy = (displayDy / displayDist) * joystick.maxRadius;
+      }
+    }
+    stick.style.transform = `translate(calc(-50% + ${displayDx}px), calc(-50% + ${displayDy}px))`;
     
     // 归一化到 -1 ~ 1
     // 注意：摇杆向前（上）= -Z 方向移动
-    joystick.moveX = dx / joystick.maxRadius;
-    joystick.moveZ = dy / joystick.maxRadius;
+    joystick.moveX = moveDx / joystick.maxRadius;
+    joystick.moveZ = moveDy / joystick.maxRadius;
   },
 
   // 初始化视角控制（全屏滑动，除了摇杆和按钮区域）
@@ -14847,7 +14880,7 @@ const MobileControls = {
       for (let i = 0; i < e.touches.length; i++) {
         const touch = e.touches[i];
         
-        // 如果点在UI控件上，跳过
+        // 如果点在UI控件上，跳过（DOM元素检测，不受旋转影响）
         if (touch.target.closest('.joystick-container') || 
             touch.target.closest('.action-buttons') ||
             touch.target.closest('.mobile-shortcuts') ||
@@ -14860,19 +14893,24 @@ const MobileControls = {
           continue;
         }
         
-        // 排除左下角摇杆区域（扩大一点范围避免误触）
+        // 坐标区域排除（需要转换到游戏画面坐标）
+        const gamePos = this.mapTouchToGame(touch.clientX, touch.clientY);
+        const gameWidth = this.isForcedLandscape ? window.innerHeight : window.innerWidth;
+        const gameHeight = this.isForcedLandscape ? window.innerWidth : window.innerHeight;
+        
+        // 排除左下角摇杆区域
         const joystickZoneX = 200;
         const joystickZoneY = 220;
-        if (touch.clientX < joystickZoneX && 
-            touch.clientY > window.innerHeight - joystickZoneY) {
+        if (gamePos.x < joystickZoneX && 
+            gamePos.y > gameHeight - joystickZoneY) {
           continue;
         }
         
         // 排除右下角按钮区域
         const btnZoneX = 200;
         const btnZoneY = 280;
-        if (touch.clientX > window.innerWidth - btnZoneX && 
-            touch.clientY > window.innerHeight - btnZoneY) {
+        if (gamePos.x > gameWidth - btnZoneX && 
+            gamePos.y > gameHeight - btnZoneY) {
           continue;
         }
         
@@ -14901,11 +14939,18 @@ const MobileControls = {
       }
       if (!touch) return;
       
-      const dx = touch.clientX - camTouch.lastX;
-      const dy = touch.clientY - camTouch.lastY;
+      let dx = touch.clientX - camTouch.lastX;
+      let dy = touch.clientY - camTouch.lastY;
       
       camTouch.lastX = touch.clientX;
       camTouch.lastY = touch.clientY;
+      
+      // 强制横屏时，旋转滑动方向（画面顺时针转了90度，所以输入方向要逆时针转90度）
+      if (this.isForcedLandscape) {
+        const temp = dx;
+        dx = dy;   // 屏幕的上下滑动 → 游戏的左右滑动（转视角）
+        dy = -temp; // 屏幕的左右滑动 → 游戏的上下滑动（俯仰）
+      }
       
       // 高灵敏度，滑动屏幕轻松转视角
       game.cameraYaw -= dx * 0.010;
