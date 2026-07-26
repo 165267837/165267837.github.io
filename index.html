@@ -53,7 +53,6 @@
   body.video-playing #game-canvas,
   body.video-playing #hud,
   body.video-playing #start-menu,
-  body.video-playing #rotate-prompt,
   body.video-playing #loading-overlay {
     display: none !important;
   }
@@ -531,9 +530,6 @@
     width: 100vh !important;
     height: 100vw !important;
   }
-  
-  /* 隐藏旧的竖屏提示 */
-  .rotate-prompt { display: none !important; }
 
   /* ========== 加载遮罩（3D场景加载时显示） ========== */
   .loading-overlay {
@@ -1306,20 +1302,6 @@
       <div id="btn-pause-mobile" class="btn-shortcut">暂停</div>
     </div>
   </div>
-</div>
-
-<!-- 竖屏提示遮罩 -->
-<div id="rotate-prompt" class="rotate-prompt">
-  <svg class="rotate-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="25" y="10" width="50" height="80" rx="8" stroke="#fbbf24" stroke-width="3" fill="rgba(251,191,36,0.1)"/>
-    <rect x="30" y="15" width="40" height="65" rx="3" fill="rgba(251,191,36,0.2)"/>
-    <circle cx="50" cy="87" r="3" fill="#fbbf24"/>
-    <path d="M10 50 Q5 45 10 40" stroke="#fbbf24" stroke-width="2" fill="none"/>
-    <path d="M8 42 L10 40 L12 42" stroke="#fbbf24" stroke-width="2" fill="none"/>
-    <text x="50" y="55" text-anchor="middle" fill="#fbbf24" font-size="14" font-weight="bold">横屏</text>
-  </svg>
-  <h3>请横屏游玩</h3>
-  <p>本游戏仅支持横屏模式<br>请将手机旋转至横屏后继续</p>
 </div>
 
 <!-- 加载遮罩（3D场景加载时显示） -->
