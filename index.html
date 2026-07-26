@@ -690,83 +690,125 @@
     position: absolute;
   }
   
-  /* 强制横屏模式下的控件优化（相当于横屏模式） */
+  /* 强制横屏模式下的控件优化 - 王者荣耀式扇形布局 */
   body.force-landscape .joystick-container {
-    bottom: 16px;
-    left: 16px;
-    width: 80px;
-    height: 80px;
-    /* 移除负margin，改用伪元素扩大触控热区，避免视觉偏移 */
+    bottom: 20px;
+    left: 20px;
+    width: 90px;
+    height: 90px;
     padding: 0;
     margin: 0;
   }
-  /* 用伪元素扩大触控热区，不影响视觉位置 */
   body.force-landscape .joystick-container::before {
     content: '';
     position: absolute;
-    top: -20px;
-    left: -20px;
-    right: -20px;
-    bottom: -20px;
+    top: -25px;
+    left: -25px;
+    right: -25px;
+    bottom: -25px;
     pointer-events: auto;
   }
   body.force-landscape .joystick-stick {
-    width: 34px;
-    height: 34px;
+    width: 38px;
+    height: 38px;
   }
   body.force-landscape .action-buttons {
+    position: absolute;
     bottom: 14px;
     right: 14px;
-    gap: 3px;
-    /* 改为横向布局，技能按钮在左，攻击按钮在右，充分利用横屏宽度 */
-    flex-direction: row;
+    width: 170px;
+    height: 160px;
+    /* 相对定位容器，所有按钮绝对定位实现扇形布局 */
+    flex-direction: column;
     align-items: flex-end;
+    gap: 0;
   }
   body.force-landscape .skill-buttons {
-    gap: 3px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     margin-bottom: 0;
-    /* 技能按钮改为两列（3+2），降低高度避免与交互按钮重叠 */
-    flex-direction: column;
-    flex-wrap: wrap;
+    flex-direction: row;
+    flex-wrap: nowrap;
     justify-content: flex-end;
     align-content: flex-end;
     max-width: none;
-    order: 2;
-    height: 108px; /* 3个按钮高度 + 间距 = 3*34 + 2*3 = 108px */
-    width: 71px; /* 2个按钮宽度 + 间距 = 2*34 + 3 = 71px */
+    order: 0;
+    height: auto;
+    width: auto;
+    pointer-events: none;
   }
   body.force-landscape .btn-skill {
-    width: 34px;
-    height: 34px;
-    font-size: 7px;
+    width: 36px;
+    height: 36px;
+    font-size: 8px;
+    position: absolute;
+    pointer-events: auto;
+  }
+  /* 5个技能按钮扇形排列 - 围绕攻击按钮左上扇形分布 */
+  /* 技能1：最左侧，最低位置 */
+  body.force-landscape .btn-skill:nth-child(1) {
+    right: 122px;
+    bottom: 92px;
+  }
+  /* 技能2：左上方 */
+  body.force-landscape .btn-skill:nth-child(2) {
+    right: 100px;
+    bottom: 102px;
+  }
+  /* 技能3：正上方最高处 */
+  body.force-landscape .btn-skill:nth-child(3) {
+    right: 76px;
+    bottom: 110px;
+  }
+  /* 技能4：右上方 */
+  body.force-landscape .btn-skill:nth-child(4) {
+    right: 50px;
+    bottom: 114px;
+  }
+  /* 技能5：最靠右侧 */
+  body.force-landscape .btn-skill:nth-child(5) {
+    right: 20px;
+    bottom: 112px;
   }
   body.force-landscape .btn-jump {
-    width: 38px;
-    height: 38px;
-    font-size: 8px;
+    width: 44px;
+    height: 44px;
+    font-size: 9px;
+    position: absolute;
+    left: 6px;
+    bottom: 6px;
   }
   body.force-landscape .btn-rings {
-    width: 32px;
-    height: 32px;
-    font-size: 7px;
+    width: 36px;
+    height: 36px;
+    font-size: 8px;
+    position: absolute;
+    left: 10px;
+    bottom: 54px;
   }
   body.force-landscape .jump-row {
-    gap: 4px;
-    display: flex;
-    flex-direction: column;
-    order: 1;
-    margin-right: 4px;
+    gap: 0;
+    display: contents;
+    flex-direction: row;
+    order: 0;
+    margin-right: 0;
   }
   body.force-landscape .btn-attack-main {
-    width: 50px;
-    height: 50px;
-    font-size: 9px;
+    width: 58px;
+    height: 58px;
+    font-size: 10px;
     margin-top: 0;
-    order: 3;
+    order: 0;
+    position: absolute;
+    right: 4px;
+    bottom: 0;
   }
   body.force-landscape .btn-interact {
-    bottom: 130px;
-    right: 14px;
+    bottom: 120px;
+    right: 170px;
     width: 40px;
     height: 40px;
     font-size: 9px;
