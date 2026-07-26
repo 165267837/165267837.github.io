@@ -776,7 +776,7 @@
     bottom: 12px;
     right: 12px;
     width: 180px;
-    height: 150px;
+    height: 170px;
     /* 相对定位容器，所有按钮绝对定位实现扇形布局 */
     flex-direction: column;
     align-items: flex-end;
@@ -807,30 +807,30 @@
     pointer-events: auto;
   }
   /* 5个技能按钮扇形排列 - 围绕攻击按钮左上扇形分布 */
-  /* 技能1：最左侧，最靠下（攻击按钮左上方较远位置） */
-  body.force-landscape .btn-skill:nth-child(1) {
-    right: 130px;
-    bottom: 12px;
-  }
-  /* 技能2：左上方 */
-  body.force-landscape .btn-skill:nth-child(2) {
-    right: 112px;
-    bottom: 34px;
-  }
-  /* 技能3：中上方 */
-  body.force-landscape .btn-skill:nth-child(3) {
-    right: 90px;
-    bottom: 54px;
+  /* 技能5：最右侧，跳跃键正上方 */
+  body.force-landscape .btn-skill:nth-child(5) {
+    right: 6px;
+    bottom: 104px;
   }
   /* 技能4：右上方 */
   body.force-landscape .btn-skill:nth-child(4) {
-    right: 64px;
-    bottom: 68px;
+    right: 30px;
+    bottom: 120px;
   }
-  /* 技能5：最靠右侧，最高 */
-  body.force-landscape .btn-skill:nth-child(5) {
-    right: 34px;
-    bottom: 76px;
+  /* 技能3：正上方最高处 */
+  body.force-landscape .btn-skill:nth-child(3) {
+    right: 58px;
+    bottom: 122px;
+  }
+  /* 技能2：左上方 */
+  body.force-landscape .btn-skill:nth-child(2) {
+    right: 84px;
+    bottom: 110px;
+  }
+  /* 技能1：最左侧，最低位置 */
+  body.force-landscape .btn-skill:nth-child(1) {
+    right: 104px;
+    bottom: 90px;
   }
   /* 技能切换按钮 - 攻击按钮左下方 */
   body.force-landscape .btn-skill-switch {
@@ -854,14 +854,14 @@
     padding: 8px;
     margin: -8px;
   }
-  /* 跳跃按钮 - 攻击按钮右上方 */
+  /* 跳跃按钮 - 攻击按钮右上方，技能5正下方 */
   body.force-landscape .btn-jump {
     width: 42px;
     height: 42px;
     font-size: 9px;
     position: absolute;
     right: 2px;
-    bottom: 64px;
+    bottom: 58px;
     padding: 10px;
     margin: -10px;
   }
@@ -17369,8 +17369,9 @@ const MobileControls = {
       joystick.touchId = null;
       joystick.rawMoveX = 0;
       joystick.rawMoveZ = 0;
-      // 平滑归零（让角色有减速感，而不是骤停）
-      // 保留 moveX/moveZ，由游戏循环中的平滑衰减处理
+      // 松手后立即大幅衰减，避免角色继续走
+      joystick.moveX *= 0.3;
+      joystick.moveZ *= 0.3;
       
       stick.classList.remove('active');
       stick.style.transform = 'translate(-50%, -50%)';
@@ -17922,15 +17923,15 @@ const MobileControls = {
     
     const joystick = this.joystick;
     
-    // 摇杆未激活时，平滑衰减到0
+    // 摇杆未激活时，快速衰减到0
     if (!joystick.active) {
-      const decayRate = 0.12; // 每帧衰减比例
+      const decayRate = 0.4; // 每帧衰减比例（快速衰减）
       joystick.moveX *= (1 - decayRate);
       joystick.moveZ *= (1 - decayRate);
       
-      // 接近0时直接归零
-      if (Math.abs(joystick.moveX) < 0.01) joystick.moveX = 0;
-      if (Math.abs(joystick.moveZ) < 0.01) joystick.moveZ = 0;
+      // 低于阈值时直接归零
+      if (Math.abs(joystick.moveX) < 0.05) joystick.moveX = 0;
+      if (Math.abs(joystick.moveZ) < 0.05) joystick.moveZ = 0;
     }
     
     // 摇杆：上(-Y) = 前进(forward+)，右(X+) = 右移(right+)
