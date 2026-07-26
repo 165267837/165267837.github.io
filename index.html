@@ -426,6 +426,160 @@
     }
   }
 
+  /* ========== 横屏模式优化 ========== */
+  @media (orientation: landscape) and (max-height: 500px) {
+    .joystick-container {
+      bottom: 20px;
+      left: 30px;
+      width: 110px;
+      height: 110px;
+    }
+    .joystick-stick {
+      width: 48px;
+      height: 48px;
+    }
+    .action-buttons {
+      bottom: 15px;
+      right: 20px;
+      gap: 6px;
+    }
+    .skill-buttons {
+      gap: 5px;
+      margin-bottom: 2px;
+    }
+    .btn-skill {
+      width: 40px;
+      height: 40px;
+      font-size: 9px;
+    }
+    .btn-jump {
+      width: 44px;
+      height: 44px;
+      font-size: 10px;
+    }
+    .btn-rings {
+      width: 38px;
+      height: 38px;
+      font-size: 8px;
+    }
+    .btn-attack-main {
+      width: 60px;
+      height: 60px;
+      font-size: 11px;
+    }
+    .btn-interact {
+      bottom: 130px;
+      right: 25px;
+      width: 48px;
+      height: 48px;
+      font-size: 11px;
+    }
+    .mobile-shortcuts {
+      top: 60px;
+      right: 8px;
+      gap: 5px;
+    }
+    .btn-shortcut {
+      width: 34px;
+      height: 34px;
+      font-size: 10px;
+      border-radius: 8px;
+    }
+  }
+
+  /* ========== 竖屏提示遮罩 ========== */
+  .rotate-prompt {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, #0a0515 0%, #1a0a2e 50%, #2d1b4e 100%);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 9999;
+    color: #fbbf24;
+    text-align: center;
+    padding: 20px;
+  }
+  .rotate-prompt.show { display: flex; }
+  
+  .rotate-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
+    animation: rotatePhone 2s ease-in-out infinite;
+  }
+  @keyframes rotatePhone {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(90deg); }
+  }
+  
+  .rotate-prompt h3 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #fbbf24;
+    text-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+  }
+  .rotate-prompt p {
+    font-size: 14px;
+    color: rgba(251, 191, 36, 0.6);
+    line-height: 1.6;
+  }
+  .rotate-prompt .btn-continue-portrait {
+    margin-top: 30px;
+    padding: 10px 24px;
+    background: rgba(251, 191, 36, 0.15);
+    border: 1px solid rgba(251, 191, 36, 0.4);
+    border-radius: 8px;
+    color: #fbbf24;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .rotate-prompt .btn-continue-portrait:active {
+    background: rgba(251, 191, 36, 0.3);
+    transform: scale(0.95);
+  }
+
+  /* ========== 加载遮罩（3D场景加载时显示） ========== */
+  .loading-overlay {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, #0a0515 0%, #1a0a2e 50%, #2d1b4e 100%);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 9998;
+    color: #fbbf24;
+  }
+  .loading-overlay.show { display: flex; }
+  
+  .loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(251, 191, 36, 0.2);
+    border-top-color: #fbbf24;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  .loading-text {
+    font-size: 16px;
+    color: rgba(251, 191, 36, 0.8);
+    letter-spacing: 0.2em;
+    margin-bottom: 10px;
+  }
+  .loading-subtext {
+    font-size: 12px;
+    color: rgba(251, 191, 36, 0.4);
+  }
+
   /* 开始菜单背景 - 玄幻风格 */
   .menu-bg {
     background: linear-gradient(180deg, #0a0515 0%, #1a0a2e 30%, #2d1b4e 60%, #1a0a2e 100%);
@@ -754,11 +908,22 @@
 
 <!-- 开场动画 - 视频播放 -->
 <div id="intro-video-panel" class="fixed inset-0 bg-black flex items-center justify-center z-[100]">
-  <video id="intro-video" class="w-full h-full object-cover" autoplay playsinline>
+  <video id="intro-video" class="w-full h-full object-cover" playsinline webkit-playsinline muted preload="auto" x5-playsinline="true">
     <source src="./intro.mp4" type="video/mp4">
   </video>
   <!-- 底部渐变遮罩 -->
   <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black to-transparent pointer-events-none"></div>
+  <!-- 点击开始提示 -->
+  <div id="video-tap-hint" class="absolute inset-0 flex items-center justify-center bg-black/30">
+    <div class="text-center">
+      <div class="w-16 h-16 mx-auto mb-4 rounded-full border-2 border-amber-400/60 flex items-center justify-center animate-pulse">
+        <svg class="w-8 h-8 text-amber-400 ml-1" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M8 5v14l11-7z"/>
+        </svg>
+      </div>
+      <p class="text-amber-300 text-lg tracking-widest">点 击 屏 幕 开 始</p>
+    </div>
+  </div>
 </div>
 
 <!-- 开始菜单 - 玄幻风格 -->
@@ -1144,6 +1309,28 @@
       <div id="btn-pause-mobile" class="btn-shortcut">暂停</div>
     </div>
   </div>
+</div>
+
+<!-- 竖屏提示遮罩 -->
+<div id="rotate-prompt" class="rotate-prompt">
+  <svg class="rotate-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="25" y="10" width="50" height="80" rx="8" stroke="#fbbf24" stroke-width="3" fill="rgba(251,191,36,0.1)"/>
+    <rect x="30" y="15" width="40" height="65" rx="3" fill="rgba(251,191,36,0.2)"/>
+    <circle cx="50" cy="87" r="3" fill="#fbbf24"/>
+    <path d="M10 50 Q5 45 10 40" stroke="#fbbf24" stroke-width="2" fill="none"/>
+    <path d="M8 42 L10 40 L12 42" stroke="#fbbf24" stroke-width="2" fill="none"/>
+    <text x="50" y="55" text-anchor="middle" fill="#fbbf24" font-size="14" font-weight="bold">横屏</text>
+  </svg>
+  <h3>请横屏体验游戏</h3>
+  <p>为了获得最佳游戏体验<br>请将手机旋转至横屏模式</p>
+  <div id="btn-continue-portrait" class="btn-continue-portrait">仍用竖屏继续</div>
+</div>
+
+<!-- 加载遮罩（3D场景加载时显示） -->
+<div id="loading-overlay" class="loading-overlay">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">正 在 加 载 世 界</div>
+  <div class="loading-subtext">请稍候...</div>
 </div>
 
 <!-- 角色面板 -->
@@ -14464,8 +14651,61 @@ const MobileControls = {
     this.initCameraControl();
     // 初始化按钮
     this.initButtons();
+    // 初始化横屏检测
+    this.initOrientation();
 
     console.log('[移动端] 触控系统已启动');
+  },
+
+  // 初始化屏幕方向检测
+  initOrientation() {
+    const prompt = document.getElementById('rotate-prompt');
+    const continueBtn = document.getElementById('btn-continue-portrait');
+    if (!prompt) return;
+
+    this.forcePortrait = false; // 用户是否强制竖屏继续
+
+    const checkOrientation = () => {
+      if (this.forcePortrait) {
+        prompt.classList.remove('show');
+        return;
+      }
+      
+      const isLandscape = window.innerWidth > window.innerHeight;
+      if (isLandscape) {
+        prompt.classList.remove('show');
+      } else {
+        // 竖屏时显示提示
+        prompt.classList.add('show');
+      }
+    };
+
+    // 初始检测
+    checkOrientation();
+
+    // 监听窗口大小变化
+    window.addEventListener('resize', checkOrientation);
+    
+    // 监听屏幕方向变化
+    if (window.screen && window.screen.orientation) {
+      window.screen.orientation.addEventListener('change', checkOrientation);
+    }
+    window.addEventListener('orientationchange', () => {
+      setTimeout(checkOrientation, 300);
+    });
+
+    // 竖屏继续按钮
+    if (continueBtn) {
+      continueBtn.addEventListener('click', () => {
+        this.forcePortrait = true;
+        prompt.classList.remove('show');
+      });
+      continueBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        this.forcePortrait = true;
+        prompt.classList.remove('show');
+      }, { passive: false });
+    }
   },
 
   // 初始化虚拟摇杆
@@ -17280,39 +17520,84 @@ function initUI() {
     }
   });
 
-  // 开场动画（不可跳过）
+  // 开场动画（视频播放期间不加载3D场景，避免手机端卡顿）
   const introVideo = document.getElementById('intro-video');
   const introPanel = document.getElementById('intro-video-panel');
+  const videoTapHint = document.getElementById('video-tap-hint');
 
   function showStartMenu() {
+    // 先隐藏视频面板
     if (introPanel && !introPanel.classList.contains('hidden')) {
       introPanel.classList.add('hidden');
-      document.getElementById('start-menu').classList.remove('hidden');
       if (introVideo) {
         introVideo.pause();
       }
+    }
+    
+    // 初始化3D场景（视频播放完后再加载，避免手机端卡顿）
+    init3DScene(() => {
+      // 3D场景加载完成后显示主菜单
+      document.getElementById('start-menu').classList.remove('hidden');
       // 播放主菜单音乐
       MusicSystem.playMenu();
-    }
+    });
   }
 
-  if (introVideo) {
-    introVideo.addEventListener('ended', showStartMenu);
+  // 开始播放视频并处理用户交互
+  function startIntroVideo() {
+    if (!introVideo) {
+      showStartMenu();
+      return;
+    }
+    
     // 尝试自动播放
-    introVideo.play().catch(() => {
-      // 自动播放失败时，显示点击继续提示
-      const hint = document.createElement('div');
-      hint.style.cssText = 'position:absolute;bottom:20%;left:50%;transform:translateX(-50%);color:#fbbf24;font-size:18px;letter-spacing:0.3em;animation:hintFade 2s ease-in-out infinite;cursor:pointer;z-index:10;';
-      hint.textContent = '点 击 屏 幕 开 始';
-      introPanel.appendChild(hint);
-      introPanel.addEventListener('click', () => {
-        introVideo.play();
-        hint.remove();
-      }, { once: true });
-    });
-  } else {
-    // 视频不存在，直接显示菜单
+    const playPromise = introVideo.play();
+    if (playPromise !== undefined) {
+      playPromise.then(() => {
+        // 自动播放成功，隐藏点击提示
+        if (videoTapHint) videoTapHint.style.display = 'none';
+      }).catch(() => {
+        // 自动播放失败，保持点击提示
+        if (videoTapHint) videoTapHint.style.display = 'flex';
+      });
+    }
+    
+    // 视频播放结束
+    introVideo.addEventListener('ended', showStartMenu);
+  }
+
+  // 点击屏幕开始播放
+  if (introPanel) {
+    introPanel.addEventListener('click', function startOnTap() {
+      if (videoTapHint) videoTapHint.style.display = 'none';
+      if (introVideo && introVideo.paused) {
+        introVideo.play().catch(() => {
+          // 播放失败直接进入菜单
+          showStartMenu();
+        });
+      }
+      introPanel.removeEventListener('click', startOnTap);
+    }, { once: false });
+    
+    // 触摸事件（移动端优先）
+    introPanel.addEventListener('touchstart', function startOnTouch(e) {
+      e.preventDefault();
+      if (videoTapHint) videoTapHint.style.display = 'none';
+      if (introVideo && introVideo.paused) {
+        introVideo.play().catch(() => {
+          showStartMenu();
+        });
+      }
+      introPanel.removeEventListener('touchstart', startOnTouch);
+    }, { passive: false, once: false });
+  }
+
+  // 视频元素不存在则直接显示菜单
+  if (!introVideo) {
     showStartMenu();
+  } else {
+    // 启动开场视频流程
+    startIntroVideo();
   }
 
   document.getElementById('btn-start').addEventListener('click', openCharacterCreate);
@@ -17588,6 +17873,55 @@ function initMenuParticles() {
   }
 }
 
+// 3D场景是否已初始化
+let scene3DInitialized = false;
+
+// 初始化3D场景（视频播放完毕后调用，避免手机端卡顿）
+function init3DScene(callback) {
+  if (scene3DInitialized) {
+    if (callback) callback();
+    return;
+  }
+  
+  // 显示加载遮罩
+  const loadingOverlay = document.getElementById('loading-overlay');
+  if (loadingOverlay) loadingOverlay.classList.add('show');
+  
+  // 用setTimeout让浏览器先渲染加载遮罩，再开始加载
+  setTimeout(() => {
+    try {
+      initThree();
+      initTerrain();
+      initTrees();
+      initVillage();
+      initInput();
+      SoundSystem.init();
+      MusicSystem.init();
+      initMenuParticles();
+      
+      // 初始相机位置（菜单时展示场景）
+      game.camera.position.set(30, 20, 30);
+      game.camera.lookAt(0, 0, 0);
+      
+      // 渲染一帧
+      game.renderer.render(game.scene, game.camera);
+      
+      scene3DInitialized = true;
+      console.log('[3D场景] 初始化完成');
+      
+      // 隐藏加载遮罩
+      if (loadingOverlay) loadingOverlay.classList.remove('show');
+      
+      if (callback) callback();
+    } catch (e) {
+      console.error('3D场景初始化失败:', e);
+      if (loadingOverlay) loadingOverlay.classList.remove('show');
+      document.body.innerHTML += '<div style="position:fixed;top:20px;left:20px;color:#f44;background:rgba(0,0,0,0.8);padding:10px 20px;border-radius:8px;z-index:9999;">' +
+        '初始化失败: ' + e.message + '</div>';
+    }
+  }, 50);
+}
+
 function init() {
   // 检查Three.js是否加载成功
   if (typeof THREE === 'undefined') {
@@ -17601,26 +17935,14 @@ function init() {
   }
 
   try {
-    initThree();
-    initTerrain();
-    initTrees();
-    initVillage();
-    initInput();
+    // 先初始化UI（开场视频+菜单界面），不加载3D场景，避免手机端卡顿
     initUI();
     // 初始化移动端触控
     if (typeof MobileControls !== 'undefined') {
       MobileControls.init();
     }
-    SoundSystem.init();
-    MusicSystem.init();
-    initMenuParticles();
-
-    // 初始相机位置（菜单时展示场景）
-    game.camera.position.set(30, 20, 30);
-    game.camera.lookAt(0, 0, 0);
-
-    // 渲染一帧
-    game.renderer.render(game.scene, game.camera);
+    
+    console.log('[初始化] UI已加载，3D场景将在视频播放后初始化');
   } catch (e) {
     console.error('初始化失败:', e);
     document.body.innerHTML += '<div style="position:fixed;top:20px;left:20px;color:#f44;background:rgba(0,0,0,0.8);padding:10px 20px;border-radius:8px;z-index:9999;">' +
