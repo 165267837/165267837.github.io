@@ -775,9 +775,9 @@
     position: absolute;
     bottom: 12px;
     right: 12px;
-    width: 180px;
-    height: 170px;
-    /* 相对定位容器，所有按钮绝对定位实现扇形布局 */
+    width: 170px;
+    height: 150px;
+    /* 相对定位容器，所有按钮绝对定位实现布局 */
     flex-direction: column;
     align-items: flex-end;
     gap: 0;
@@ -800,37 +800,37 @@
     pointer-events: none;
   }
   body.force-landscape .btn-skill {
-    width: 34px;
-    height: 34px;
+    width: 30px;
+    height: 30px;
     font-size: 7px;
     position: absolute;
     pointer-events: auto;
   }
-  /* 5个技能按钮扇形排列 - 围绕攻击按钮左上扇形分布 */
+  /* 5个技能按钮横线排列 - 从右往左排列，技能5在最右（跳跃键正上方） */
   /* 技能5：最右侧，跳跃键正上方 */
   body.force-landscape .btn-skill:nth-child(5) {
     right: 6px;
     bottom: 104px;
   }
-  /* 技能4：右上方 */
+  /* 技能4：技能5左侧 */
   body.force-landscape .btn-skill:nth-child(4) {
-    right: 30px;
-    bottom: 120px;
+    right: 38px;
+    bottom: 104px;
   }
-  /* 技能3：正上方最高处 */
+  /* 技能3：技能4左侧 */
   body.force-landscape .btn-skill:nth-child(3) {
-    right: 58px;
-    bottom: 122px;
+    right: 70px;
+    bottom: 104px;
   }
-  /* 技能2：左上方 */
+  /* 技能2：技能3左侧 */
   body.force-landscape .btn-skill:nth-child(2) {
-    right: 84px;
-    bottom: 110px;
+    right: 102px;
+    bottom: 104px;
   }
-  /* 技能1：最左侧，最低位置 */
+  /* 技能1：最左侧 */
   body.force-landscape .btn-skill:nth-child(1) {
-    right: 104px;
-    bottom: 90px;
+    right: 134px;
+    bottom: 104px;
   }
   /* 技能切换按钮 - 攻击按钮左下方 */
   body.force-landscape .btn-skill-switch {
@@ -17665,20 +17665,17 @@ const MobileControls = {
       // 综合灵敏度
       const sensitivity = baseSensitivity * speedFactor * distFactor;
       
-      // 应用视角变化（X轴反转，Y轴保持正常）
-      // 向左滑(dx<0) → 视角向右(yaw增加) → cameraYaw += dx * sensitivity (因为dx是负的，减去负数等于加)
-      // 向右滑(dx>0) → 视角向左(yaw减少) → cameraYaw -= dx * sensitivity
-      // 注意：原代码是 game.cameraYaw -= dx * sensitivity
-      // 要实现反转，应该是 game.cameraYaw += dx * sensitivity
-      game.cameraYaw += dx * sensitivity;       // X轴反转：左滑右看，右滑左看
+      // 应用视角变化（X轴正常：左滑左转，右滑右转）
+      // 向左滑(dx<0) → 视角向左(yaw增加) → cameraYaw -= dx * sensitivity (dx负，减去负数等于加)
+      // 向右滑(dx>0) → 视角向右(yaw减少) → cameraYaw -= dx * sensitivity
+      game.cameraYaw -= dx * sensitivity;       // X轴正常：左滑左转，右滑右转
       game.cameraPitch -= dy * sensitivity;     // Y轴正常：上滑上看，下滑下看
       
       // 俯仰限制
       game.cameraPitch = Math.max(pitchMin, Math.min(pitchMax, game.cameraPitch));
       
       // 记录速度用于惯性滑动（低通滤波，更平滑）
-      // 注意：速度方向也要对应调整
-      const targetVelX = dx * sensitivity;   // X轴反转后的速度
+      const targetVelX = -dx * sensitivity;  // X轴正常方向的速度
       const targetVelY = -dy * sensitivity;  // Y轴正常方向的速度
       camTouch.velocityX = camTouch.velocityX * 0.6 + targetVelX * 0.4;
       camTouch.velocityY = camTouch.velocityY * 0.6 + targetVelY * 0.4;
