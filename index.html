@@ -657,6 +657,65 @@
   body.force-landscape #awakening-icon {
     font-size: 3rem !important;
   }
+  
+  /* 手机端背包适配 */
+  body.force-landscape #bag-panel > div {
+    width: 95% !important;
+    max-width: 900px !important;
+    padding: 0.75rem !important;
+  }
+  body.force-landscape #bag-panel h2 {
+    font-size: 1.25rem !important;
+  }
+  body.force-landscape #bag-panel .mb-4 {
+    margin-bottom: 0.5rem !important;
+  }
+  body.force-landscape #bag-panel .gap-2 {
+    gap: 0.375rem !important;
+  }
+  body.force-landscape #bag-panel .bag-tab {
+    padding: 0.375rem 0.75rem !important;
+    font-size: 0.75rem !important;
+  }
+  /* 背包物品格子增大，增加点击区域 */
+  body.force-landscape #bag-grid {
+    grid-template-columns: repeat(8, 1fr) !important;
+    gap: 0.5rem !important;
+  }
+  body.force-landscape #bag-grid .item-slot {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 1 / 1 !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+  }
+  body.force-landscape #bag-grid .item-slot .text-lg {
+    font-size: 1.25rem !important;
+  }
+  body.force-landscape #bag-grid .item-slot .w-7 {
+    width: 1.75rem !important;
+    height: 1.75rem !important;
+  }
+  /* 物品详情区域按钮增大，便于点击 */
+  body.force-landscape #item-detail {
+    padding: 0.75rem !important;
+    min-height: 100px !important;
+  }
+  body.force-landscape #item-detail button {
+    min-height: 40px !important;
+    font-size: 0.875rem !important;
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+  }
+  body.force-landscape #item-detail .gap-2 {
+    gap: 0.5rem !important;
+  }
+  body.force-landscape #item-detail .text-lg {
+    font-size: 1rem !important;
+  }
+  body.force-landscape #item-detail .text-xs {
+    font-size: 0.7rem !important;
+  }
   body.force-landscape #crystal-ball {
     width: 80px !important;
     height: 80px !important;
@@ -1127,6 +1186,128 @@
     0%, 100% { border-color: rgba(251, 191, 36, 0.3); box-shadow: 0 0 20px rgba(251, 191, 36, 0.2); }
     50% { border-color: rgba(251, 191, 36, 0.7); box-shadow: 0 0 40px rgba(251, 191, 36, 0.4), inset 0 0 20px rgba(251, 191, 36, 0.1); }
   }
+
+  /* ===== 手机端抽卡界面适配 ===== */
+  @media (max-width: 900px), (max-height: 600px) {
+    /* 中间区域改为左右布局 */
+    #gacha-panel .absolute.top-1\/2.left-1\/2 {
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) !important;
+      width: 95% !important;
+      max-width: 800px !important;
+      padding: 0 !important;
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 20px !important;
+    }
+    
+    /* 奖池卡片缩小 */
+    #gacha-panel .aspect-\[3\/4\] {
+      max-width: 200px !important;
+      width: 35vw !important;
+      max-height: 70vh !important;
+    }
+    
+    /* 卡片内元素缩小 */
+    #gacha-panel .aspect-\[3\/4\] h2 {
+      font-size: 1.25rem !important;
+    }
+    #gacha-panel .aspect-\[3\/4\] .text-3xl {
+      font-size: 1rem !important;
+    }
+    #gacha-panel .aspect-\[3\/4\] .text-2xl {
+      font-size: 1rem !important;
+    }
+    #gacha-panel .aspect-\[3\/4\] .absolute.bottom-0 {
+      padding: 12px !important;
+    }
+    #gacha-panel .aspect-\[3\/4\] .absolute.top-4 {
+      top: 8px !important;
+      left: 8px !important;
+    }
+    
+    /* 抽奖按钮区改为竖排，移到右侧 */
+    #gacha-panel .flex.justify-center.gap-6.mt-8 {
+      flex-direction: column !important;
+      gap: 12px !important;
+      margin-top: 0 !important;
+      min-width: 140px !important;
+    }
+    
+    /* 抽奖按钮缩小但保证点击区域 */
+    #gacha-panel #btn-gacha-one,
+    #gacha-panel #btn-gacha-ten {
+      width: 100% !important;
+      min-height: 60px !important;
+    }
+    #gacha-panel #btn-gacha-one .btn-gold,
+    #gacha-panel #btn-gacha-ten .btn-gold {
+      padding: 10px 16px !important;
+      font-size: 0.875rem !important;
+      min-height: 60px !important;
+      width: 100% !important;
+    }
+    #gacha-panel #btn-gacha-one .text-xl,
+    #gacha-panel #btn-gacha-ten .text-xl {
+      font-size: 1rem !important;
+    }
+    
+    /* 顶部标题缩小 */
+    #gacha-panel .absolute.top-6.left-1\/2 h1 {
+      font-size: 1.5rem !important;
+    }
+    #gacha-panel .absolute.top-6 {
+      top: 10px !important;
+    }
+    #gacha-panel .absolute.top-6.right-6 {
+      right: 10px !important;
+      width: 40px !important;
+      height: 40px !important;
+    }
+    #gacha-panel .absolute.top-6.left-6 {
+      left: 10px !important;
+      padding: 6px 10px !important;
+    }
+    
+    /* 底部概率说明 */
+    #gacha-panel .absolute.bottom-6 {
+      bottom: 8px !important;
+      font-size: 10px !important;
+    }
+    
+    /* 抽卡结果弹窗适配 */
+    #gacha-result {
+      padding: 20px !important;
+    }
+    #gacha-result-cards {
+      gap: 8px !important;
+      margin-bottom: 16px !important;
+      max-height: 60vh !important;
+      overflow-y: auto !important;
+    }
+    #gacha-result .gacha-result-card {
+      width: 80px !important;
+      height: 110px !important;
+    }
+    #gacha-result #btn-gacha-confirm {
+      padding: 10px 24px !important;
+      font-size: 1rem !important;
+      min-height: 48px !important;
+    }
+  }
+
+  /* 强制横屏模式下抽卡界面特殊适配 */
+  body.force-landscape #gacha-panel .absolute.top-1\/2.left-1\/2 {
+    width: 90% !important;
+    max-width: 700px !important;
+  }
+  body.force-landscape #gacha-panel .aspect-\[3\/4\] {
+    max-width: 180px !important;
+    width: 28vh !important;
+  }
 </style>
 </head>
 <body class="bg-black">
@@ -1217,8 +1398,11 @@
   </div>
   
   <div class="flex flex-col gap-4 w-80 relative z-10">
-    <button id="btn-start" class="btn-xuanhuan btn-xuanhuan-primary py-4 px-8 rounded-lg text-xl font-bold tracking-[0.3em]">
-      <span class="relative z-10">开 始 游 戏</span>
+    <button id="btn-continue" class="btn-xuanhuan btn-xuanhuan-primary py-4 px-8 rounded-lg text-xl font-bold tracking-[0.3em] hidden flex-col items-center">
+      <span class="relative z-10">继 续 游 戏</span>
+    </button>
+    <button id="btn-start" class="btn-xuanhuan btn-xuanhuan-secondary py-4 px-8 rounded-lg text-xl font-bold tracking-[0.3em]">
+      <span class="relative z-10">新 的 旅 程</span>
     </button>
     <button id="btn-help" class="btn-xuanhuan btn-xuanhuan-secondary py-3 px-8 rounded-lg text-base font-bold tracking-[0.2em]">
       <span class="relative z-10">操 作 说 明</span>
@@ -1902,6 +2086,20 @@
       
       <!-- 分割线 -->
       <div class="h-px bg-gradient-to-r from-transparent via-amber-500/30 to-transparent"></div>
+      
+      <!-- 存档管理 -->
+      <div>
+        <div class="text-amber-200 font-bold mb-3">存档管理</div>
+        <div class="grid grid-cols-2 gap-2">
+          <button id="btn-save-game" class="py-2 px-3 rounded-lg bg-green-600/30 border border-green-500/50 text-green-200 hover:bg-green-600/50 transition font-bold text-sm">
+            手动存档
+          </button>
+          <button id="btn-delete-save" class="py-2 px-3 rounded-lg bg-red-600/30 border border-red-500/50 text-red-200 hover:bg-red-600/50 transition font-bold text-sm">
+            删除存档
+          </button>
+        </div>
+        <div id="save-status" class="text-xs text-amber-200/50 mt-2 text-center">自动存档：每秒</div>
+      </div>
       
       <!-- 兑换码 -->
       <div>
@@ -13130,6 +13328,9 @@ function doGacha(count) {
 
   // 显示结果
   showGachaResult(results);
+  
+  // 抽卡后保存
+  saveGame();
 }
 
 // 发放抽奖奖励
@@ -13641,6 +13842,9 @@ function completeQuest(questId) {
     <div class="text-green-400 font-bold text-lg mb-2">任务完成！</div>
     <div class="text-amber-100/70">获得奖励：${quest.reward.gold} 金币</div>
   `;
+  
+  // 完成任务后保存
+  saveGame();
 }
 
 // 更新猎杀任务进度
@@ -15009,6 +15213,9 @@ function levelUp() {
 
   updateHUD();
   updateSkillSlots();
+  
+  // 升级后保存
+  saveGame();
 }
 
 // ========== 拾取物品 ==========
@@ -15184,6 +15391,9 @@ function doAbsorbRing() {
   }
 
   currentAbsorbIdx = -1;
+  
+  // 吸收魂环后保存
+  saveGame();
 }
 
 // 取消吸收
@@ -15488,7 +15698,17 @@ const MobileControls = {
     touchId: null,
     lastX: 0,
     lastY: 0,
+    startX: 0,
+    startY: 0,
+    startTime: 0,
+    velocityX: 0,
+    velocityY: 0,
+    inertiaActive: false,
+    inertiaVelX: 0,
+    inertiaVelY: 0,
   },
+  // 自动跟随延迟（用户操作视角后延迟一段时间再恢复自动跟随）
+  autoFollowDelay: 0,
   // 攻击自动连发
   attackHeld: false,
 
@@ -15711,9 +15931,18 @@ const MobileControls = {
     joystick.moveZ = moveDy / joystick.maxRadius;
   },
 
-  // 初始化视角控制（全屏滑动，除了摇杆和按钮区域）
+  // 初始化视角控制（鸣潮风格：右半屏视角 + 灵敏度曲线 + 惯性滑动 + 智能自动跟随）
   initCameraControl() {
     const camTouch = this.cameraTouch;
+    
+    // 视角控制参数（鸣潮风格）
+    const baseSensitivity = 0.006;        // 基础灵敏度
+    const maxSensitivityMultiplier = 2.5;  // 最大灵敏度倍率（快速滑动时）
+    const inertiaFactor = 0.92;            // 惯性系数（越大滑得越远）
+    const minInertiaSpeed = 0.01;          // 最小惯性速度（低于此值停止）
+    const pitchMin = -0.5;                 // 向下俯仰限制（约-29°，防止看到地底虚空）
+    const pitchMax = 1.05;                 // 向上俯仰限制（约60°）
+    const rightScreenRatio = 0.55;         // 右半屏视角控制区域比例（从屏幕右侧算起）
 
     // 检查触摸点是否在UI控件上（通过DOM元素检测）
     const isTouchOnUI = (touch) => {
@@ -15744,22 +15973,37 @@ const MobileControls = {
       }
       return false;
     };
+    
+    // 检查触摸点是否在右半屏视角控制区
+    const isInCameraZone = (touch) => {
+      const screenWidth = window.innerWidth;
+      // 右半屏的 rightScreenRatio 区域是视角控制区
+      const cameraZoneStartX = screenWidth * (1 - rightScreenRatio);
+      return touch.clientX >= cameraZoneStartX;
+    };
 
     const onTouchStart = (e) => {
       if (game.state !== 'playing') return;
       if (camTouch.active) return;
       
-      // 找到一个合适的触摸点来控制视角（不是点在UI控件上的）
+      // 找到一个合适的触摸点来控制视角
       let validTouch = null;
+      let bestPriority = -1;
+      
       for (let i = 0; i < e.touches.length; i++) {
         const touch = e.touches[i];
         
         // 如果点在UI控件上，跳过
         if (isTouchOnUI(touch)) continue;
         
-        // 这个触摸点可以用来控制视角
+        // 优先级：右半屏视角区 > 其他区域
+        let priority = isInCameraZone(touch) ? 2 : 1;
+        
+        // 已经有活跃的视角触摸点，且这个优先级更低，跳过
+        if (priority <= bestPriority) continue;
+        
         validTouch = touch;
-        break;
+        bestPriority = priority;
       }
       
       if (!validTouch) return;
@@ -15768,6 +16012,12 @@ const MobileControls = {
       camTouch.touchId = validTouch.identifier;
       camTouch.lastX = validTouch.clientX;
       camTouch.lastY = validTouch.clientY;
+      camTouch.startX = validTouch.clientX;
+      camTouch.startY = validTouch.clientY;
+      camTouch.startTime = Date.now();
+      // 重置惯性速度
+      camTouch.velocityX = 0;
+      camTouch.velocityY = 0;
     };
 
     const onTouchMove = (e) => {
@@ -15788,18 +16038,43 @@ const MobileControls = {
       camTouch.lastX = touch.clientX;
       camTouch.lastY = touch.clientY;
       
-      // 强制横屏时，旋转滑动方向（画面顺时针转了90度，所以输入方向要逆时针转90度）
+      // 强制横屏时，旋转滑动方向
       if (this.isForcedLandscape) {
         const temp = dx;
-        dx = dy;   // 屏幕的上下滑动 → 游戏的左右滑动（转视角）
-        dy = -temp; // 屏幕的左右滑动 → 游戏的上下滑动（俯仰）
+        dx = dy;
+        dy = -temp;
       }
       
-      // 高灵敏度，滑动屏幕轻松转视角
-      game.cameraYaw -= dx * 0.010;
-      game.cameraPitch -= dy * 0.008;
-      // 俯仰限制：约 -35° ~ +60°（向下视角收窄，防止看到脚底下虚空）
-      game.cameraPitch = Math.max(-0.6, Math.min(1.1, game.cameraPitch));
+      // 鸣潮风格灵敏度曲线：
+      // 1. 基于滑动速度的动态灵敏度（快速滑动 = 更高灵敏度）
+      const moveSpeed = Math.sqrt(dx * dx + dy * dy);
+      const speedFactor = Math.min(maxSensitivityMultiplier, 1 + moveSpeed * 0.08);
+      
+      // 2. 距离起点越远，灵敏度越高（边缘加速效果）
+      const distFromStart = Math.sqrt(
+        Math.pow(touch.clientX - camTouch.startX, 2) + 
+        Math.pow(touch.clientY - camTouch.startY, 2)
+      );
+      const distFactor = 1 + Math.min(0.5, distFromStart * 0.002);
+      
+      // 综合灵敏度
+      const sensitivity = baseSensitivity * speedFactor * distFactor;
+      
+      // 应用视角变化
+      game.cameraYaw -= dx * sensitivity;
+      game.cameraPitch -= dy * sensitivity;
+      
+      // 俯仰限制
+      game.cameraPitch = Math.max(pitchMin, Math.min(pitchMax, game.cameraPitch));
+      
+      // 记录速度用于惯性滑动（低通滤波，更平滑）
+      const targetVelX = -dx * sensitivity;
+      const targetVelY = -dy * sensitivity;
+      camTouch.velocityX = camTouch.velocityX * 0.6 + targetVelX * 0.4;
+      camTouch.velocityY = camTouch.velocityY * 0.6 + targetVelY * 0.4;
+      
+      // 重置自动跟随延迟计时器（用户主动操作视角时，暂停自动跟随）
+      MobileControls.autoFollowDelay = 0.8; // 0.8秒后才恢复自动跟随
     };
 
     const onTouchEnd = (e) => {
@@ -15813,6 +16088,15 @@ const MobileControls = {
         }
       }
       if (!found) return;
+      
+      // 检查滑动速度，如果足够快则启动惯性滑动
+      const velMag = Math.sqrt(camTouch.velocityX ** 2 + camTouch.velocityY ** 2);
+      if (velMag > minInertiaSpeed) {
+        // 启动惯性
+        camTouch.inertiaActive = true;
+        camTouch.inertiaVelX = camTouch.velocityX;
+        camTouch.inertiaVelY = camTouch.velocityY;
+      }
       
       camTouch.active = false;
       camTouch.touchId = null;
@@ -16035,10 +16319,48 @@ function updatePlayer(dt) {
   p.mesh.position.x += moveX;
   p.mesh.position.z += moveZ;
 
-  // 移动端：移动时相机自动转向移动方向（减少手动转视角的麻烦）
+  // 移动端：鸣潮风格智能相机自动跟随
   if (typeof MobileControls !== 'undefined' && MobileControls.isMobile) {
     const moveLen = Math.sqrt(forward * forward + right * right);
-    if (moveLen > 0.2 && !MobileControls.cameraTouch.active) {
+    
+    // 惯性滑动更新（松开手指后视角继续滑行）
+    if (MobileControls.cameraTouch.inertiaActive) {
+      const inertia = MobileControls.cameraTouch;
+      game.cameraYaw += inertia.inertiaVelX;
+      game.cameraPitch += inertia.inertiaVelY;
+      
+      // 俯仰限制
+      const pitchMin = -0.5;
+      const pitchMax = 1.05;
+      game.cameraPitch = Math.max(pitchMin, Math.min(pitchMax, game.cameraPitch));
+      
+      // 惯性衰减
+      const inertiaFactor = 0.92;
+      inertia.inertiaVelX *= inertiaFactor;
+      inertia.inertiaVelY *= inertiaFactor;
+      
+      // 速度过小时停止惯性
+      const velMag = Math.sqrt(inertia.inertiaVelX ** 2 + inertia.inertiaVelY ** 2);
+      if (velMag < 0.002) {
+        inertia.inertiaActive = false;
+      }
+    }
+    
+    // 自动跟随延迟计时
+    if (MobileControls.autoFollowDelay > 0) {
+      MobileControls.autoFollowDelay -= dt;
+    }
+    
+    // 自动跟随条件：
+    // 1. 玩家在移动
+    // 2. 没有主动操控视角（包括惯性滑动中）
+    // 3. 自动跟随延迟已过
+    // 4. 主要是向前移动（侧移和后退不跟随，避免晕）
+    if (moveLen > 0.2 && 
+        !MobileControls.cameraTouch.active && 
+        !MobileControls.cameraTouch.inertiaActive &&
+        MobileControls.autoFollowDelay <= 0 &&
+        forward > 0.3) {
       // 计算移动方向的角度
       const moveWorldX = forwardX * forward + rightX * right;
       const moveWorldZ = forwardZ * forward + rightZ * right;
@@ -16050,10 +16372,9 @@ function updatePlayer(dt) {
       // 归一化到 -PI ~ PI
       while (diff > Math.PI) diff -= Math.PI * 2;
       while (diff < -Math.PI) diff += Math.PI * 2;
-      // 慢速自动跟随（只有向前移动时才跟随，侧移/后退不跟随，避免晕）
-      if (forward > 0.3) {
-        game.cameraYaw += diff * Math.min(1, dt * 2.5);
-      }
+      // 鸣潮风格：慢速平滑跟随，转动太快会晕
+      const followSpeed = 1.8; // 跟随速度，越大转得越快
+      game.cameraYaw += diff * Math.min(1, dt * followSpeed);
     }
   }
 
@@ -17574,6 +17895,244 @@ function confirmCharacterCreate() {
   startGame(true);
 }
 
+// ========== 游戏存档系统 ==========
+const SAVE_KEY = 'douluo_save_data';
+const AUTO_SAVE_INTERVAL = 1; // 自动保存间隔（秒）
+let autoSaveTimer = 0;
+
+// 保存游戏
+function saveGame() {
+  if (!game.player) return false;
+  
+  try {
+    const saveData = {
+      // 玩家基础属性
+      level: game.player.level,
+      exp: game.player.exp,
+      expToNext: game.player.expToNext,
+      hp: game.player.hp,
+      maxHp: game.player.maxHp,
+      mp: game.player.mp,
+      maxMp: game.player.maxMp,
+      atk: game.player.atk,
+      def: game.player.def,
+      spd: game.player.spd,
+      spirit: game.player.spirit,
+      
+      // 武魂
+      martialSoul: game.player.martialSoul,
+      martialSoulAwakened: game.player.martialSoulAwakened,
+      rings: game.player.rings,
+      ringsVisible: game.player.ringsVisible,
+      
+      // 资源
+      spiritStones: game.player.spiritStones,
+      gold: game.player.gold,
+      
+      // 背包
+      bag: game.player.bag,
+      equipment: game.player.equipment,
+      
+      // 任务
+      quests: game.player.quests,
+      
+      // 角色
+      characters: game.player.characters,
+      
+      // 外观
+      appearance: game.playerAppearance,
+      
+      // 位置
+      position: {
+        x: game.player.mesh ? game.player.mesh.position.x : CONFIG.VILLAGE.centerX,
+        y: game.player.mesh ? game.player.mesh.position.y : 0,
+        z: game.player.mesh ? game.player.mesh.position.z : CONFIG.VILLAGE.centerZ + 5,
+      },
+      cameraYaw: game.cameraYaw,
+      cameraPitch: game.cameraPitch,
+      
+      // 抽卡
+      gachaPityCount: typeof gachaPityCount !== 'undefined' ? gachaPityCount : 0,
+      
+      // 剧情进度
+      storyState: game.storyState,
+      
+      // 时间戳
+      saveTime: Date.now(),
+      
+      // 版本
+      version: 1,
+    };
+    
+    localStorage.setItem(SAVE_KEY, JSON.stringify(saveData));
+    return true;
+  } catch (e) {
+    console.error('保存游戏失败:', e);
+    return false;
+  }
+}
+
+// 读取存档
+function loadGame() {
+  try {
+    const saveStr = localStorage.getItem(SAVE_KEY);
+    if (!saveStr) return null;
+    
+    const saveData = JSON.parse(saveStr);
+    return saveData;
+  } catch (e) {
+    console.error('读取存档失败:', e);
+    return null;
+  }
+}
+
+// 检查是否有存档
+function hasSaveData() {
+  return localStorage.getItem(SAVE_KEY) !== null;
+}
+
+// 删除存档
+function deleteSave() {
+  localStorage.removeItem(SAVE_KEY);
+}
+
+// 格式化存档时间
+function formatSaveTime(timestamp) {
+  const date = new Date(timestamp);
+  const now = new Date();
+  const diff = now - date;
+  
+  if (diff < 60000) return '刚刚';
+  if (diff < 3600000) return Math.floor(diff / 60000) + '分钟前';
+  if (diff < 86400000) return Math.floor(diff / 3600000) + '小时前';
+  if (diff < 604800000) return Math.floor(diff / 86400000) + '天前';
+  
+  return date.toLocaleDateString('zh-CN');
+}
+
+// 从存档开始游戏
+function startGameFromSave() {
+  const saveData = loadGame();
+  if (!saveData) return;
+  
+  game.state = 'playing';
+  game.player = createPlayer();
+  
+  // 恢复玩家属性
+  game.player.level = saveData.level || 1;
+  game.player.exp = saveData.exp || 0;
+  game.player.expToNext = saveData.expToNext || 100;
+  game.player.hp = saveData.hp || 100;
+  game.player.maxHp = saveData.maxHp || 100;
+  game.player.mp = saveData.mp || 100;
+  game.player.maxMp = saveData.maxMp || 100;
+  game.player.atk = saveData.atk || 10;
+  game.player.def = saveData.def || 5;
+  game.player.spd = saveData.spd || 5;
+  game.player.spirit = saveData.spirit || 10;
+  
+  // 恢复武魂
+  game.player.martialSoul = saveData.martialSoul || null;
+  game.player.martialSoulAwakened = saveData.martialSoulAwakened || false;
+  game.player.rings = saveData.rings || [];
+  game.player.ringsVisible = saveData.ringsVisible !== false;
+  
+  // 恢复资源
+  game.player.spiritStones = saveData.spiritStones || 0;
+  game.player.gold = saveData.gold || 100;
+  
+  // 恢复背包
+  game.player.bag = saveData.bag || [];
+  game.player.equipment = saveData.equipment || { weapon: null, armor: null, accessory: null };
+  
+  // 恢复任务
+  game.player.quests = saveData.quests || { active: [], completed: [] };
+  
+  // 恢复角色
+  game.player.characters = saveData.characters || [];
+  
+  // 恢复外观
+  game.playerAppearance = saveData.appearance || null;
+  
+  // 恢复抽卡保底
+  if (typeof gachaPityCount !== 'undefined' && saveData.gachaPityCount !== undefined) {
+    gachaPityCount = saveData.gachaPityCount;
+  }
+  
+  // 恢复剧情状态
+  game.storyState = saveData.storyState || 'none';
+  
+  // 使用外观创建角色模型
+  const appearance = game.playerAppearance || defaultCharAppearance;
+  game.player.mesh = createPlayerMesh(appearance);
+  
+  // 恢复位置
+  const pos = saveData.position || { x: CONFIG.VILLAGE.centerX, y: 0, z: CONFIG.VILLAGE.centerZ + 5 };
+  const spawnY = getTerrainHeight(pos.x, pos.z) + 0.2;
+  game.player.mesh.position.set(pos.x, spawnY, pos.z);
+  game.scene.add(game.player.mesh);
+  
+  // 恢复相机角度
+  game.cameraYaw = saveData.cameraYaw || 0;
+  game.cameraPitch = saveData.cameraPitch || 0.35;
+  game.cameraDistance = 10;
+  
+  // 重置场景
+  for (const b of game.beasts) game.scene.remove(b.mesh);
+  game.beasts = [];
+  for (const it of game.items) game.scene.remove(it.mesh);
+  game.items = [];
+  
+  spawnBeasts();
+  updatePlayerRings();
+  
+  // UI
+  document.getElementById('start-menu').classList.add('hidden');
+  document.getElementById('death-panel').classList.add('hidden');
+  document.getElementById('pause-menu').classList.add('hidden');
+  document.getElementById('hud').classList.remove('hidden');
+  
+  // 手机端隐藏十字准星
+  if (typeof MobileControls !== 'undefined' && MobileControls.isMobile) {
+    document.getElementById('crosshair').classList.add('hidden');
+  }
+  
+  // 播放游戏背景音乐
+  MusicSystem.playGame();
+  
+  updateHUD();
+  updateSkillSlots();
+  updateCharacterPanel();
+  
+  showHint('欢迎回来，魂师！');
+  
+  // 启动游戏循环
+  if (!game.animId) {
+    game.lastTime = performance.now();
+    gameLoop();
+  }
+  
+  // 重置自动保存计时器
+  autoSaveTimer = 0;
+}
+
+// 显示继续游戏按钮（如果有存档）
+function updateStartMenu() {
+  const continueBtn = document.getElementById('btn-continue');
+  if (!continueBtn) return;
+  
+  if (hasSaveData()) {
+    const saveData = loadGame();
+    continueBtn.classList.remove('hidden');
+    continueBtn.innerHTML = `
+      <span>继续游戏</span>
+      <span class="text-sm opacity-70">Lv.${saveData.level} ${formatSaveTime(saveData.saveTime)}</span>
+    `;
+  } else {
+    continueBtn.classList.add('hidden');
+  }
+}
+
 // ========== 游戏状态控制 ==========
 function startGame(isFirstPlay = true) {
   game.state = 'playing';
@@ -17649,6 +18208,9 @@ function startGame(isFirstPlay = true) {
     game.lastTime = performance.now();
     gameLoop();
   }
+  
+  // 重置自动保存计时器
+  autoSaveTimer = 0;
 }
 
 // ========== 开局剧情系统 ==========
@@ -18553,6 +19115,13 @@ function gameLoop() {
       game.renderer.render(game.scene, game.camera);
       return;
     }
+    
+    // 自动保存
+    autoSaveTimer += dt;
+    if (autoSaveTimer >= AUTO_SAVE_INTERVAL) {
+      autoSaveTimer = 0;
+      saveGame();
+    }
 
     updatePlayer(dt);
     updateBeasts(dt);
@@ -18609,6 +19178,8 @@ function initUI() {
     init3DScene(() => {
       // 3D场景加载完成后显示主菜单
       document.getElementById('start-menu').classList.remove('hidden');
+      // 更新继续游戏按钮
+      updateStartMenu();
       // 播放主菜单音乐
       MusicSystem.playMenu();
     });
@@ -18725,6 +19296,28 @@ function initUI() {
   document.getElementById('btn-close-help').addEventListener('click', () => {
     document.getElementById('help-panel').classList.add('hidden');
   });
+  
+  // 继续游戏按钮
+  const btnContinue = document.getElementById('btn-continue');
+  if (btnContinue) {
+    btnContinue.addEventListener('click', () => {
+      if (hasSaveData()) {
+        startGameFromSave();
+      }
+    });
+  }
+  
+  // 页面关闭/隐藏时自动保存
+  window.addEventListener('beforeunload', () => {
+    if (game.state === 'playing' && game.player) {
+      saveGame();
+    }
+  });
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden && game.state === 'playing' && game.player) {
+      saveGame();
+    }
+  });
 
   // 角色创建面板
   document.getElementById('btn-char-back').addEventListener('click', closeCharacterCreate);
@@ -18786,6 +19379,42 @@ function initUI() {
       SoundSystem.playPanelClose();
     });
   }
+  
+  // 手动存档
+  const btnSaveGame = document.getElementById('btn-save-game');
+  if (btnSaveGame) {
+    btnSaveGame.addEventListener('click', () => {
+      if (saveGame()) {
+        const statusEl = document.getElementById('save-status');
+        if (statusEl) {
+          statusEl.textContent = '存档成功！' + new Date().toLocaleTimeString('zh-CN');
+          statusEl.classList.remove('text-amber-200/50');
+          statusEl.classList.add('text-green-300');
+          setTimeout(() => {
+            statusEl.textContent = '自动存档：每秒';
+            statusEl.classList.add('text-amber-200/50');
+            statusEl.classList.remove('text-green-300');
+          }, 2000);
+        }
+      }
+    });
+  }
+  
+  // 删除存档
+  const btnDeleteSave = document.getElementById('btn-delete-save');
+  if (btnDeleteSave) {
+    btnDeleteSave.addEventListener('click', () => {
+      if (confirm('确定要删除存档吗？此操作不可恢复！')) {
+        deleteSave();
+        const statusEl = document.getElementById('save-status');
+        if (statusEl) {
+          statusEl.textContent = '存档已删除';
+          statusEl.classList.remove('text-amber-200/50');
+          statusEl.classList.add('text-red-300');
+        }
+      }
+    });
+  }
   // 音乐音量
   const musicSlider = document.getElementById('music-volume-slider');
   if (musicSlider) {
@@ -18831,6 +19460,7 @@ function initUI() {
   // 兑换码系统
   const REDEEM_CODES = {
     '鸡哥666': { type: 'stones', amount: 3000, name: '3000灵石', used: false },
+    'thrsm': { type: 'stones', amount: 10000, name: '10000灵石', used: false },
   };
   // 从localStorage读取已使用的兑换码
   const usedRedeemCodes = JSON.parse(localStorage.getItem('usedRedeemCodes') || '[]');
