@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>斗罗大陆·魂师传说 - 3D RPG</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
@@ -28,7 +28,17 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; }
   img, video { max-width: 100%; height: auto; display: block; }
-  body { overflow-wrap: break-word; margin: 0; padding: 0; overflow: hidden; font-family: "PingFang SC", "Microsoft YaHei", sans-serif; }
+  body { 
+    overflow-wrap: break-word; 
+    margin: 0; padding: 0; 
+    overflow: hidden; 
+    font-family: "PingFang SC", "Microsoft YaHei", sans-serif; 
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    touch-action: none;
+  }
 
   #game-canvas { display: block; width: 100vw; height: 100vh; }
 
@@ -124,6 +134,297 @@
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); }
   ::-webkit-scrollbar-thumb { background: rgba(218,165,32,0.5); border-radius: 3px; }
+
+  /* ========== 移动端触控控件 ========== */
+  .mobile-controls {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 50;
+    display: none;
+  }
+  .mobile-controls.active { display: block; }
+
+  /* 虚拟摇杆 - 左下角 */
+  .joystick-container {
+    position: absolute;
+    bottom: 80px;
+    left: 40px;
+    width: 140px;
+    height: 140px;
+    pointer-events: auto;
+    touch-action: none;
+  }
+  .joystick-base {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 70%, transparent 100%);
+    border: 3px solid rgba(251, 191, 36, 0.4);
+    position: relative;
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.2), inset 0 0 30px rgba(0,0,0,0.3);
+  }
+  .joystick-stick {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(251, 191, 36, 0.9), rgba(180, 130, 20, 0.95));
+    transform: translate(-50%, -50%);
+    box-shadow: 0 4px 15px rgba(251, 191, 36, 0.5), inset 0 -2px 5px rgba(0,0,0,0.3);
+    transition: transform 0.05s ease-out;
+  }
+  .joystick-stick.active {
+    background: radial-gradient(circle at 30% 30%, rgba(251, 191, 36, 1), rgba(218, 165, 32, 1));
+    box-shadow: 0 6px 20px rgba(251, 191, 36, 0.7);
+  }
+
+  /* 右侧操作按钮区域 */
+  .action-buttons {
+    position: absolute;
+    bottom: 80px;
+    right: 20px;
+    pointer-events: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+  }
+
+  /* 主攻击按钮 */
+  .btn-attack-main {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #ef4444, #991b1b);
+    border: 3px solid #fca5a5;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(239, 68, 68, 0.5), inset 0 -3px 8px rgba(0,0,0,0.3);
+    user-select: none;
+    touch-action: none;
+  }
+  .btn-attack-main:active {
+    transform: scale(0.92);
+    box-shadow: 0 2px 10px rgba(239, 68, 68, 0.6);
+  }
+
+  /* 技能按钮组 */
+  .skill-buttons {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  .btn-skill {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #8b5cf6, #5b21b6);
+    border: 2px solid #c4b5fd;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 12px rgba(139, 92, 246, 0.4), inset 0 -2px 5px rgba(0,0,0,0.3);
+    position: relative;
+    user-select: none;
+    touch-action: none;
+    overflow: hidden;
+  }
+  .btn-skill:active {
+    transform: scale(0.92);
+  }
+  .btn-skill .skill-num {
+    position: absolute;
+    top: 2px;
+    right: 4px;
+    font-size: 9px;
+    color: rgba(255,255,255,0.7);
+  }
+  .btn-skill .skill-cd-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.65);
+    transition: height 0.1s linear;
+    pointer-events: none;
+  }
+
+  /* 跳跃按钮 */
+  .btn-jump {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #22d3ee, #0e7490);
+    border: 2px solid #67e8f9;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 12px rgba(34, 211, 238, 0.4), inset 0 -2px 5px rgba(0,0,0,0.3);
+    user-select: none;
+    touch-action: none;
+  }
+  .btn-jump:active {
+    transform: scale(0.92);
+  }
+
+  /* 跳跃 + 魂环 行 */
+  .jump-row {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+  }
+
+  /* 魂环按钮 */
+  .btn-rings {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #fbbf24, #b45309);
+    border: 2px solid #fde68a;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 12px rgba(251, 191, 36, 0.4), inset 0 -2px 5px rgba(0,0,0,0.3);
+    user-select: none;
+    touch-action: none;
+  }
+  .btn-rings:active {
+    transform: scale(0.92);
+  }
+
+  /* 移动端交互按钮（F键替代） */
+  .btn-interact {
+    position: absolute;
+    bottom: 200px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #10b981, #065f46);
+    border: 2px solid #6ee7b7;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 15px rgba(16, 185, 129, 0.5);
+    pointer-events: auto;
+    user-select: none;
+    touch-action: none;
+    animation: interactPulse 1.5s ease-in-out infinite;
+  }
+  .btn-interact:active {
+    transform: scale(0.92);
+  }
+  @keyframes interactPulse {
+    0%, 100% { box-shadow: 0 3px 15px rgba(16, 185, 129, 0.5); }
+    50% { box-shadow: 0 3px 25px rgba(16, 185, 129, 0.8), 0 0 30px rgba(16, 185, 129, 0.4); }
+  }
+
+  /* 视角控制区域提示（屏幕右半部分上半区） */
+  .camera-hint {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    color: rgba(255,255,255,0.3);
+    font-size: 11px;
+    writing-mode: vertical-rl;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* 移动端快捷按钮（左上区域，角色/背包） */
+  .mobile-shortcuts {
+    position: absolute;
+    top: 120px;
+    right: 10px;
+    pointer-events: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .btn-shortcut {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(251, 191, 36, 0.4);
+    color: #fbbf24;
+    font-size: 11px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    touch-action: none;
+  }
+  .btn-shortcut:active {
+    background: rgba(251, 191, 36, 0.2);
+    transform: scale(0.95);
+  }
+
+  /* 移动端适配：小屏设备 */
+  @media (max-width: 480px) {
+    .joystick-container {
+      bottom: 60px;
+      left: 20px;
+      width: 120px;
+      height: 120px;
+    }
+    .joystick-stick {
+      width: 50px;
+      height: 50px;
+    }
+    .action-buttons {
+      bottom: 60px;
+      right: 12px;
+      gap: 8px;
+    }
+    .btn-attack-main {
+      width: 68px;
+      height: 68px;
+      font-size: 12px;
+    }
+    .btn-skill {
+      width: 44px;
+      height: 44px;
+      font-size: 10px;
+    }
+    .btn-jump {
+      width: 48px;
+      height: 48px;
+      font-size: 11px;
+    }
+    .btn-rings {
+      width: 42px;
+      height: 42px;
+      font-size: 9px;
+    }
+    .btn-interact {
+      bottom: 170px;
+      right: 20px;
+      width: 52px;
+      height: 52px;
+    }
+  }
 
   /* 开始菜单背景 - 玄幻风格 */
   .menu-bg {
@@ -778,9 +1079,70 @@
     </div>
   </div>
 
-  <!-- 底部右侧：操作提示 -->
-  <div class="absolute bottom-6 right-4 text-xs text-amber-100/50 text-right pointer-events-auto">
+  <!-- 底部右侧：操作提示（PC端） -->
+  <div class="absolute bottom-6 right-4 text-xs text-amber-100/50 text-right pointer-events-auto pc-only-hint">
     <div>C 角色 | B 背包 | ESC 暂停</div>
+  </div>
+
+  <!-- ========== 移动端触控控件 ========== -->
+  <div id="mobile-controls" class="mobile-controls">
+    <!-- 虚拟摇杆（左下） -->
+    <div id="joystick-container" class="joystick-container">
+      <div class="joystick-base">
+        <div id="joystick-stick" class="joystick-stick"></div>
+      </div>
+    </div>
+
+    <!-- 右侧操作按钮 -->
+    <div class="action-buttons">
+      <!-- 技能按钮组 -->
+      <div class="skill-buttons">
+        <div class="btn-skill" data-skill="0">
+          <span class="skill-num">1</span>
+          <span>技能</span>
+          <div class="skill-cd-overlay" style="height: 0%"></div>
+        </div>
+        <div class="btn-skill" data-skill="1">
+          <span class="skill-num">2</span>
+          <span>技能</span>
+          <div class="skill-cd-overlay" style="height: 0%"></div>
+        </div>
+        <div class="btn-skill" data-skill="2">
+          <span class="skill-num">3</span>
+          <span>技能</span>
+          <div class="skill-cd-overlay" style="height: 0%"></div>
+        </div>
+        <div class="btn-skill" data-skill="3">
+          <span class="skill-num">4</span>
+          <span>技能</span>
+          <div class="skill-cd-overlay" style="height: 0%"></div>
+        </div>
+        <div class="btn-skill" data-skill="4">
+          <span class="skill-num">5</span>
+          <span>技能</span>
+          <div class="skill-cd-overlay" style="height: 0%"></div>
+        </div>
+      </div>
+      <!-- 跳跃 + 魂环 -->
+      <div class="jump-row">
+        <div id="btn-rings-mobile" class="btn-rings">魂环</div>
+        <div id="btn-jump-mobile" class="btn-jump">跳跃</div>
+      </div>
+      <!-- 主攻击按钮 -->
+      <div id="btn-attack-mobile" class="btn-attack-main">攻击</div>
+    </div>
+
+    <!-- NPC交互按钮（靠近NPC时显示） -->
+    <div id="btn-interact-mobile" class="btn-interact hidden">
+      交互
+    </div>
+
+    <!-- 移动端快捷按钮（右上） -->
+    <div class="mobile-shortcuts">
+      <div id="btn-char-mobile" class="btn-shortcut">角色</div>
+      <div id="btn-bag-mobile" class="btn-shortcut">背包</div>
+      <div id="btn-pause-mobile" class="btn-shortcut">暂停</div>
+    </div>
   </div>
 </div>
 
@@ -12747,12 +13109,20 @@ function updateNPCInteractHint() {
   const textEl = document.getElementById('npc-interact-text');
   if (!hintEl || !textEl || game.uiOpen) {
     if (hintEl) hintEl.classList.add('hidden');
+    // 移动端也隐藏
+    if (typeof MobileControls !== 'undefined' && MobileControls.isMobile) {
+      MobileControls.updateInteractButton(false);
+    }
     return;
   }
   
   const interactable = getNearestInteractable();
   if (!interactable || !interactable.target) {
     hintEl.classList.add('hidden');
+    // 移动端也隐藏
+    if (typeof MobileControls !== 'undefined' && MobileControls.isMobile) {
+      MobileControls.updateInteractButton(false);
+    }
     return;
   }
   
@@ -12780,6 +13150,10 @@ function updateNPCInteractHint() {
   
   textEl.textContent = text;
   hintEl.classList.remove('hidden');
+  // 移动端显示交互按钮
+  if (typeof MobileControls !== 'undefined' && MobileControls.isMobile) {
+    MobileControls.updateInteractButton(true);
+  }
 }
 
 // NPC巡逻更新
@@ -14044,6 +14418,393 @@ function checkHouseCollision(playerPos, house) {
   return null; // 没有碰撞
 }
 
+// ========== 移动端触控系统 ==========
+const MobileControls = {
+  isMobile: false,
+  // 摇杆状态
+  joystick: {
+    active: false,
+    touchId: null,
+    centerX: 0,
+    centerY: 0,
+    moveX: 0, // -1 ~ 1
+    moveZ: 0, // -1 ~ 1
+    maxRadius: 50,
+  },
+  // 视角控制
+  cameraTouch: {
+    active: false,
+    touchId: null,
+    lastX: 0,
+    lastY: 0,
+  },
+  // 攻击自动连发
+  attackHeld: false,
+
+  // 初始化
+  init() {
+    // 检测是否为移动设备
+    this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
+      || ('ontouchstart' in window && window.innerWidth <= 1024);
+    
+    if (!this.isMobile) return;
+
+    const controls = document.getElementById('mobile-controls');
+    if (controls) {
+      controls.classList.add('active');
+    }
+
+    // 隐藏PC端操作提示
+    const pcHints = document.querySelectorAll('.pc-only-hint');
+    pcHints.forEach(el => el.style.display = 'none');
+
+    // 初始化摇杆
+    this.initJoystick();
+    // 初始化视角控制
+    this.initCameraControl();
+    // 初始化按钮
+    this.initButtons();
+
+    console.log('[移动端] 触控系统已启动');
+  },
+
+  // 初始化虚拟摇杆
+  initJoystick() {
+    const container = document.getElementById('joystick-container');
+    const stick = document.getElementById('joystick-stick');
+    if (!container || !stick) return;
+
+    const joystick = this.joystick;
+
+    const onTouchStart = (e) => {
+      if (joystick.active) return;
+      e.preventDefault();
+      
+      const touch = e.touches[0];
+      joystick.active = true;
+      joystick.touchId = touch.identifier;
+      
+      const rect = container.getBoundingClientRect();
+      joystick.centerX = rect.left + rect.width / 2;
+      joystick.centerY = rect.top + rect.height / 2;
+      
+      stick.classList.add('active');
+      this.updateStickPosition(touch.clientX, touch.clientY);
+    };
+
+    const onTouchMove = (e) => {
+      if (!joystick.active) return;
+      
+      let touch = null;
+      for (let i = 0; i < e.touches.length; i++) {
+        if (e.touches[i].identifier === joystick.touchId) {
+          touch = e.touches[i];
+          break;
+        }
+      }
+      if (!touch) return;
+      
+      e.preventDefault();
+      this.updateStickPosition(touch.clientX, touch.clientY);
+    };
+
+    const onTouchEnd = (e) => {
+      if (!joystick.active) return;
+      
+      // 检查对应的触摸点是否结束
+      let found = false;
+      for (let i = 0; i < e.changedTouches.length; i++) {
+        if (e.changedTouches[i].identifier === joystick.touchId) {
+          found = true;
+          break;
+        }
+      }
+      if (!found) return;
+      
+      e.preventDefault();
+      joystick.active = false;
+      joystick.touchId = null;
+      joystick.moveX = 0;
+      joystick.moveZ = 0;
+      
+      stick.classList.remove('active');
+      stick.style.transform = 'translate(-50%, -50%)';
+    };
+
+    container.addEventListener('touchstart', onTouchStart, { passive: false });
+    container.addEventListener('touchmove', onTouchMove, { passive: false });
+    container.addEventListener('touchend', onTouchEnd, { passive: false });
+    container.addEventListener('touchcancel', onTouchEnd, { passive: false });
+  },
+
+  // 更新摇杆位置
+  updateStickPosition(clientX, clientY) {
+    const stick = document.getElementById('joystick-stick');
+    const joystick = this.joystick;
+    
+    let dx = clientX - joystick.centerX;
+    let dy = clientY - joystick.centerY;
+    
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist > joystick.maxRadius) {
+      dx = (dx / dist) * joystick.maxRadius;
+      dy = (dy / dist) * joystick.maxRadius;
+    }
+    
+    stick.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
+    
+    // 归一化到 -1 ~ 1
+    // 注意：摇杆向前（上）= -Z 方向移动
+    joystick.moveX = dx / joystick.maxRadius;
+    joystick.moveZ = dy / joystick.maxRadius;
+  },
+
+  // 初始化视角控制（屏幕右侧区域滑动）
+  initCameraControl() {
+    const hud = document.getElementById('hud');
+    if (!hud) return;
+
+    const camTouch = this.cameraTouch;
+
+    const onTouchStart = (e) => {
+      if (game.state !== 'playing') return;
+      if (camTouch.active) return;
+      
+      // 只处理屏幕右半侧的触摸，且不是点在按钮上的
+      const touch = e.touches[0];
+      
+      // 如果点在UI控件上，不处理视角
+      if (touch.target.closest('.joystick-container') || 
+          touch.target.closest('.action-buttons') ||
+          touch.target.closest('.mobile-shortcuts') ||
+          touch.target.closest('.btn-interact') ||
+          touch.target.closest('.pointer-events-auto')) {
+        return;
+      }
+      
+      // 只处理屏幕右半部分的触摸（作为视角区）
+      if (touch.clientX < window.innerWidth * 0.5) return;
+      
+      camTouch.active = true;
+      camTouch.touchId = touch.identifier;
+      camTouch.lastX = touch.clientX;
+      camTouch.lastY = touch.clientY;
+    };
+
+    const onTouchMove = (e) => {
+      if (!camTouch.active) return;
+      
+      let touch = null;
+      for (let i = 0; i < e.touches.length; i++) {
+        if (e.touches[i].identifier === camTouch.touchId) {
+          touch = e.touches[i];
+          break;
+        }
+      }
+      if (!touch) return;
+      
+      const dx = touch.clientX - camTouch.lastX;
+      const dy = touch.clientY - camTouch.lastY;
+      
+      camTouch.lastX = touch.clientX;
+      camTouch.lastY = touch.clientY;
+      
+      // 旋转视角（灵敏度与鼠标版类似）
+      game.cameraYaw -= dx * 0.005;
+      game.cameraPitch -= dy * 0.004;
+      game.cameraPitch = Math.max(-1.05, Math.min(1.05, game.cameraPitch));
+    };
+
+    const onTouchEnd = (e) => {
+      if (!camTouch.active) return;
+      
+      let found = false;
+      for (let i = 0; i < e.changedTouches.length; i++) {
+        if (e.changedTouches[i].identifier === camTouch.touchId) {
+          found = true;
+          break;
+        }
+      }
+      if (!found) return;
+      
+      camTouch.active = false;
+      camTouch.touchId = null;
+    };
+
+    hud.addEventListener('touchstart', onTouchStart, { passive: true });
+    hud.addEventListener('touchmove', onTouchMove, { passive: true });
+    hud.addEventListener('touchend', onTouchEnd, { passive: true });
+    hud.addEventListener('touchcancel', onTouchEnd, { passive: true });
+  },
+
+  // 初始化按钮
+  initButtons() {
+    // 攻击按钮（支持按住连发）
+    const attackBtn = document.getElementById('btn-attack-mobile');
+    if (attackBtn) {
+      const startAttack = (e) => {
+        e.preventDefault();
+        if (game.state !== 'playing') return;
+        this.attackHeld = true;
+        playerAttack();
+        // 启动连发
+        this.startAttackAutoFire();
+      };
+      const endAttack = (e) => {
+        e.preventDefault();
+        this.attackHeld = false;
+      };
+      
+      attackBtn.addEventListener('touchstart', startAttack, { passive: false });
+      attackBtn.addEventListener('touchend', endAttack, { passive: false });
+      attackBtn.addEventListener('touchcancel', endAttack, { passive: false });
+    }
+
+    // 技能按钮
+    const skillBtns = document.querySelectorAll('.btn-skill');
+    skillBtns.forEach(btn => {
+      const idx = parseInt(btn.dataset.skill);
+      const useSkillHandler = (e) => {
+        e.preventDefault();
+        if (game.state !== 'playing') return;
+        useSkill(idx);
+      };
+      btn.addEventListener('touchstart', useSkillHandler, { passive: false });
+    });
+
+    // 跳跃按钮
+    const jumpBtn = document.getElementById('btn-jump-mobile');
+    if (jumpBtn) {
+      jumpBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        if (game.state !== 'playing') return;
+        if (game.player.onGround) {
+          game.player.jumpVelocity = 8;
+          game.player.onGround = false;
+          SoundSystem.playJump();
+        }
+      }, { passive: false });
+    }
+
+    // 魂环按钮
+    const ringsBtn = document.getElementById('btn-rings-mobile');
+    if (ringsBtn) {
+      ringsBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        if (game.state !== 'playing') return;
+        togglePlayerRings();
+      }, { passive: false });
+    }
+
+    // 交互按钮
+    const interactBtn = document.getElementById('btn-interact-mobile');
+    if (interactBtn) {
+      interactBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        if (game.state !== 'playing') return;
+        tryInteract();
+      }, { passive: false });
+    }
+
+    // 角色面板按钮
+    const charBtn = document.getElementById('btn-char-mobile');
+    if (charBtn) {
+      charBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        togglePanel('character-panel');
+      }, { passive: false });
+    }
+
+    // 背包按钮
+    const bagBtn = document.getElementById('btn-bag-mobile');
+    if (bagBtn) {
+      bagBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        togglePanel('bag-panel');
+      }, { passive: false });
+    }
+
+    // 暂停按钮
+    const pauseBtn = document.getElementById('btn-pause-mobile');
+    if (pauseBtn) {
+      pauseBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        if (game.state === 'playing') {
+          pauseGame();
+        } else if (game.state === 'paused') {
+          resumeGame();
+        }
+      }, { passive: false });
+    }
+  },
+
+  // 攻击连发
+  attackAutoFireTimer: null,
+  startAttackAutoFire() {
+    if (this.attackAutoFireTimer) return;
+    
+    const fire = () => {
+      if (!this.attackHeld) {
+        this.attackAutoFireTimer = null;
+        return;
+      }
+      playerAttack();
+      // 根据攻击速度调整连发间隔
+      const p = game.player;
+      const soul = p && p.martialSoul ? CONFIG.MARTIAL_SOULS.find(s => s.id === p.martialSoul) : null;
+      const attackSpeed = soul ? soul.attackSpeed : 0.5;
+      this.attackAutoFireTimer = setTimeout(fire, attackSpeed * 1000 + 50);
+    };
+    
+    // 第一次连发延迟稍长
+    const p = game.player;
+    const soul = p && p.martialSoul ? CONFIG.MARTIAL_SOULS.find(s => s.id === p.martialSoul) : null;
+    const attackSpeed = soul ? soul.attackSpeed : 0.5;
+    this.attackAutoFireTimer = setTimeout(fire, attackSpeed * 1000 + 50);
+  },
+
+  // 获取移动输入（供 updatePlayer 使用）
+  getMoveInput() {
+    if (!this.isMobile || !this.joystick.active) {
+      return { forward: 0, right: 0 };
+    }
+    // 摇杆：上(-Y) = 前进(forward+)，右(X+) = 右移(right+)
+    // 注意：我们的 forward/right 是基于相机坐标系的
+    // 摇杆直接输出 forward/right 分量（因为玩家是相对于相机移动的）
+    return {
+      forward: -this.joystick.moveZ, // 向上推 = 前进
+      right: this.joystick.moveX,    // 向右推 = 右移
+    };
+  },
+
+  // 更新技能冷却显示
+  updateSkillCooldowns() {
+    if (!this.isMobile) return;
+    const skillBtns = document.querySelectorAll('.btn-skill');
+    skillBtns.forEach((btn, idx) => {
+      const overlay = btn.querySelector('.skill-cd-overlay');
+      if (!overlay) return;
+      
+      const cd = game.skillCooldowns[idx] || 0;
+      const maxCd = 3 + idx * 1; // 对应 useSkill 中的冷却时间
+      const percent = Math.max(0, Math.min(100, (cd / maxCd) * 100));
+      overlay.style.height = percent + '%';
+    });
+  },
+
+  // 显示/隐藏交互按钮
+  updateInteractButton(show) {
+    if (!this.isMobile) return;
+    const btn = document.getElementById('btn-interact-mobile');
+    if (!btn) return;
+    if (show) {
+      btn.classList.remove('hidden');
+    } else {
+      btn.classList.add('hidden');
+    }
+  },
+};
+
 function updatePlayer(dt) {
   const p = game.player;
   const stats = calcStats();
@@ -14055,6 +14816,13 @@ function updatePlayer(dt) {
   if (game.keys['KeyS']) forward -= 1;
   if (game.keys['KeyA']) right -= 1;
   if (game.keys['KeyD']) right += 1;
+
+  // 移动端摇杆输入
+  if (typeof MobileControls !== 'undefined' && MobileControls.isMobile) {
+    const moveInput = MobileControls.getMoveInput();
+    forward += moveInput.forward;
+    right += moveInput.right;
+  }
 
   const len = Math.sqrt(forward * forward + right * right);
   if (len > 0) {
@@ -16491,6 +17259,11 @@ function gameLoop() {
     updateMinimap();
     updateNPCInteractHint();
 
+    // 移动端UI更新
+    if (typeof MobileControls !== 'undefined' && MobileControls.isMobile) {
+      MobileControls.updateSkillCooldowns();
+    }
+
     game.renderer.render(game.scene, game.camera);
   } catch (e) {
     console.error('游戏循环错误:', e);
@@ -16834,6 +17607,10 @@ function init() {
     initVillage();
     initInput();
     initUI();
+    // 初始化移动端触控
+    if (typeof MobileControls !== 'undefined') {
+      MobileControls.init();
+    }
     SoundSystem.init();
     MusicSystem.init();
     initMenuParticles();
