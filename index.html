@@ -1012,38 +1012,38 @@
 
 <!-- 捏脸/角色创建面板 -->
 <div id="character-create-panel" class="fixed inset-0 bg-black/80 flex items-center justify-center z-[60] hidden">
-  <div class="glass-panel rounded-2xl p-6 max-w-5xl w-full mx-4" style="max-height: 90vh;">
-    <h2 class="text-3xl font-bold text-amber-300 mb-4 text-center tracking-[0.3em]">角 色 创 建</h2>
+  <div class="glass-panel rounded-2xl p-4 md:p-6 max-w-5xl w-full mx-2 md:mx-4 flex flex-col" style="max-height: 95vh;">
+    <h2 class="text-2xl md:text-3xl font-bold text-amber-300 mb-3 md:mb-4 text-center tracking-[0.3em]">角 色 创 建</h2>
     
-    <div class="flex gap-6" style="height: 500px;">
+    <div class="flex gap-3 md:gap-6 flex-1 min-h-0" style="max-height: calc(95vh - 140px);">
       <!-- 左侧：3D预览 -->
-      <div class="flex-1 rounded-xl overflow-hidden relative" style="background: linear-gradient(180deg, #1a1a3a 0%, #0a0a20 100%);">
+      <div class="flex-1 rounded-xl overflow-hidden relative min-h-0" style="background: linear-gradient(180deg, #1a1a3a 0%, #0a0a20 100%);">
         <div id="character-preview-container" class="w-full h-full"></div>
         <div class="absolute bottom-3 left-1/2 -translate-x-1/2 text-amber-200/60 text-xs">
-          拖动旋转 · 滚轮缩放
+          拖动旋转 · 双指缩放
         </div>
       </div>
       
       <!-- 右侧：自定义选项 -->
-      <div class="w-80 flex flex-col gap-4 overflow-y-auto pr-2">
+      <div class="w-64 md:w-80 flex flex-col gap-3 md:gap-4 overflow-y-auto pr-1 md:pr-2 flex-shrink-0">
         <!-- 性别 -->
-        <div class="bg-black/30 rounded-xl p-4">
-          <div class="text-amber-300 font-bold mb-3 flex items-center gap-2">
+        <div class="bg-black/30 rounded-xl p-3 md:p-4">
+          <div class="text-amber-300 font-bold mb-2 md:mb-3 flex items-center gap-2">
             <span>👤</span><span>性别</span>
           </div>
           <div class="grid grid-cols-2 gap-2">
-            <button data-gender="male" class="char-option gender-btn py-3 rounded-lg border border-amber-600/50 text-amber-200 hover:bg-amber-900/40 transition text-sm font-bold">
+            <button data-gender="male" class="char-option gender-btn py-2 md:py-3 rounded-lg border border-amber-600/50 text-amber-200 hover:bg-amber-900/40 transition text-xs md:text-sm font-bold">
               ♂ 男
             </button>
-            <button data-gender="female" class="char-option gender-btn py-3 rounded-lg border border-pink-600/50 text-pink-200 hover:bg-pink-900/40 transition text-sm font-bold">
+            <button data-gender="female" class="char-option gender-btn py-2 md:py-3 rounded-lg border border-pink-600/50 text-pink-200 hover:bg-pink-900/40 transition text-xs md:text-sm font-bold">
               ♀ 女
             </button>
           </div>
         </div>
         
         <!-- 发型 -->
-        <div class="bg-black/30 rounded-xl p-4">
-          <div class="text-amber-300 font-bold mb-3 flex items-center gap-2">
+        <div class="bg-black/30 rounded-xl p-3 md:p-4">
+          <div class="text-amber-300 font-bold mb-2 md:mb-3 flex items-center gap-2">
             <span>💇</span><span>发型</span>
           </div>
           <div class="grid grid-cols-3 gap-2" id="hairstyle-btns">
@@ -1052,8 +1052,8 @@
         </div>
         
         <!-- 发色 -->
-        <div class="bg-black/30 rounded-xl p-4">
-          <div class="text-amber-300 font-bold mb-3 flex items-center gap-2">
+        <div class="bg-black/30 rounded-xl p-3 md:p-4">
+          <div class="text-amber-300 font-bold mb-2 md:mb-3 flex items-center gap-2">
             <span>🎨</span><span>发色</span>
           </div>
           <div class="grid grid-cols-5 gap-2" id="haircolor-btns">
@@ -1062,8 +1062,8 @@
         </div>
         
         <!-- 上衣 -->
-        <div class="bg-black/30 rounded-xl p-4">
-          <div class="text-amber-300 font-bold mb-3 flex items-center gap-2">
+        <div class="bg-black/30 rounded-xl p-3 md:p-4">
+          <div class="text-amber-300 font-bold mb-2 md:mb-3 flex items-center gap-2">
             <span>👕</span><span>上衣</span>
           </div>
           <div class="grid grid-cols-2 gap-2" id="top-btns">
@@ -1072,8 +1072,8 @@
         </div>
         
         <!-- 裤子 -->
-        <div class="bg-black/30 rounded-xl p-4">
-          <div class="text-amber-300 font-bold mb-3 flex items-center gap-2">
+        <div class="bg-black/30 rounded-xl p-3 md:p-4">
+          <div class="text-amber-300 font-bold mb-2 md:mb-3 flex items-center gap-2">
             <span>👖</span><span>裤子</span>
           </div>
           <div class="grid grid-cols-2 gap-2" id="pants-btns">
@@ -1084,11 +1084,11 @@
     </div>
     
     <!-- 底部按钮 -->
-    <div class="flex gap-4 mt-5">
-      <button id="btn-char-back" class="flex-1 py-3 rounded-lg font-bold border border-amber-600/50 text-amber-200 hover:bg-amber-900/30 transition">
+    <div class="flex gap-3 md:gap-4 mt-4 md:mt-5 flex-shrink-0">
+      <button id="btn-char-back" class="flex-1 py-2 md:py-3 rounded-lg font-bold border border-amber-600/50 text-amber-200 hover:bg-amber-900/30 transition text-sm md:text-base">
         返回
       </button>
-      <button id="btn-char-confirm" class="flex-1 btn-gold py-3 rounded-lg font-bold text-lg tracking-[0.2em]">
+      <button id="btn-char-confirm" class="flex-1 btn-gold py-2 md:py-3 rounded-lg font-bold text-base md:text-lg tracking-[0.2em]">
         进 入 游 戏
       </button>
     </div>
@@ -14691,6 +14691,12 @@ const MobileControls = {
         }
         game.camera.updateProjectionMatrix();
       }
+      
+      // 更新角色预览渲染器尺寸（如果捏脸面板打开着）
+      const charPanel = document.getElementById('character-create-panel');
+      if (charPanel && !charPanel.classList.contains('hidden') && typeof resizeCharPreview === 'function') {
+        setTimeout(resizeCharPreview, 200);
+      }
     };
 
     // 初始检测
@@ -16408,9 +16414,29 @@ let currentAppearance = { ...defaultCharAppearance };
 function openCharacterCreate() {
   document.getElementById('start-menu').classList.add('hidden');
   document.getElementById('character-create-panel').classList.remove('hidden');
-  initCharPreview();
-  buildCharCustomizationUI();
-  updateCharPreview();
+  // 延迟一帧初始化，确保容器尺寸已正确计算（尤其是强制横屏模式下）
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      initCharPreview();
+      buildCharCustomizationUI();
+      updateCharPreview();
+      // 更新一次预览渲染器尺寸
+      resizeCharPreview();
+    }, 50);
+  });
+}
+
+// 调整角色预览渲染器尺寸
+function resizeCharPreview() {
+  if (!charPreview.renderer || !charPreview.camera) return;
+  const container = document.getElementById('character-preview-container');
+  if (!container) return;
+  const width = container.clientWidth;
+  const height = container.clientHeight;
+  if (width === 0 || height === 0) return;
+  charPreview.renderer.setSize(width, height);
+  charPreview.camera.aspect = width / height;
+  charPreview.camera.updateProjectionMatrix();
 }
 
 // 关闭角色创建界面（返回主菜单）
