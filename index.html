@@ -390,6 +390,33 @@
     transform: scale(0.92);
   }
 
+  /* 技能切换按钮 */
+  .btn-skill-switch {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #8b5cf6, #4c1d95);
+    border: 2px solid #c4b5fd;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 12px rgba(139, 92, 246, 0.5), inset 0 -2px 5px rgba(0,0,0,0.3);
+    user-select: none;
+    touch-action: none;
+    -webkit-tap-highlight-color: transparent;
+    /* 扩大触控热区 */
+    padding: 10px;
+    margin: -10px;
+    background-clip: content-box;
+    transition: transform 0.05s ease-out;
+  }
+  .btn-skill-switch:active {
+    transform: scale(0.92);
+  }
+
   /* 移动端交互按钮（F键替代） */
   .btn-interact {
     position: absolute;
@@ -418,6 +445,38 @@
     transform: scale(0.92);
   }
   @keyframes interactPulse {
+    0%, 100% { box-shadow: 0 3px 15px rgba(16, 185, 129, 0.5); }
+    50% { box-shadow: 0 3px 25px rgba(16, 185, 129, 0.8), 0 0 30px rgba(16, 185, 129, 0.4); }
+  }
+
+  /* 世界空间交互按钮（跟随NPC在屏幕上移动） */
+  .world-interact-btn {
+    position: fixed;
+    z-index: 60;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #10b981, #065f46);
+    border: 2px solid #6ee7b7;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 15px rgba(16, 185, 129, 0.5);
+    pointer-events: auto;
+    user-select: none;
+    touch-action: none;
+    -webkit-tap-highlight-color: transparent;
+    animation: worldInteractPulse 1.5s ease-in-out infinite;
+    transition: transform 0.05s ease-out, opacity 0.2s ease;
+    transform: translate(-50%, -50%);
+  }
+  .world-interact-btn:active {
+    transform: translate(-50%, -50%) scale(0.92);
+  }
+  @keyframes worldInteractPulse {
     0%, 100% { box-shadow: 0 3px 15px rgba(16, 185, 129, 0.5); }
     50% { box-shadow: 0 3px 25px rgba(16, 185, 129, 0.8), 0 0 30px rgba(16, 185, 129, 0.4); }
   }
@@ -692,10 +751,10 @@
   
   /* 强制横屏模式下的控件优化 - 王者荣耀式扇形布局 */
   body.force-landscape .joystick-container {
-    bottom: 20px;
-    left: 20px;
-    width: 90px;
-    height: 90px;
+    bottom: 18px;
+    left: 18px;
+    width: 85px;
+    height: 85px;
     padding: 0;
     margin: 0;
   }
@@ -709,15 +768,15 @@
     pointer-events: auto;
   }
   body.force-landscape .joystick-stick {
-    width: 38px;
-    height: 38px;
+    width: 36px;
+    height: 36px;
   }
   body.force-landscape .action-buttons {
     position: absolute;
-    bottom: 14px;
-    right: 14px;
-    width: 170px;
-    height: 160px;
+    bottom: 12px;
+    right: 12px;
+    width: 180px;
+    height: 150px;
     /* 相对定位容器，所有按钮绝对定位实现扇形布局 */
     flex-direction: column;
     align-items: flex-end;
@@ -741,53 +800,70 @@
     pointer-events: none;
   }
   body.force-landscape .btn-skill {
-    width: 36px;
-    height: 36px;
-    font-size: 8px;
+    width: 34px;
+    height: 34px;
+    font-size: 7px;
     position: absolute;
     pointer-events: auto;
   }
   /* 5个技能按钮扇形排列 - 围绕攻击按钮左上扇形分布 */
-  /* 技能1：最左侧，最低位置 */
+  /* 技能1：最左侧，最靠下（攻击按钮左上方较远位置） */
   body.force-landscape .btn-skill:nth-child(1) {
-    right: 122px;
-    bottom: 92px;
+    right: 130px;
+    bottom: 12px;
   }
   /* 技能2：左上方 */
   body.force-landscape .btn-skill:nth-child(2) {
-    right: 100px;
-    bottom: 102px;
+    right: 112px;
+    bottom: 34px;
   }
-  /* 技能3：正上方最高处 */
+  /* 技能3：中上方 */
   body.force-landscape .btn-skill:nth-child(3) {
-    right: 76px;
-    bottom: 110px;
+    right: 90px;
+    bottom: 54px;
   }
   /* 技能4：右上方 */
   body.force-landscape .btn-skill:nth-child(4) {
-    right: 50px;
-    bottom: 114px;
+    right: 64px;
+    bottom: 68px;
   }
-  /* 技能5：最靠右侧 */
+  /* 技能5：最靠右侧，最高 */
   body.force-landscape .btn-skill:nth-child(5) {
-    right: 20px;
-    bottom: 112px;
+    right: 34px;
+    bottom: 76px;
   }
-  body.force-landscape .btn-jump {
-    width: 44px;
-    height: 44px;
-    font-size: 9px;
+  /* 技能切换按钮 - 攻击按钮左下方 */
+  body.force-landscape .btn-skill-switch {
+    width: 34px;
+    height: 34px;
+    font-size: 7px;
     position: absolute;
-    left: 6px;
-    bottom: 6px;
+    left: 52px;
+    bottom: 8px;
+    padding: 8px;
+    margin: -8px;
   }
+  /* 魂环按钮 - 最左下角 */
   body.force-landscape .btn-rings {
     width: 36px;
     height: 36px;
     font-size: 8px;
     position: absolute;
-    left: 10px;
-    bottom: 54px;
+    left: 6px;
+    bottom: 6px;
+    padding: 8px;
+    margin: -8px;
+  }
+  /* 跳跃按钮 - 攻击按钮右上方 */
+  body.force-landscape .btn-jump {
+    width: 42px;
+    height: 42px;
+    font-size: 9px;
+    position: absolute;
+    right: 2px;
+    bottom: 64px;
+    padding: 10px;
+    margin: -10px;
   }
   body.force-landscape .jump-row {
     gap: 0;
@@ -796,22 +872,20 @@
     order: 0;
     margin-right: 0;
   }
+  /* 主攻击按钮 - 右下角最大 */
   body.force-landscape .btn-attack-main {
-    width: 58px;
-    height: 58px;
+    width: 56px;
+    height: 56px;
     font-size: 10px;
     margin-top: 0;
     order: 0;
     position: absolute;
-    right: 4px;
-    bottom: 0;
+    right: 6px;
+    bottom: 2px;
   }
+  /* 交互按钮 - 手游端隐藏，改为在NPC上方显示 */
   body.force-landscape .btn-interact {
-    bottom: 120px;
-    right: 170px;
-    width: 40px;
-    height: 40px;
-    font-size: 9px;
+    display: none !important;
   }
   body.force-landscape .mobile-shortcuts {
     top: 45px;
@@ -1949,6 +2023,11 @@
     </div>
   </div>
 
+  <!-- 移动端世界空间交互按钮（跟随NPC显示） -->
+  <div id="world-interact-btn" class="world-interact-btn hidden">
+    <span id="world-interact-text">交互</span>
+  </div>
+
   <!-- 对话框 -->
   <div id="dialog-panel" class="absolute bottom-10 left-1/2 -translate-x-1/2 hidden pointer-events-auto" style="width: 600px; max-width: 90vw;">
     <div class="glass-panel rounded-xl p-4 border-2 border-amber-500/50">
@@ -1989,7 +2068,7 @@
 
     <!-- 右侧操作按钮 -->
     <div class="action-buttons">
-      <!-- 技能按钮组 -->
+      <!-- 技能按钮组（扇形排列） -->
       <div class="skill-buttons">
         <div class="btn-skill" data-skill="0">
           <span class="skill-num">1</span>
@@ -2017,16 +2096,19 @@
           <div class="skill-cd-overlay" style="height: 0%"></div>
         </div>
       </div>
-      <!-- 跳跃 + 魂环 -->
-      <div class="jump-row">
-        <div id="btn-rings-mobile" class="btn-rings">魂环</div>
-        <div id="btn-jump-mobile" class="btn-jump">跳跃</div>
+      <!-- 技能切换按钮 -->
+      <div id="btn-skill-switch" class="btn-skill-switch">
+        <span>切换</span>
       </div>
+      <!-- 魂环显示按钮 -->
+      <div id="btn-rings-mobile" class="btn-rings">魂环</div>
+      <!-- 跳跃按钮 -->
+      <div id="btn-jump-mobile" class="btn-jump">跳跃</div>
       <!-- 主攻击按钮 -->
       <div id="btn-attack-mobile" class="btn-attack-main">攻击</div>
     </div>
 
-    <!-- NPC交互按钮（靠近NPC时显示） -->
+    <!-- NPC交互按钮（靠近NPC时显示） - 保留但在手游端改为3D世界空间显示 -->
     <div id="btn-interact-mobile" class="btn-interact hidden">
       交互
     </div>
@@ -15400,12 +15482,17 @@ function getNearestInteractable() {
 function updateNPCInteractHint() {
   const hintEl = document.getElementById('npc-interact-hint');
   const textEl = document.getElementById('npc-interact-text');
+  const worldBtn = document.getElementById('world-interact-btn');
+  const worldText = document.getElementById('world-interact-text');
+  
   if (!hintEl || !textEl || game.uiOpen) {
     if (hintEl) hintEl.classList.add('hidden');
     // 移动端也隐藏
     if (typeof MobileControls !== 'undefined' && MobileControls.isMobile) {
       MobileControls.updateInteractButton(false);
     }
+    // 隐藏世界空间交互按钮
+    if (worldBtn) worldBtn.classList.add('hidden');
     return;
   }
   
@@ -15416,6 +15503,8 @@ function updateNPCInteractHint() {
     if (typeof MobileControls !== 'undefined' && MobileControls.isMobile) {
       MobileControls.updateInteractButton(false);
     }
+    // 隐藏世界空间交互按钮
+    if (worldBtn) worldBtn.classList.add('hidden');
     return;
   }
   
@@ -15453,6 +15542,30 @@ function updateNPCInteractHint() {
   // 移动端显示交互按钮
   if (typeof MobileControls !== 'undefined' && MobileControls.isMobile) {
     MobileControls.updateInteractButton(true);
+  }
+  
+  // 更新世界空间交互按钮位置（移动端）
+  if (worldBtn && typeof MobileControls !== 'undefined' && MobileControls.isMobile && game.camera) {
+    // 获取交互目标的位置（头顶上方一点）
+    const targetPos = interactable.target.position.clone();
+    targetPos.y += 3.5; // 显示在NPC头顶上方
+    
+    // 将3D坐标投影到2D屏幕坐标
+    const screenPos = targetPos.clone().project(game.camera);
+    
+    // 转换为像素坐标
+    const x = (screenPos.x * 0.5 + 0.5) * window.innerWidth;
+    const y = (-screenPos.y * 0.5 + 0.5) * window.innerHeight;
+    
+    // 检查是否在相机视锥体内
+    if (screenPos.z < 1 && screenPos.z > -1) {
+      worldBtn.style.left = x + 'px';
+      worldBtn.style.top = y + 'px';
+      worldBtn.classList.remove('hidden');
+      if (worldText) worldText.textContent = text;
+    } else {
+      worldBtn.classList.add('hidden');
+    }
   }
 }
 
@@ -17646,10 +17759,11 @@ const MobileControls = {
     // 技能按钮
     const skillBtns = document.querySelectorAll('.btn-skill');
     skillBtns.forEach(btn => {
-      const idx = parseInt(btn.dataset.skill);
       const useSkillHandler = (e) => {
         e.preventDefault();
         if (game.state !== 'playing') return;
+        // 动态读取当前技能索引（支持技能页切换）
+        const idx = parseInt(btn.dataset.skill);
         useSkill(idx);
       };
       btn.addEventListener('touchstart', useSkillHandler, { passive: false });
@@ -17679,11 +17793,33 @@ const MobileControls = {
       }, { passive: false });
     }
 
+    // 技能切换按钮（切换第1-5魂技和第6-9魂技）
+    this.currentSkillPage = 0; // 0=第1-5魂技, 1=第6-9魂技
+    const skillSwitchBtn = document.getElementById('btn-skill-switch');
+    if (skillSwitchBtn) {
+      skillSwitchBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        if (game.state !== 'playing') return;
+        this.switchSkillPage();
+      }, { passive: false });
+    }
+
     // 交互按钮
     const interactBtn = document.getElementById('btn-interact-mobile');
     if (interactBtn) {
       interactBtn.addEventListener('touchstart', (e) => {
         e.preventDefault();
+        if (game.state !== 'playing') return;
+        tryInteract();
+      }, { passive: false });
+    }
+
+    // 世界空间交互按钮（跟随NPC显示）
+    const worldInteractBtn = document.getElementById('world-interact-btn');
+    if (worldInteractBtn) {
+      worldInteractBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         if (game.state !== 'playing') return;
         tryInteract();
       }, { passive: false });
@@ -17746,6 +17882,38 @@ const MobileControls = {
     this.attackAutoFireTimer = setTimeout(fire, attackSpeed * 1000 + 50);
   },
 
+  // 切换技能页（第1-5魂技 <-> 第6-9魂技）
+  switchSkillPage() {
+    this.currentSkillPage = this.currentSkillPage === 0 ? 1 : 0;
+    this.updateSkillButtons();
+  },
+
+  // 更新技能按钮显示
+  updateSkillButtons() {
+    const skillBtns = document.querySelectorAll('.btn-skill');
+    const offset = this.currentSkillPage * 5;
+    
+    skillBtns.forEach((btn, i) => {
+      const skillIdx = offset + i;
+      btn.dataset.skill = skillIdx;
+      
+      // 更新技能编号显示
+      const numEl = btn.querySelector('.skill-num');
+      if (numEl) {
+        numEl.textContent = (skillIdx + 1);
+      }
+      
+      // 第6-9魂技时，第5个按钮（索引4）置灰表示不可用
+      if (this.currentSkillPage === 1 && i === 4) {
+        btn.style.opacity = '0.4';
+        btn.style.pointerEvents = 'none';
+      } else {
+        btn.style.opacity = '1';
+        btn.style.pointerEvents = 'auto';
+      }
+    });
+  },
+
   // 获取移动输入（供 updatePlayer 使用）
   getMoveInput() {
     if (!this.isMobile) {
@@ -17778,12 +17946,14 @@ const MobileControls = {
   updateSkillCooldowns() {
     if (!this.isMobile) return;
     const skillBtns = document.querySelectorAll('.btn-skill');
-    skillBtns.forEach((btn, idx) => {
+    const offset = this.currentSkillPage || 0;
+    skillBtns.forEach((btn, i) => {
       const overlay = btn.querySelector('.skill-cd-overlay');
       if (!overlay) return;
       
-      const cd = game.skillCooldowns[idx] || 0;
-      const maxCd = 3 + idx * 1; // 对应 useSkill 中的冷却时间
+      const skillIdx = offset + i;
+      const cd = game.skillCooldowns[skillIdx] || 0;
+      const maxCd = 3 + skillIdx * 1; // 对应 useSkill 中的冷却时间
       const percent = Math.max(0, Math.min(100, (cd / maxCd) * 100));
       overlay.style.height = percent + '%';
     });
