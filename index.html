@@ -15142,10 +15142,37 @@ const MobileControls = {
 
   // 初始化视角控制（全屏滑动，除了摇杆和按钮区域）
   initCameraControl() {
-    const hud = document.getElementById('hud');
-    if (!hud) return;
-
     const camTouch = this.cameraTouch;
+
+    // 检查触摸点是否在UI控件上（通过DOM元素检测）
+    const isTouchOnUI = (touch) => {
+      const target = touch.target;
+      if (!target || !target.closest) return false;
+      
+      // 排除各种UI控件
+      if (target.closest('.joystick-container') || 
+          target.closest('.action-buttons') ||
+          target.closest('.mobile-shortcuts') ||
+          target.closest('.btn-interact') ||
+          target.closest('.crosshair') ||
+          target.closest('.quest-panel') ||
+          target.closest('.hp-mp-bar') ||
+          target.closest('.soul-ring-ui') ||
+          target.closest('.minimap-container') ||
+          target.closest('.level-info') ||
+          target.closest('.settings-btn') ||
+          target.closest('#settings-panel') ||
+          target.closest('#help-panel') ||
+          target.closest('#bag-panel') ||
+          target.closest('#soul-panel') ||
+          target.closest('#skill-panel') ||
+          target.closest('.dialog-box') ||
+          target.closest('.toast-container') ||
+          target.closest('button')) {
+        return true;
+      }
+      return false;
+    };
 
     const onTouchStart = (e) => {
       if (game.state !== 'playing') return;
@@ -15156,39 +15183,8 @@ const MobileControls = {
       for (let i = 0; i < e.touches.length; i++) {
         const touch = e.touches[i];
         
-        // 如果点在UI控件上，跳过（DOM元素检测，不受旋转影响）
-        if (touch.target.closest('.joystick-container') || 
-            touch.target.closest('.action-buttons') ||
-            touch.target.closest('.mobile-shortcuts') ||
-            touch.target.closest('.btn-interact') ||
-            touch.target.closest('.pointer-events-auto') ||
-            touch.target.closest('.crosshair') ||
-            touch.target.closest('.quest-panel') ||
-            touch.target.closest('.hp-mp-bar') ||
-            touch.target.closest('.soul-ring-ui')) {
-          continue;
-        }
-        
-        // 坐标区域排除（需要转换到游戏画面坐标）
-        const gamePos = this.mapTouchToGame(touch.clientX, touch.clientY);
-        const gameWidth = this.isForcedLandscape ? window.innerHeight : window.innerWidth;
-        const gameHeight = this.isForcedLandscape ? window.innerWidth : window.innerHeight;
-        
-        // 排除左下角摇杆区域
-        const joystickZoneX = 200;
-        const joystickZoneY = 220;
-        if (gamePos.x < joystickZoneX && 
-            gamePos.y > gameHeight - joystickZoneY) {
-          continue;
-        }
-        
-        // 排除右下角按钮区域
-        const btnZoneX = 200;
-        const btnZoneY = 280;
-        if (gamePos.x > gameWidth - btnZoneX && 
-            gamePos.y > gameHeight - btnZoneY) {
-          continue;
-        }
+        // 如果点在UI控件上，跳过
+        if (isTouchOnUI(touch)) continue;
         
         // 这个触摸点可以用来控制视角
         validTouch = touch;
@@ -15251,10 +15247,11 @@ const MobileControls = {
       camTouch.touchId = null;
     };
 
-    hud.addEventListener('touchstart', onTouchStart, { passive: true });
-    hud.addEventListener('touchmove', onTouchMove, { passive: true });
-    hud.addEventListener('touchend', onTouchEnd, { passive: true });
-    hud.addEventListener('touchcancel', onTouchEnd, { passive: true });
+    // 直接在document上监听，确保全屏都能响应
+    document.addEventListener('touchstart', onTouchStart, { passive: true });
+    document.addEventListener('touchmove', onTouchMove, { passive: true });
+    document.addEventListener('touchend', onTouchEnd, { passive: true });
+    document.addEventListener('touchcancel', onTouchEnd, { passive: true });
   },
 
   // 初始化按钮
@@ -17190,6 +17187,11 @@ function showStoryDialog(speaker, text) {
 
 // 触发武魂觉醒
 function triggerAwakening() {
+  // 已觉醒则不再触发觉醒流程
+  if (game.player && game.player.martialSoulAwakened) {
+    showHint('你已觉醒武魂！');
+    return;
+  }
   game.storyState = 'awakening';
   document.getElementById('awakening-panel').classList.remove('hidden');
   document.exitPointerLock();
@@ -17251,6 +17253,11 @@ function awakenMartialSoul() {
         // 保存武魂
         game.player.martialSoul = finalSoul.id;
         game.player.martialSoulAwakened = true;
+        
+        // 更新UI
+        updateHUD();
+        updateCharacterPanel();
+        updateSkillSlots();
         
         // 播放音效
         SoundSystem.playLevelUp();
