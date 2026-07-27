@@ -767,8 +767,8 @@
   body.force-landscape .joystick-container {
     bottom: calc(18px + var(--safe-landscape-bottom));
     left: calc(18px + var(--safe-landscape-left));
-    width: 85px;
-    height: 85px;
+    width: 100px;
+    height: 100px;
     padding: 0;
     margin: 0;
   }
@@ -1134,32 +1134,40 @@
   }
   
   /* 强制横屏模式下开始菜单优化 */
+  body.force-landscape #start-menu {
+    flex-direction: row !important;
+    justify-content: space-around !important;
+    align-items: center !important;
+    padding: 0 40px !important;
+    gap: 20px;
+  }
   body.force-landscape #start-menu h1 {
-    font-size: 2.5rem !important;
-    margin-bottom: 0.5rem !important;
+    font-size: 2rem !important;
+    margin-bottom: 0.25rem !important;
   }
   body.force-landscape #start-menu .text-2xl {
-    font-size: 1rem !important;
+    font-size: 0.875rem !important;
   }
   body.force-landscape #start-menu .text-7xl {
-    font-size: 2.5rem !important;
+    font-size: 2rem !important;
   }
   body.force-landscape #start-menu .mb-10 {
-    margin-bottom: 1.5rem !important;
-  }
-  body.force-landscape #start-menu .my-4 {
-    margin-top: 0.5rem !important;
     margin-bottom: 0.5rem !important;
   }
+  body.force-landscape #start-menu .my-4 {
+    margin-top: 0.25rem !important;
+    margin-bottom: 0.25rem !important;
+  }
   body.force-landscape #start-menu .mt-8 {
-    margin-top: 1rem !important;
+    margin-top: 0.5rem !important;
   }
   body.force-landscape #start-menu .mb-6 {
-    margin-bottom: 0.75rem !important;
+    margin-bottom: 0.5rem !important;
   }
   body.force-landscape #start-menu .menu-soul-ring {
-    transform: scale(0.6);
-    margin-bottom: -20px;
+    transform: scale(0.5);
+    margin-bottom: -30px;
+    display: none;
   }
   body.force-landscape #start-menu #btn-start {
     padding-top: 0.5rem !important;
@@ -1173,6 +1181,46 @@
   }
   body.force-landscape #start-menu .gap-4 {
     gap: 0.5rem !important;
+  }
+  body.force-landscape #start-menu .w-80 {
+    width: 200px !important;
+  }
+  body.force-landscape #start-menu > .absolute.bottom-10 {
+    bottom: 8px !important;
+    font-size: 0.65rem !important;
+  }
+  body.force-landscape #start-menu .text-sm {
+    font-size: 0.7rem !important;
+  }
+  body.force-landscape #start-menu .text-xs {
+    font-size: 0.6rem !important;
+  }
+  /* 强制横屏下隐藏顶部装饰的分隔线，节省空间 */
+  body.force-landscape #start-menu .menu-deco-line,
+  body.force-landscape #start-menu .flex.items-center.justify-center.gap-4.mb-6,
+  body.force-landscape #start-menu .flex.items-center.justify-center.gap-4.mt-8 {
+    display: none !important;
+  }
+  /* 强制横屏下帮助面板适配 */
+  body.force-landscape #help-panel > div {
+    max-width: 80% !important;
+    max-height: 85% !important;
+    padding: 1rem !important;
+    overflow-y: auto;
+  }
+  body.force-landscape #help-panel h2 {
+    font-size: 1.25rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+  body.force-landscape #help-panel .grid {
+    gap: 0.5rem !important;
+    font-size: 0.8rem !important;
+  }
+  body.force-landscape #help-panel #btn-close-help {
+    margin-top: 0.75rem !important;
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+    font-size: 0.9rem !important;
   }
 
   /* ========== 加载遮罩（3D场景加载时显示） ========== */
@@ -17321,28 +17369,17 @@ const MobileControls = {
       joystick.active = true;
       joystick.touchId = touch.identifier;
       
-      // 动态中心：摇杆中心跟随首次触摸位置（提供更好的手感）
-      // 但限制在容器范围内，避免偏移太多
+      // 摇杆中心固定在容器中心（稳定，不会偏移出屏幕）
       const rect = container.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
+      joystick.centerX = rect.left + rect.width / 2;
+      joystick.centerY = rect.top + rect.height / 2;
       
-      // 计算触摸点相对于容器中心的偏移
-      const offsetX = touch.clientX - centerX;
-      const offsetY = touch.clientY - centerY;
-      const offsetDist = Math.sqrt(offsetX * offsetX + offsetY * offsetY);
-      const maxOffset = joystick.maxRadius * 0.5; // 最大偏移半径
-      
-      if (offsetDist > maxOffset) {
-        // 触摸点超出最大偏移范围，将中心向触摸点移动，但保持在范围内
-        const ratio = maxOffset / offsetDist;
-        joystick.centerX = centerX + offsetX * ratio;
-        joystick.centerY = centerY + offsetY * ratio;
-      } else {
-        // 触摸点在范围内，以触摸点为中心
-        joystick.centerX = touch.clientX;
-        joystick.centerY = touch.clientY;
-      }
+      // 根据容器大小动态计算最大半径（确保摇杆不会跑出容器）
+      // maxRadius = 容器半径 - 摇杆半径
+      const stickRect = stick.getBoundingClientRect();
+      const containerRadius = Math.min(rect.width, rect.height) / 2;
+      const stickRadius = Math.min(stickRect.width, stickRect.height) / 2;
+      joystick.currentMaxRadius = Math.max(15, containerRadius - stickRadius - 2); // 留2px边距
       
       // 重置平滑值
       joystick.moveX = 0;
@@ -17401,6 +17438,13 @@ const MobileControls = {
     container.addEventListener('touchmove', onTouchMove, { passive: false });
     container.addEventListener('touchend', onTouchEnd, { passive: false });
     container.addEventListener('touchcancel', onTouchEnd, { passive: false });
+    
+    // 初始化当前最大半径
+    const initRect = container.getBoundingClientRect();
+    const initStickRect = stick.getBoundingClientRect();
+    const initContainerRadius = Math.min(initRect.width, initRect.height) / 2;
+    const initStickRadius = Math.min(initStickRect.width, initStickRect.height) / 2;
+    joystick.currentMaxRadius = Math.max(15, initContainerRadius - initStickRadius - 2);
   },
 
   // 更新摇杆位置
@@ -17408,53 +17452,58 @@ const MobileControls = {
     const stick = document.getElementById('joystick-stick');
     const joystick = this.joystick;
     
+    if (!stick) return;
+    
+    // 计算触摸点相对于摇杆中心的偏移（视口坐标）
     let dx = clientX - joystick.centerX;
     let dy = clientY - joystick.centerY;
     
-    // 强制横屏时，摇杆输入方向需要旋转
-    // 画面顺时针旋转90度后：
-    // - 视觉向上（屏幕右方向，dx>0）= 向前走（moveZ<0）
-    // - 视觉向右（屏幕下方向，dy>0）= 向右走（moveX>0）
-    // 映射：moveX = dy, moveZ = -dx
-    let moveDx = dx;
-    let moveDy = dy;
-    if (this.isForcedLandscape) {
-      moveDx = dy;       // 屏幕向下（dy>0）= 游戏向右（moveX>0）
-      moveDy = -dx;      // 屏幕向右（dx>0）= 游戏向上（moveZ<0=向前）
-    }
-    
-    // 计算距离并限制在最大半径内
-    const dist = Math.sqrt(moveDx * moveDx + moveDy * moveDy);
-    let clampedDist = dist;
-    if (clampedDist > joystick.maxRadius) {
-      clampedDist = joystick.maxRadius;
-      moveDx = (moveDx / dist) * joystick.maxRadius;
-      moveDy = (moveDy / dist) * joystick.maxRadius;
+    // 计算距离并限制在最大半径内（先限制再转换，避免转换后超出范围）
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    const maxR = joystick.currentMaxRadius || joystick.maxRadius;
+    let clampedDx = dx;
+    let clampedDy = dy;
+    if (dist > maxR) {
+      const ratio = maxR / dist;
+      clampedDx = dx * ratio;
+      clampedDy = dy * ratio;
     }
     
     // 摇杆显示位置
-    // 容器本身被旋转了90度，stick的translate需要在容器坐标系中
-    // 视觉偏移(dx, dy) → 容器坐标(dy, -dx)
-    let displayDx = dx;
-    let displayDy = dy;
+    // 普通模式：直接使用视口偏移
+    // 强制横屏模式：容器被旋转90度，需要将视口偏移转换为容器内部坐标
+    let displayDx = clampedDx;
+    let displayDy = clampedDy;
+    
     if (this.isForcedLandscape) {
-      displayDx = dy;
-      displayDy = -dx;
-      // 重新归一化显示位置
-      const displayDist = Math.sqrt(displayDx * displayDx + displayDy * displayDy);
-      if (displayDist > joystick.maxRadius) {
-        displayDx = (displayDx / displayDist) * joystick.maxRadius;
-        displayDy = (displayDy / displayDist) * joystick.maxRadius;
-      }
+      // body顺时针旋转90度
+      // 视口中的向右(dx>0) → 容器中的向下(dy>0)
+      // 视口中的向下(dy>0) → 容器中的向左(dx<0)
+      displayDx = -clampedDy;
+      displayDy = clampedDx;
     }
+    
+    // 应用显示偏移（始终在容器范围内）
     stick.style.transform = `translate(calc(-50% + ${displayDx}px), calc(-50% + ${displayDy}px))`;
     
-    // 归一化到 -1 ~ 1（原始值）
-    const rawX = moveDx / joystick.maxRadius;
-    const rawZ = moveDy / joystick.maxRadius;
+    // 计算移动输入（-1 ~ 1）
+    let moveX = 0;
+    let moveZ = 0;
+    
+    if (this.isForcedLandscape) {
+      // 强制横屏模式方向映射
+      // 视口向右(dx>0) = 游戏向前(moveZ<0)
+      // 视口向下(dy>0) = 游戏向右(moveX>0)
+      moveX = clampedDy / maxR;
+      moveZ = -clampedDx / maxR;
+    } else {
+      // 普通模式
+      moveX = clampedDx / maxR;
+      moveZ = clampedDy / maxR;
+    }
     
     // 死区处理
-    const rawMag = Math.sqrt(rawX * rawX + rawZ * rawZ);
+    const rawMag = Math.sqrt(moveX * moveX + moveZ * moveZ);
     let outputX = 0;
     let outputZ = 0;
     
@@ -17468,8 +17517,8 @@ const MobileControls = {
       
       // 按方向缩放
       if (rawMag > 0.001) {
-        outputX = (rawX / rawMag) * finalMag;
-        outputZ = (rawZ / rawMag) * finalMag;
+        outputX = (moveX / rawMag) * finalMag;
+        outputZ = (moveZ / rawMag) * finalMag;
       }
     }
     
@@ -21896,10 +21945,23 @@ function initUI() {
   }
 
   document.getElementById('btn-start').addEventListener('click', openCharacterCreate);
+  document.getElementById('btn-start').addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    openCharacterCreate();
+  });
   document.getElementById('btn-help').addEventListener('click', () => {
     document.getElementById('help-panel').classList.remove('hidden');
   });
   document.getElementById('btn-close-help').addEventListener('click', () => {
+    document.getElementById('help-panel').classList.add('hidden');
+  });
+  // 移动端触摸支持
+  document.getElementById('btn-help').addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    document.getElementById('help-panel').classList.remove('hidden');
+  });
+  document.getElementById('btn-close-help').addEventListener('touchstart', (e) => {
+    e.preventDefault();
     document.getElementById('help-panel').classList.add('hidden');
   });
   
