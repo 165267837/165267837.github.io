@@ -38,6 +38,11 @@
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
     touch-action: none;
+    /* 安全区域适配变量 */
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-left: env(safe-area-inset-left, 0px);
+    --safe-right: env(safe-area-inset-right, 0px);
   }
 
   /* 视频播放期间暂停所有非必要动画，提升移动端性能 */
@@ -733,6 +738,15 @@
     transform: translate(-50%, -50%) rotate(90deg);
     transform-origin: center center;
     overflow: hidden;
+    /* 强制横屏下的安全区域映射（顺时针旋转90度后）：
+       视觉顶部 = 手机物理左侧 = safe-left
+       视觉右侧 = 手机物理顶部 = safe-top
+       视觉底部 = 手机物理右侧 = safe-right
+       视觉左侧 = 手机物理底部 = safe-bottom */
+    --safe-landscape-top: env(safe-area-inset-left, 0px);
+    --safe-landscape-right: env(safe-area-inset-top, 0px);
+    --safe-landscape-bottom: env(safe-area-inset-right, 0px);
+    --safe-landscape-left: env(safe-area-inset-bottom, 0px);
   }
   
   body.force-landscape #game-canvas {
@@ -751,8 +765,8 @@
   
   /* 强制横屏模式下的控件优化 - 王者荣耀式扇形布局 */
   body.force-landscape .joystick-container {
-    bottom: 18px;
-    left: 18px;
+    bottom: calc(18px + var(--safe-landscape-bottom));
+    left: calc(18px + var(--safe-landscape-left));
     width: 85px;
     height: 85px;
     padding: 0;
@@ -773,10 +787,10 @@
   }
   body.force-landscape .action-buttons {
     position: absolute;
-    bottom: 12px;
-    right: 12px;
-    width: 170px;
-    height: 150px;
+    bottom: calc(12px + var(--safe-landscape-bottom));
+    right: calc(12px + var(--safe-landscape-right));
+    width: 160px;
+    height: 145px;
     /* 相对定位容器，所有按钮绝对定位实现布局 */
     flex-direction: column;
     align-items: flex-end;
@@ -800,8 +814,8 @@
     pointer-events: none;
   }
   body.force-landscape .btn-skill {
-    width: 30px;
-    height: 30px;
+    width: 28px;
+    height: 28px;
     font-size: 7px;
     position: absolute;
     pointer-events: auto;
@@ -810,27 +824,27 @@
   /* 技能5：最右侧，跳跃键正上方 */
   body.force-landscape .btn-skill:nth-child(5) {
     right: 6px;
-    bottom: 104px;
+    bottom: 100px;
   }
   /* 技能4：技能5左侧 */
   body.force-landscape .btn-skill:nth-child(4) {
-    right: 38px;
-    bottom: 104px;
+    right: 36px;
+    bottom: 100px;
   }
   /* 技能3：技能4左侧 */
   body.force-landscape .btn-skill:nth-child(3) {
-    right: 70px;
-    bottom: 104px;
+    right: 66px;
+    bottom: 100px;
   }
   /* 技能2：技能3左侧 */
   body.force-landscape .btn-skill:nth-child(2) {
-    right: 102px;
-    bottom: 104px;
+    right: 96px;
+    bottom: 100px;
   }
   /* 技能1：最左侧 */
   body.force-landscape .btn-skill:nth-child(1) {
-    right: 134px;
-    bottom: 104px;
+    right: 126px;
+    bottom: 100px;
   }
   /* 技能切换按钮 - 攻击按钮左下方 */
   body.force-landscape .btn-skill-switch {
@@ -843,14 +857,14 @@
     padding: 8px;
     margin: -8px;
   }
-  /* 魂环按钮 - 最左下角 */
+  /* 魂环按钮 - 攻击按钮左侧 */
   body.force-landscape .btn-rings {
     width: 36px;
     height: 36px;
     font-size: 8px;
     position: absolute;
-    left: 6px;
-    bottom: 6px;
+    right: 70px;
+    bottom: 12px;
     padding: 8px;
     margin: -8px;
   }
@@ -888,8 +902,8 @@
     display: none !important;
   }
   body.force-landscape .mobile-shortcuts {
-    top: 45px;
-    right: 6px;
+    top: calc(45px + var(--safe-landscape-top));
+    right: calc(6px + var(--safe-landscape-right));
     gap: 4px;
   }
   body.force-landscape .btn-shortcut {
@@ -897,6 +911,12 @@
     height: 30px;
     font-size: 9px;
     border-radius: 6px;
+  }
+  
+  /* 强制横屏下左上角HUD的安全区域适配 */
+  body.force-landscape #hud > .absolute.top-4.left-4 {
+    top: calc(16px + var(--safe-landscape-top)) !important;
+    left: calc(16px + var(--safe-landscape-left)) !important;
   }
   
   /* 强制横屏模式下面板高度修复（避免使用vh单位导致面板过高） */
